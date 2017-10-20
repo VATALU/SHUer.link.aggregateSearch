@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+                http://www.springframework.org/schema/context  
+                 http://www.springframework.org/schema/context/spring-context-3.2.xsd  
+                http://www.springframework.org/schema/tx   
+                http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
+			<list>
+				<value>classpath:executor.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 下面这两个开启了自动扫描功能 -->
+	<!-- 开启注解配置 即Autowried -->
+	<context:annotation-config />
+	<!-- 使用自动注入的时候要 添加他来扫描bean之后才能在使用的时候 -->
+	<!--其实component-scan 就有了annotation-config的功能即把需要的类注册到了spring容器中 -->
+	<context:component-scan base-package="org.shuerlink" />
+
+	<!--配置线程池 -->
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 核心线程数 -->
+		<property name="corePoolSize" value="${executor.corePoolSize}" />
+		<!-- 最大线程数 -->
+		<property name="maxPoolSize" value="${executor.maxPoolSize}" />
+		<!-- 最大队列数 -->
+		<property name="queueCapacity" value="${executor.queueCapacity}" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name="keepAliveSeconds" value="${executor.keepAliveSeconds}" />
+	</bean>
+
+</beans>  
