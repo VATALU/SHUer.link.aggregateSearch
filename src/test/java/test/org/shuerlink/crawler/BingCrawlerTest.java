@@ -13,7 +13,7 @@ public class BingCrawlerTest {
 	public void testBaiduCrawler() throws UnsupportedEncodingException {
 		 System.out.println("Start:");
 		 try {
-		 System.out.println(new BingCrawler().start("�ɴ�Ѽ"));
+		 System.out.println(new BingCrawler().start("可达鸭"));
 		 } catch (IOException e) {
 		 e.printStackTrace();
 		 System.out.println("connect failer");

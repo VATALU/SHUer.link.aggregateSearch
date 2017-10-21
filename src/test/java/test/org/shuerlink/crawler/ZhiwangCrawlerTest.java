@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
-import org.shuerlink.crawler.BingCrawler;
 import org.shuerlink.crawler.ZhiwangCrawler;
 
 public class ZhiwangCrawlerTest {
@@ -13,7 +12,7 @@ public class ZhiwangCrawlerTest {
 
 	System.out.println("Start:");
 	try {
-		System.out.println(new ZhiwangCrawler().start("Õı±¶«ø"));
+		System.out.println(new ZhiwangCrawler().start("ÁéãÂÆùÂº∫"));
 	} catch (IOException e) {
 		e.printStackTrace();
 		System.out.println("connect failer");
