@@ -10,18 +10,15 @@
 
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
+		<property name="locations"> 
 			<list>
 				<value>classpath:executor.properties</value>
 			</list>
 		</property>
 	</bean>
 
-	<!-- 下面这两个开启了自动扫描功能 -->
 	<!-- 开启注解配置 即Autowried -->
 	<context:annotation-config />
-	<!-- 使用自动注入的时候要 添加他来扫描bean之后才能在使用的时候 -->
-	<!--其实component-scan 就有了annotation-config的功能即把需要的类注册到了spring容器中 -->
 	<context:component-scan base-package="org.shuerlink" />
 
 	<!--配置线程池 -->
