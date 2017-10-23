@@ -16,7 +16,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:springmvc-servlet.xml,
-			classpath:ApplicationContext.xml
+			classpath:ApplicationContext.xml,
 		</param-value>
 	</context-param>
 

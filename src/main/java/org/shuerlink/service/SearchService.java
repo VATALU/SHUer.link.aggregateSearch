@@ -1,5 +1,9 @@
 package org.shuerlink.service;
 
+import java.util.LinkedList;
+
+import org.shuerlink.model.SearchResult;
+
 public interface SearchService {
-	public String search(String content);
+	public LinkedList<SearchResult> search(String content);
 }

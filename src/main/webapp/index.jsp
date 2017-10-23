@@ -8,7 +8,7 @@
 </head>
 <body>
 	<form action="search">
-		<input type="text" name="content"> <input type="submit"
+		<input type="text" name="keyword"> <input type="submit"
 			value="搜索">
 	</form>
 </body>

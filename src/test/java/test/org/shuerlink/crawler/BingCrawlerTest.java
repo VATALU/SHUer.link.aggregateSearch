@@ -2,16 +2,17 @@ package test.org.shuerlink.crawler;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import org.junit.Test;
-import org.shuerlink.crawler.BaiduCrawler;
 import org.shuerlink.crawler.BingCrawler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BingCrawlerTest {
+	 private static final Logger logger = LoggerFactory.getLogger(BingCrawlerTest.class);
 	@Test
 	public void testBaiduCrawler() throws UnsupportedEncodingException {
-		 System.out.println("Start:");
+		 logger.debug("Start~");
 		 try {
 		 System.out.println(new BingCrawler().start("可达鸭"));
 		 } catch (IOException e) {
