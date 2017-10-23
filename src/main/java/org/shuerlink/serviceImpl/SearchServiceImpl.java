@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -38,36 +39,38 @@ public class SearchServiceImpl implements SearchService {
 				return new BaiduCrawler().start(keyword);
 			}
 		}));
-		// resultArrayList.add(taskExecutor.submit(new
-		// Callable<ArrayList<SearchResult>>() {
-		// public ArrayList<SearchResult> call() throws Exception {
-		// return new BingCrawler().start(keyword);
-		// }
-		// }));
+		resultArrayList.add(taskExecutor.submit(new Callable<LinkedList<SearchResult>>() {
+			public LinkedList<SearchResult> call() throws Exception {
+				return new BingCrawler().start(keyword);
+			}
+		}));
 
-		LinkedList<SearchResult> results = null;
+		LinkedList<SearchResult> results = new LinkedList<SearchResult>();
 		for (Future<LinkedList<SearchResult>> f : resultArrayList) {
 			try {
-				//求并集
-				LinkedList<SearchResult> result = f.get();
-				results.removeAll(result);
-				results.addAll(result);
+				// URL去重
+//				while (true) {
+//					if (f.isDone() && !f.isCancelled()) {
+						results.addAll(f.get());
+						results = new LinkedList<SearchResult>(new LinkedHashSet<SearchResult>(results));
+//						break;
+//					} else {
+//						Thread.sleep(50);
+//					}
+//				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		//排序
-		Collections.sort(results,new Comparator<SearchResult>() {
-
+		// 排序
+		Collections.sort(results, new Comparator<SearchResult>() {
 			@Override
 			public int compare(SearchResult o1, SearchResult o2) {
 				return o1.compareTo(o2);
 			}
-			
+
 		});
 		return results;
 	}

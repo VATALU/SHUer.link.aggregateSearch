@@ -57,4 +57,19 @@ public class SearchResult implements Comparable<SearchResult> {
 			return sr.title.compareTo(this.title);
 		}
 	}
+
+	@Override
+	public int hashCode() {
+		return 0;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		SearchResult sr = (SearchResult) obj;
+		if (this.titleURL.equals(sr.titleURL)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

@@ -1,7 +1,6 @@
 package org.shuerlink.crawler;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
@@ -27,8 +26,7 @@ public class BaiduCrawler {
 		Elements results = doc.select("div.result.c-container");
 		for (Element result : results) {
 			SearchResult searchResult = new SearchResult();
-			System.out.println(result.attr("id"));
-			searchResult.setSearchEngine("百度搜索");
+			searchResult.setSearchEngine("百度");
 			Elements piece = result.select("h3");
 			searchResult.setTitle(piece.text());
 			searchResult.setTitleURL(piece.select("a[href]").attr("href"));
