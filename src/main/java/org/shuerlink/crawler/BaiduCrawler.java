@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.shuerlink.model.SearchResult;
+import org.shuerlink.util.AssessScore;
 
 public class BaiduCrawler {
 	private static String baidu = "http://www.baidu.com/s?wd=";
@@ -31,6 +32,7 @@ public class BaiduCrawler {
 			searchResult.setTitle(piece.text());
 			searchResult.setTitleURL(piece.select("a[href]").attr("href"));
 			searchResult.set_abstract(result.select(".c-abstract").text());
+//			searchResult.setGrade(AssessScore.assess(result.("id"), searchEngine, title, keyword));
 			resultList.add(searchResult);
 		}
 		return resultList;

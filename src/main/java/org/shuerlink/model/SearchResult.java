@@ -1,5 +1,9 @@
 package org.shuerlink.model;
 
+/**
+ * @author VATALU
+ *
+ */
 public class SearchResult implements Comparable<SearchResult> {
 	private String searchEngine;
 	private String title;
@@ -50,9 +54,9 @@ public class SearchResult implements Comparable<SearchResult> {
 	@Override
 	public int compareTo(SearchResult sr) {
 		if (sr.grade < this.grade) {
-			return 1;
-		} else if (sr.grade > this.grade) {
 			return -1;
+		} else if (sr.grade > this.grade) {
+			return 1;
 		} else {
 			return sr.title.compareTo(this.title);
 		}
@@ -62,7 +66,11 @@ public class SearchResult implements Comparable<SearchResult> {
 	public int hashCode() {
 		return 0;
 	}
-
+	
+	
+	/* 
+	 * URL去重
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		SearchResult sr = (SearchResult) obj;

@@ -48,22 +48,15 @@ public class SearchServiceImpl implements SearchService {
 		LinkedList<SearchResult> results = new LinkedList<SearchResult>();
 		for (Future<LinkedList<SearchResult>> f : resultArrayList) {
 			try {
-				// URL去重
-//				while (true) {
-//					if (f.isDone() && !f.isCancelled()) {
 						results.addAll(f.get());
-						results = new LinkedList<SearchResult>(new LinkedHashSet<SearchResult>(results));
-//						break;
-//					} else {
-//						Thread.sleep(50);
-//					}
-//				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {
 				e.printStackTrace();
 			}
 		}
+		// URL去重
+		results = new LinkedList<SearchResult>(new LinkedHashSet<SearchResult>(results));
 		// 排序
 		Collections.sort(results, new Comparator<SearchResult>() {
 			@Override
