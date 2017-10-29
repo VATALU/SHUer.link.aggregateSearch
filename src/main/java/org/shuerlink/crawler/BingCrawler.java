@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.shuerlink.model.TextResult;
+import org.shuerlink.util.AssessScore;
 
 public class BingCrawler {
     private static String bing = "https://www.bing.com/search?q=";
@@ -23,10 +24,11 @@ public class BingCrawler {
         for (Element result : results) {
             Elements s = result.select("h2");
             TextResult textResult = new TextResult();
-            textResult.setSearchEngine("必应");
+            textResult.setSearchEngine("必应搜索");
             textResult.setTitle(s.text());
             textResult.setTitleURL(s.select("a[href]").attr("href"));
-            textResult.set_abstract(result.select("p").text());
+            textResult.setDiscription(result.select("p").text());
+            textResult.setGrade(AssessScore.assess(Integer.valueOf(result.attr("data-bm")),"bing",textResult.getTitle(),keyword));
             resultList.add(textResult);
         }
         return resultList;

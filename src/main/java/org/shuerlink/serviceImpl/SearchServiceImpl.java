@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 
 import org.shuerlink.crawler.BaiduCrawler;
 import org.shuerlink.crawler.BingCrawler;
+import org.shuerlink.crawler.GoogleCrawler;
 import org.shuerlink.model.TextResult;
 import org.shuerlink.service.SearchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -32,6 +33,9 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	private LinkedList<TextResult> addCrawlerTask(final String keyword) {
+		/*
+		* 添加爬虫线程
+		* */
 		ArrayList<Future<LinkedList<TextResult>>> resultArrayList = new ArrayList<Future<LinkedList<TextResult>>>();
 		resultArrayList.add(taskExecutor.submit(new Callable<LinkedList<TextResult>>() {
 			public LinkedList<TextResult> call() throws Exception {
@@ -43,6 +47,13 @@ public class SearchServiceImpl implements SearchService {
 				return new BaiduCrawler().start(keyword);
 			}
 		}));
+		resultArrayList.add(taskExecutor.submit(new Callable<LinkedList<TextResult>>() {
+			public LinkedList<TextResult> call() throws Exception {
+				return new GoogleCrawler().start(keyword);
+			}
+		}));
+
+		//获取返回信息
 		Long analysisTime = System.currentTimeMillis();
 		LinkedList<TextResult> results = new LinkedList<TextResult>();
 		for (Future<LinkedList<TextResult>> f : resultArrayList) {

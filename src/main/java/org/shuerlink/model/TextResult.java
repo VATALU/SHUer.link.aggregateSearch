@@ -7,7 +7,7 @@ public class TextResult implements Comparable<TextResult> {
     private String searchEngine;
     private String title;
     private String titleURL;
-    private String _abstract;
+    private String discription;
     private int grade;
 
 
@@ -43,12 +43,12 @@ public class TextResult implements Comparable<TextResult> {
         this.titleURL = titleURL;
     }
 
-    public String get_abstract() {
-        return _abstract;
+    public String getDiscription() {
+        return discription;
     }
 
-    public void set_abstract(String _abstract) {
-        this._abstract = _abstract;
+    public void setDiscription(String discription) {
+        this.discription = discription;
     }
 
     @Override
@@ -83,6 +83,6 @@ public class TextResult implements Comparable<TextResult> {
     @Override
     public String toString() {
 
-        return searchEngine + " " + grade + " " + title + " " + titleURL + " " + _abstract;
+        return searchEngine + " " + grade + " " + title + "\n" + titleURL + "\n" + discription +"\n";
     }
 }
