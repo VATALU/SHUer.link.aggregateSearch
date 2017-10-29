@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import javax.annotation.Resource;
 
-import org.shuerlink.model.SearchResult;
+import org.shuerlink.model.TextResult;
 import org.shuerlink.serviceImpl.SearchServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +21,9 @@ public class SearchController {
 	private SearchServiceImpl searchService;
 
 	@RequestMapping(value = "search", produces = "application/json; charset=utf-8")
-	public @ResponseBody LinkedList<SearchResult> search(String keyword) {
+	public @ResponseBody LinkedList<TextResult> search(String keyword) {
 		Long start = System.currentTimeMillis();
-		LinkedList<SearchResult> result = searchService.search(keyword);
+		LinkedList<TextResult> result = searchService.search(keyword);
 		System.out.println(System.currentTimeMillis()-start);
 		return result;
 		//return searchService.search(content);

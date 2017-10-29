@@ -8,13 +8,6 @@ import java.util.Map;
 import java.util.Properties;
 
 public class AssessScore {
-	/**
-	 * @param index result's index
-	 * @param searchEngine searchEngine's name
-	 * @param title result's title
-	 * @param keyword 
-	 * @return score
-	 */
 	private static Map<String, Integer> searchEngineCoefficientMap;
 	static {
 		Properties props = new Properties();
@@ -41,7 +34,15 @@ public class AssessScore {
 			}
 		}
 	}
-	//暂行评分算法
+	
+	/**
+	 * 暂行评分算法
+	 * @param index result's index
+	 * @param searchEngine searchEngine's name
+	 * @param title result's title
+	 * @param keyword 
+	 * @return score
+	 */
 	public static int assess(int index,String searchEngine,String title,String keyword) {
 		int searchEngineCoefficient = searchEngineCoefficientMap.get(searchEngine).intValue();
 		int score = index * searchEngineCoefficient;

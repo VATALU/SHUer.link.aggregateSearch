@@ -10,7 +10,7 @@ public class BaiduCrawlerTest {
 	public void testBaiduCrawler() {
 		System.out.println("Start:");
 		try {
-			System.out.println(new BaiduCrawler().start("可达鸭"));
+			System.out.println(new BaiduCrawler().start("idea吧"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("connect failer");

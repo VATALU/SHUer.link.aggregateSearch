@@ -6,16 +6,16 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import org.junit.Test;
-import org.shuerlink.model.SearchResult;
+import org.shuerlink.model.TextResult;
 
 public class SortTest {
 	@Test
 	public void testSort() {
-		LinkedList<SearchResult> results = new LinkedList<SearchResult>();
-		SearchResult sr1 = new SearchResult();
-		SearchResult sr2 = new SearchResult();
-		SearchResult sr3 = new SearchResult();
-		SearchResult sr4 = new SearchResult();
+		LinkedList<TextResult> results = new LinkedList<TextResult>();
+		TextResult sr1 = new TextResult();
+		TextResult sr2 = new TextResult();
+		TextResult sr3 = new TextResult();
+		TextResult sr4 = new TextResult();
 		
 		sr1.setGrade(120);
 		sr2.setGrade(120);
@@ -36,17 +36,17 @@ public class SortTest {
 		results.add(sr2);
 		results.add(sr3);
 		results.add(sr4);
-		results = new LinkedList<SearchResult>(new LinkedHashSet<SearchResult>(results));
+		results = new LinkedList<TextResult>(new LinkedHashSet<TextResult>(results));
 		// 排序
-		Collections.sort(results, new Comparator<SearchResult>() {
+		Collections.sort(results, new Comparator<TextResult>() {
 			@Override
-			public int compare(SearchResult o1, SearchResult o2) {
+			public int compare(TextResult o1, TextResult o2) {
 				return o1.compareTo(o2);
 			}
 		});
 		
 		for(int i=0;i<results.size();i++) {
-			SearchResult sr = results.get(i);
+			TextResult sr = results.get(i);
 			System.out.println(sr.getTitle() + " " + sr.getGrade());
 		}
 		
