@@ -6,15 +6,10 @@ import org.junit.Test;
 import org.shuerlink.crawler.BaiduCrawler;
 
 public class BaiduCrawlerTest {
-	@Test
-	public void testBaiduCrawler() {
-		System.out.println("Start:");
-		try {
-			System.out.println(new BaiduCrawler().start("idea吧"));
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("connect failer");
-		}
-		System.out.println("End~");
-	}
+    @Test
+    public void testBaiduCrawler() {
+        System.out.println("Start:");
+        System.out.println(new BaiduCrawler().start("idea吧"));
+        System.out.println("End~");
+    }
 }

@@ -1,8 +1,6 @@
 package org.shuerlink.serviceImpl;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.concurrent.Callable;
@@ -25,62 +23,44 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SearchServiceImpl implements SearchService {
-	@Resource
-	private ThreadPoolTaskExecutor taskExecutor;
+    @Resource
+    private ThreadPoolTaskExecutor taskExecutor;
 
-	public LinkedList<TextResult> search(String keyword) {
-		return addCrawlerTask(keyword);
-	}
+    public LinkedList<TextResult> search(String keyword) {
+        return addCrawlerTask(keyword);
+    }
 
-	private LinkedList<TextResult> addCrawlerTask(final String keyword) {
-		/*
-		* 添加爬虫线程
+    private LinkedList<TextResult> addCrawlerTask(final String keyword) {
+        /*
+        * 添加爬虫线程
 		* */
-		ArrayList<Future<LinkedList<TextResult>>> resultArrayList = new ArrayList<Future<LinkedList<TextResult>>>();
-		resultArrayList.add(taskExecutor.submit(new Callable<LinkedList<TextResult>>() {
-			public LinkedList<TextResult> call() throws Exception {
-				return new BingCrawler().start(keyword);
-			}
-		}));
-		resultArrayList.add(taskExecutor.submit(new Callable<LinkedList<TextResult>>() {
-			public LinkedList<TextResult> call() throws Exception {
-				return new BaiduCrawler().start(keyword);
-			}
-		}));
-		resultArrayList.add(taskExecutor.submit(new Callable<LinkedList<TextResult>>() {
-			public LinkedList<TextResult> call() throws Exception {
-				return new GoogleCrawler().start(keyword);
-			}
-		}));
+        ArrayList<Future<LinkedList<TextResult>>> resultArrayList = new ArrayList<Future<LinkedList<TextResult>>>();
+        resultArrayList.add(taskExecutor.submit(() -> new BaiduCrawler().start(keyword)));
+        resultArrayList.add(taskExecutor.submit(()-> new GoogleCrawler().start(keyword)));
+        resultArrayList.add(taskExecutor.submit(()->new BingCrawler().start(keyword)));
 
-		//获取返回信息
-		Long analysisTime = System.currentTimeMillis();
-		LinkedList<TextResult> results = new LinkedList<TextResult>();
-		for (Future<LinkedList<TextResult>> f : resultArrayList) {
-			try {
-						results.addAll(f.get());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
-		}
-		System.out.println("解析耗时："+(System.currentTimeMillis()-analysisTime));
-		// URL去重
-		Long urlTime = System.currentTimeMillis();
-		results = new LinkedList<TextResult>(new LinkedHashSet<TextResult>(results));
-		System.out.println("url去重耗时："+(System.currentTimeMillis()-urlTime));
-		// 排序
-		Long sortTime = System.currentTimeMillis();
-		Collections.sort(results, new Comparator<TextResult>() {
-			@Override
-			public int compare(TextResult o1, TextResult o2) {
-				return o1.compareTo(o2);
-			}
-			
-		});
-		System.out.println("排序耗时："+(System.currentTimeMillis()-sortTime));
-		return results;
-	}
+        //获取返回信息
+        Long analysisTime = System.currentTimeMillis();
+        LinkedList<TextResult> results = new LinkedList<TextResult>();
+        for (Future<LinkedList<TextResult>> f : resultArrayList) {
+            try {
+                results.addAll(f.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("解析耗时：" + (System.currentTimeMillis() - analysisTime));
+        // URL去重
+        Long urlTime = System.currentTimeMillis();
+        results = new LinkedList<TextResult>(new LinkedHashSet<TextResult>(results));
+        System.out.println("url去重耗时：" + (System.currentTimeMillis() - urlTime));
+        // 排序
+        Long sortTime = System.currentTimeMillis();
+        results.sort((tr1, tr2) -> (tr1.compareTo(tr2)));
+        System.out.println("排序耗时：" + (System.currentTimeMillis() - sortTime));
+        return results;
+    }
 
 }

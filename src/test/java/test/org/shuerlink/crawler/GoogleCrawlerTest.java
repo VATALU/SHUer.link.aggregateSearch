@@ -9,12 +9,7 @@ public class GoogleCrawlerTest {
     @Test
     public void testGoogleCrawler() {
         System.out.println("Start:");
-        try {
-            System.out.println(new GoogleCrawler().start("大师球"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("connect failer");
-        }
+        System.out.println(new GoogleCrawler().start("可达鸭"));
         System.out.println("End~");
     }
 }
