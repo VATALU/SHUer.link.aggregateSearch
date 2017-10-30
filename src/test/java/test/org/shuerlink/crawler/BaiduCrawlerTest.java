@@ -1,6 +1,5 @@
 package test.org.shuerlink.crawler;
 
-import java.io.IOException;
 
 import org.junit.Test;
 import org.shuerlink.crawler.BaiduCrawler;

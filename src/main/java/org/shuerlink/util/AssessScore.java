@@ -40,7 +40,7 @@ public class AssessScore {
 	 * @param index result's index
 	 * @param searchEngine searchEngine's name
 	 * @param title result's title
-	 * @param keyword 
+	 * @param keyword search keyword
 	 * @return score
 	 */
 	public static int assess(int index,String searchEngine,String title,String keyword) {

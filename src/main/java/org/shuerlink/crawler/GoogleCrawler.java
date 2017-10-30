@@ -7,7 +7,6 @@ import org.jsoup.select.Elements;
 import org.shuerlink.model.TextResult;
 import org.shuerlink.util.AssessScore;
 
-import java.io.IOException;
 import java.util.LinkedList;
 
 public class GoogleCrawler {
@@ -17,9 +16,7 @@ public class GoogleCrawler {
         LinkedList<TextResult> resultList = null;
         try {
             resultList = new LinkedList<TextResult>();
-            Long getConnect = System.currentTimeMillis();
             Document doc = Jsoup.connect(google + keyword).userAgent("Mozilla").timeout(4000).get();
-            System.out.println("google获取链接" + (System.currentTimeMillis() - getConnect));
             Elements results = doc.select("div.g");
             int i = 1;
             for (Element result : results) {

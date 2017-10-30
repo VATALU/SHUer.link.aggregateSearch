@@ -14,18 +14,6 @@ public class ZhiwangCrawler {
 			+ "value1=";
 
 	public String start(String content) throws IOException {
-		StringBuffer sb = new StringBuffer("ÖªÍø\n");
-		Document doc = Jsoup.connect(zhiwang + content).userAgent("Mozilla").timeout(3000).get();
-//		Elements results = doc.select("ol#b_results li.b_algo");
-//		for (Element result : results) {
-//			Elements s = result.select("h2");
-//			sb.append(s.text());
-//			sb.append("\n");
-//			sb.append(s.select("a[href]").attr("href"));
-//			sb.append("\n");
-//			sb.append(result.select("p").text());
-//			sb.append("\n\n");
-//		}
-		return sb.toString();
+		return null;
 	}
 }

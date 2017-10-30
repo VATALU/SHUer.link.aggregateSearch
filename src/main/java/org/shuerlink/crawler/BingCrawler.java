@@ -1,11 +1,8 @@
 package org.shuerlink.crawler;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.LinkedList;
 
-import net.didion.jwnl.data.Exc;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,9 +18,7 @@ public class BingCrawler {
         try {
             resultList = new LinkedList<TextResult>();
             keyword = URLEncoder.encode(keyword, "UTF-8");
-            Long getConnect = System.currentTimeMillis();
-            Document doc = Jsoup.connect(bing + keyword).userAgent("Mozilla").timeout(30000).get();
-            System.out.println("bing获取链接" + (System.currentTimeMillis() - getConnect));
+            Document doc = Jsoup.connect(bing + keyword).userAgent("Mozilla").timeout(3000).get();
             Elements results = doc.select(".b_algo");
             int i = 1;
             for (Element result : results) {

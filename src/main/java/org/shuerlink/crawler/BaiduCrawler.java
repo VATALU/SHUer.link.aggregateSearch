@@ -1,6 +1,5 @@
 package org.shuerlink.crawler;
 
-import java.io.IOException;
 import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
@@ -17,9 +16,7 @@ public class BaiduCrawler {
         LinkedList<TextResult> resultList = null;
         try {
             resultList = new LinkedList<TextResult>();
-            Long getConnect = System.currentTimeMillis();
             Document doc = Jsoup.connect(baidu + keyword).userAgent("Mozilla").timeout(3000).get();
-            System.out.println("baidu获取链接" + (System.currentTimeMillis() - getConnect));
 
             //result-op.c-container.xpath-log
             Elements result_op_c_container_xpath_log = doc.select("div.result-op.c-container.xpath-log");
