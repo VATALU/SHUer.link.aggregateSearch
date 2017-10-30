@@ -2,3 +2,6 @@
 /.idea
 .settings/
 target/
+aggregate-search.iml
+.classpath
+.project
