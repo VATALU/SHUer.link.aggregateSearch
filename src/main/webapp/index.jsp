@@ -10,6 +10,7 @@
 	<form action="search">
 		<input type="text" name="keyword"> <input type="submit"
 			value="搜索">
+		<input hidden type="text" name="form" value="webpage">
 	</form>
 </body>
 </html>

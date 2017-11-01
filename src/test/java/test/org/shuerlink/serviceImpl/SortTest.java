@@ -6,26 +6,26 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import org.junit.Test;
-import org.shuerlink.model.TextResult;
+import org.shuerlink.model.WebPageResult;
 
 public class SortTest {
 	@Test
 	public void testSort() {
-		LinkedList<TextResult> results = new LinkedList<TextResult>();
-		TextResult sr1 = new TextResult();
-		TextResult sr2 = new TextResult();
-		TextResult sr3 = new TextResult();
-		TextResult sr4 = new TextResult();
+		LinkedList<WebPageResult> results = new LinkedList<WebPageResult>();
+		WebPageResult sr1 = new WebPageResult();
+		WebPageResult sr2 = new WebPageResult();
+		WebPageResult sr3 = new WebPageResult();
+		WebPageResult sr4 = new WebPageResult();
 		
-		sr1.setGrade(120);
-		sr2.setGrade(120);
-		sr3.setGrade(110);
-		sr4.setGrade(130);
+		sr1.setScore(120);
+		sr2.setScore(120);
+		sr3.setScore(110);
+		sr4.setScore(130);
 		
-		sr1.setTitleURL("a");
-		sr2.setTitleURL("asdaf");
-		sr3.setTitleURL("asfsfss");
-		sr4.setTitleURL("a");
+		sr1.setUrl("a");
+		sr2.setUrl("asdaf");
+		sr3.setUrl("asfsfss");
+		sr4.setUrl("a");
 
 		sr1.setTitle("1");
 		sr2.setTitle("2");
@@ -36,18 +36,18 @@ public class SortTest {
 		results.add(sr2);
 		results.add(sr3);
 		results.add(sr4);
-		results = new LinkedList<TextResult>(new LinkedHashSet<TextResult>(results));
+		results = new LinkedList<WebPageResult>(new LinkedHashSet<WebPageResult>(results));
 		// 排序
-		Collections.sort(results, new Comparator<TextResult>() {
+		Collections.sort(results, new Comparator<WebPageResult>() {
 			@Override
-			public int compare(TextResult o1, TextResult o2) {
+			public int compare(WebPageResult o1, WebPageResult o2) {
 				return o1.compareTo(o2);
 			}
 		});
 		
 		for(int i=0;i<results.size();i++) {
-			TextResult sr = results.get(i);
-			System.out.println(sr.getTitle() + " " + sr.getGrade());
+			WebPageResult sr = results.get(i);
+			System.out.println(sr.getTitle() + " " + sr.getScore());
 		}
 		
 	}
