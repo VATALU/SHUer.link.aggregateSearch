@@ -9,7 +9,7 @@ import java.util.LinkedList;
 @Repository
 public class WangyiyunCrawlerImpl implements MusicCrawler {
     @Override
-    public LinkedList<MusicResult> getMusicResult(String keyword) {
+    public LinkedList<MusicResult> getMusicResult(String keyword, int start, int num) {
         return null;
     }
 }

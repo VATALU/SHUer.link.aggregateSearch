@@ -9,7 +9,7 @@ import java.util.LinkedList;
 @Repository
 public class DoubanCrawlerImpl implements BookCrawler {
     @Override
-    public LinkedList<BookResult> getBookResult(String keyword) {
+    public LinkedList<BookResult> getBookResult(String keyword, int start, int num) {
         return null;
     }
 }

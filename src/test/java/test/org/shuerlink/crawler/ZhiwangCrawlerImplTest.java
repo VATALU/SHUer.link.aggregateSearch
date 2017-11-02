@@ -10,6 +10,6 @@ public class ZhiwangCrawlerImplTest {
     @Test
     public void testBaiduCrawler() throws UnsupportedEncodingException {
         System.out.println("Start:");
-        System.out.println(new ZhiwangCrawlerImpl().getPaperReult("王宝强"));
+        System.out.println(new ZhiwangCrawlerImpl().getPaperReult("王宝强", 0, 10));
     }
 }

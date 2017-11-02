@@ -5,5 +5,5 @@ import org.shuerlink.model.MusicResult;
 import java.util.LinkedList;
 
 public interface MusicCrawler {
-    public LinkedList<MusicResult> getMusicResult(String keyword);
+    public LinkedList<MusicResult> getMusicResult(String keyword, int start, int num);
 }

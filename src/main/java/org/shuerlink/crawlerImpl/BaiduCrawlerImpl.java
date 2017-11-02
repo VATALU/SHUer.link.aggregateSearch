@@ -1,5 +1,6 @@
 package org.shuerlink.crawlerImpl;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
@@ -20,13 +21,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCrawler, VedioCrawler {
     private static String baidu = "http://www.baidu.com/s?wd=";
+    private static String image = "http://image.baidu.com/search/index?tn=baiduimage&word=";
 
     @Override
-    public LinkedList<WebPageResult> getWebPageResult(String keyword) {
+    public LinkedList<WebPageResult> getWebPageResult(String keyword, int start, int num) {
         LinkedList<WebPageResult> resultList = null;
         try {
             resultList = new LinkedList<WebPageResult>();
-            Document doc = Jsoup.connect(baidu + keyword).userAgent("Mozilla").timeout(3000).get();
+            Document doc = Jsoup.connect(baidu + keyword + "&pn=" + String.valueOf(start) + "&rn=" + String.valueOf(num)).userAgent("Mozilla").timeout(3000).get();
 
             //result-op.c-container.xpath-log
             Elements result_op_c_container_xpath_log = doc.select("div.result-op.c-container.xpath-log");
@@ -40,7 +42,7 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
                 if (!baike_abstract.html().equals("")) {
                     Element p = baike_abstract.select("p").first();
                     webPageResult.setTitle(p.text());
-                    webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu", webPageResult.getTitle(), webPageResult.getUrl()));
+                    webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
                     resultList.add(webPageResult);
                 }
 
@@ -48,7 +50,7 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
                 if (!tieba_abstract.html().equals("")) {
                     webPageResult.setTitle(
                             tieba_abstract.select("p").text());
-                    webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu", webPageResult.getTitle(), webPageResult.getUrl()));
+                    webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
                     resultList.add(webPageResult);
                 }
             }
@@ -57,14 +59,14 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
             //result.c-container
             Elements results_c_container = doc.select("div.result.c-container");
             for (Element result : results_c_container) {
-                WebPageResult searchResult = new WebPageResult();
-                searchResult.setSearchEngine("百度搜索");
+                WebPageResult webPageResult = new WebPageResult();
+                webPageResult.setSearchEngine("百度搜索");
                 Elements title = result.select("h3");
-                searchResult.setTitle(title.text());
-                searchResult.setUrl(title.select("a[href]").attr("href"));
-                searchResult.setTitle(result.select(".c-abstract").text());
-                searchResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu", searchResult.getTitle(), searchResult.getUrl()));
-                resultList.add(searchResult);
+                webPageResult.setTitle(title.text());
+                webPageResult.setUrl(title.select("a[href]").attr("href"));
+                webPageResult.setTitle(result.select(".c-abstract").text());
+                webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
+                resultList.add(webPageResult);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,17 +75,44 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
     }
 
     @Override
-    public LinkedList<VedioResult> getVedioResult(String keyword) {
+    public LinkedList<VedioResult> getVedioResult(String keyword, int start, int num) {
         return null;
     }
 
+    /*
+    * 图片搜索数据在 app.setData的js代码中
+    * 尚未完成
+    * */
     @Override
-    public LinkedList<ImageResult> getImageResult(String keyword) {
-        return null;
+    public LinkedList<ImageResult> getImageResult(String keyword, int start, int num) {
+        LinkedList<ImageResult> resultList = null;
+        try {
+            resultList = new LinkedList<ImageResult>();
+            Document doc = Jsoup.connect(image + keyword).userAgent("Mozilla").timeout(3000).get();
+            System.out.println(doc.text());
+            Elements imgitem = doc.select("li.imgitem");
+            int i = 1;
+            for (Element img : imgitem) {
+                ImageResult imageResult = new ImageResult();
+                imageResult.setSearchEngine("百度搜索");
+                String title = img.attr("data-title");
+                imageResult.setTitle(title);
+                imageResult.setUrl(img.attr("data-thumburl"));
+                imageResult.setWidth(Integer.valueOf(img.attr("data-width")));
+                imageResult.setHeight(Integer.valueOf(img.attr("data-height")));
+                imageResult.setHostUrl(img.attr("data-objurl"));
+                imageResult.setExtension(img.attr("data-ext"));
+                imageResult.setScore(AssessScore.assess(i++, "baidu"));
+                resultList.add(imageResult);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultList;
     }
 
     @Override
-    public LinkedList<MusicResult> getMusicResult(String keyword) {
+    public LinkedList<MusicResult> getMusicResult(String keyword, int start, int num) {
         return null;
     }
 

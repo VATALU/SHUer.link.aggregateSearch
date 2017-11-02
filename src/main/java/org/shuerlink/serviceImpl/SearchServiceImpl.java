@@ -50,14 +50,14 @@ public class SearchServiceImpl implements SearchService {
     * 搜索网页
     * */
     @Override
-    public LinkedList<WebPageResult> searchWebPage(String keyword) {
+    public LinkedList<WebPageResult> searchWebPage(String keyword, int start, int num) {
          /*
         * 添加爬虫线程
 		* */
         ArrayList<Future<LinkedList<WebPageResult>>> resultArrayList = new ArrayList<Future<LinkedList<WebPageResult>>>();
-        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getWebPageResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> googleCrawler.getWebPageResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> bingCrawler.getWebPageResult(keyword)));
+        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getWebPageResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> googleCrawler.getWebPageResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> bingCrawler.getWebPageResult(keyword,start,num)));
 
         /*
         * 获取线程返回值
@@ -87,14 +87,14 @@ public class SearchServiceImpl implements SearchService {
     * 搜索照片
     * */
     @Override
-    public LinkedList<ImageResult> searchImage(String keyword) {
+    public LinkedList<ImageResult> searchImage(String keyword, int start, int num) {
          /*
         * 添加爬虫线程
 		* */
         ArrayList<Future<LinkedList<ImageResult>>> resultArrayList = new ArrayList<Future<LinkedList<ImageResult>>>();
-        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getImageResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> googleCrawler.getImageResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> bingCrawler.getImageResult(keyword)));
+        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getImageResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> googleCrawler.getImageResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> bingCrawler.getImageResult(keyword,start,num)));
 
         /*
         * 获取线程返回值
@@ -124,17 +124,17 @@ public class SearchServiceImpl implements SearchService {
     * 搜索视频
     * */
     @Override
-    public LinkedList<VedioResult> searchVedio(String keyword) {
+    public LinkedList<VedioResult> searchVedio(String keyword, int start, int num) {
         /*
         * 添加爬虫线程
 		* */
         ArrayList<Future<LinkedList<VedioResult>>> resultArrayList = new ArrayList<Future<LinkedList<VedioResult>>>();
-        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getVedioResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> googleCrawler.getVedioResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> bingCrawler.getVedioResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> bilibiliCrawler.getVedioResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> youkuCrawler.getVedioResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> iqiyiCrawler.getVedioResult(keyword)));
+        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getVedioResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> googleCrawler.getVedioResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> bingCrawler.getVedioResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> bilibiliCrawler.getVedioResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> youkuCrawler.getVedioResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> iqiyiCrawler.getVedioResult(keyword,start,num)));
 
         /*
         * 获取线程返回值
@@ -164,15 +164,15 @@ public class SearchServiceImpl implements SearchService {
     * 搜索音乐
     * */
     @Override
-    public LinkedList<MusicResult> searchMusic(String keyword) {
+    public LinkedList<MusicResult> searchMusic(String keyword, int start, int num) {
         /*
         * 添加爬虫线程
 		* */
         ArrayList<Future<LinkedList<MusicResult>>> resultArrayList = new ArrayList<Future<LinkedList<MusicResult>>>();
-        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getMusicResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> qqMusicCrawler.getMusicResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> xiamiMusicCrawler.getMusicResult(keyword)));
-        resultArrayList.add(taskExecutor.submit(() -> wangyiyunCrawler.getMusicResult(keyword)));
+        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getMusicResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> qqMusicCrawler.getMusicResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> xiamiMusicCrawler.getMusicResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> wangyiyunCrawler.getMusicResult(keyword,start,num)));
 
         /*
         * 获取线程返回值
@@ -202,12 +202,12 @@ public class SearchServiceImpl implements SearchService {
     * 搜索书籍
     * */
     @Override
-    public LinkedList<BookResult> searchBook(String keyword) {
+    public LinkedList<BookResult> searchBook(String keyword, int start, int num) {
          /*
         * 添加爬虫线程
 		* */
         ArrayList<Future<LinkedList<BookResult>>> resultArrayList = new ArrayList<Future<LinkedList<BookResult>>>();
-        resultArrayList.add(taskExecutor.submit(() -> doubanCrawler.getBookResult(keyword)));
+        resultArrayList.add(taskExecutor.submit(() -> doubanCrawler.getBookResult(keyword,start,num)));
 
         /*
         * 获取线程返回值
@@ -237,12 +237,12 @@ public class SearchServiceImpl implements SearchService {
     * 搜索论文
     * */
     @Override
-    public LinkedList<PaperResult> searchPaper(String keyword) {
+    public LinkedList<PaperResult> searchPaper(String keyword, int start, int num) {
           /*
         * 添加爬虫线程
 		* */
         ArrayList<Future<LinkedList<PaperResult>>> resultArrayList = new ArrayList<Future<LinkedList<PaperResult>>>();
-        resultArrayList.add(taskExecutor.submit(() -> zhiwangCrawler.getPaperReult(keyword)));
+        resultArrayList.add(taskExecutor.submit(() -> zhiwangCrawler.getPaperReult(keyword,start,num)));
 
         /*
         * 获取线程返回值

@@ -5,6 +5,6 @@ import org.shuerlink.model.ImageResult;
 import java.util.LinkedList;
 
 public interface ImageCrawler {
-    public LinkedList<ImageResult> getImageResult(String keyword);
+    public LinkedList<ImageResult> getImageResult(String keyword, int start, int num);
 
 }

@@ -21,12 +21,12 @@ public class BingCrawlerImpl implements WebPageCrawler, ImageCrawler, VedioCrawl
     private static String bing = "https://www.bing.com/search?q=";
 
     @Override
-    public LinkedList<WebPageResult> getWebPageResult(String keyword) {
+    public LinkedList<WebPageResult> getWebPageResult(String keyword, int start, int num) {
         LinkedList<WebPageResult> resultList = null;
         try {
             resultList = new LinkedList<WebPageResult>();
             keyword = URLEncoder.encode(keyword, "UTF-8");
-            Document doc = Jsoup.connect(bing + keyword).userAgent("Mozilla").timeout(3000).get();
+            Document doc = Jsoup.connect(bing + keyword+"&first="+start).userAgent("Mozilla").timeout(3000).get();
             Elements results = doc.select(".b_algo");
             int i = 1;
             for (Element result : results) {
@@ -36,7 +36,7 @@ public class BingCrawlerImpl implements WebPageCrawler, ImageCrawler, VedioCrawl
                 webPageResult.setTitle(s.text());
                 webPageResult.setUrl(s.select("a[href]").attr("href"));
                 webPageResult.setTitle(result.select("p").text());
-                webPageResult.setScore(AssessScore.assess(i++, "bing", webPageResult.getTitle(), keyword));
+                webPageResult.setScore(AssessScore.assess(i++, "bing"));
                 resultList.add(webPageResult);
             }
         } catch (Exception e) {
@@ -47,12 +47,12 @@ public class BingCrawlerImpl implements WebPageCrawler, ImageCrawler, VedioCrawl
 
 
     @Override
-    public LinkedList<VedioResult> getVedioResult(String keyword) {
+    public LinkedList<VedioResult> getVedioResult(String keyword, int start, int num) {
         return null;
     }
 
     @Override
-    public LinkedList<ImageResult> getImageResult(String keyword) {
+    public LinkedList<ImageResult> getImageResult(String keyword, int start, int num) {
         return null;
     }
 

@@ -8,7 +8,7 @@ public class GoogleCrawlerImplTest {
     @Test
     public void testGoogleCrawler() {
         System.out.println("Start:");
-        System.out.println(new GoogleCrawlerImpl().getWebPageResult("mono"));
+        System.out.println(new GoogleCrawlerImpl().getWebPageResult("可达鸭", 0, 10));
         System.out.println("End~");
     }
 }

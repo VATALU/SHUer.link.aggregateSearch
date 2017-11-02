@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.shuerlink.serviceImpl.SearchServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -23,32 +24,37 @@ public class SearchController {
 
     @RequestMapping(value = "search", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    LinkedList<?> search(String keyword, String form) {
+    LinkedList<?> search(String keyword,
+                         String form,
+                         @RequestParam(defaultValue = "0") int start,
+                         @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
-        Long start = System.currentTimeMillis();
+        Long startTime = System.currentTimeMillis();
+        System.out.println(start);
         LinkedList<?> result = null;
         switch (form.toLowerCase()) {
             case "webpage":
-                result = searchService.searchWebPage(keyword);
+                result = searchService.searchWebPage(keyword, start, num);
                 break;
             case "image":
-                result = searchService.searchImage(keyword);
+                result = searchService.searchImage(keyword, start, num);
                 break;
             case "music":
-                result = searchService.searchMusic(keyword);
+                result = searchService.searchMusic(keyword, start, num);
                 break;
             case "vedio":
-                result = searchService.searchVedio(keyword);
+                result = searchService.searchVedio(keyword, start, num);
                 break;
             case "book":
-                result = searchService.searchBook(keyword);
+                result = searchService.searchBook(keyword, start, num);
                 break;
             case "paper":
-                result = searchService.searchPaper(keyword);
+                result = searchService.searchPaper(keyword, start, num);
                 break;
         }
-        System.out.println(System.currentTimeMillis() - start);
+        System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
+
 
 }

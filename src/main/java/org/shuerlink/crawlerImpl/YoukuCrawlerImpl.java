@@ -9,7 +9,7 @@ import java.util.LinkedList;
 @Repository
 public class YoukuCrawlerImpl implements VedioCrawler{
     @Override
-    public LinkedList<VedioResult> getVedioResult(String keyword) {
+    public LinkedList<VedioResult> getVedioResult(String keyword, int start, int num) {
         return null;
     }
 }

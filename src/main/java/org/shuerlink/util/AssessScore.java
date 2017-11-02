@@ -43,7 +43,7 @@ public class AssessScore {
 	 * @param keyword search keyword
 	 * @return score
 	 */
-	public static int assess(int index,String searchEngine,String title,String keyword) {
+	public static int assess(int index,String searchEngine) {
 		int searchEngineCoefficient = searchEngineCoefficientMap.get(searchEngine).intValue();
 		int score = index * searchEngineCoefficient;
 		

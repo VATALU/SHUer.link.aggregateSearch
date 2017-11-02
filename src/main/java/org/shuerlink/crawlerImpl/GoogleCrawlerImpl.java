@@ -20,11 +20,11 @@ public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCra
     public static final String google = "https://g.shuer.link/search?q=";
 
     @Override
-    public LinkedList<WebPageResult> getWebPageResult(String keyword) {
+    public LinkedList<WebPageResult> getWebPageResult(String keyword, int start, int num) {
         LinkedList<WebPageResult> resultList = null;
         try {
             resultList = new LinkedList<WebPageResult>();
-            Document doc = Jsoup.connect(google + keyword + "&num=10").userAgent("Mozilla").timeout(4000).get();
+            Document doc = Jsoup.connect(google + keyword + "&num=" + num + "&start=" + start + "&lr=lang_zh-CN").userAgent("Mozilla").timeout(4000).get();
             Elements results = doc.select("div.g");
             int i = 1;
             for (Element result : results) {
@@ -34,13 +34,13 @@ public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCra
                 webPageResult.setTitle(piece.text());
                 String titleUrl = piece.select("a[href]").attr("href");
                 String discription = result.select("span.st").text();
-                if(discription.equals("")){
+                if (discription.equals("")) {
                     continue;
                 }
                 webPageResult.setDiscription(discription);
                 titleUrl = titleUrl.substring(7, titleUrl.length());
                 webPageResult.setUrl(titleUrl);
-                webPageResult.setScore(AssessScore.assess(i++, "google", webPageResult.getTitle(), keyword));
+                webPageResult.setScore(AssessScore.assess(i++, "google"));
                 resultList.add(webPageResult);
             }
         } catch (Exception e) {
@@ -50,12 +50,12 @@ public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCra
     }
 
     @Override
-    public LinkedList<VedioResult> getVedioResult(String keyword) {
+    public LinkedList<VedioResult> getVedioResult(String keyword, int start, int num) {
         return null;
     }
 
     @Override
-    public LinkedList<ImageResult> getImageResult(String keyword) {
+    public LinkedList<ImageResult> getImageResult(String keyword, int start, int num) {
         return null;
     }
 
