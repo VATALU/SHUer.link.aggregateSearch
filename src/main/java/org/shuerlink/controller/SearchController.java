@@ -40,6 +40,12 @@ public class SearchController {
             case "vedio":
                 result = searchService.searchVedio(keyword);
                 break;
+            case "book":
+                result = searchService.searchBook(keyword);
+                break;
+            case "paper":
+                result = searchService.searchPaper(keyword);
+                break;
         }
         System.out.println(System.currentTimeMillis() - start);
         return result;

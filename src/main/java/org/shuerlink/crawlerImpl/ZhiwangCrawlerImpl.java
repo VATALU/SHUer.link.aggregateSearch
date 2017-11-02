@@ -8,7 +8,6 @@ import java.util.LinkedList;
 
 @Repository
 public class ZhiwangCrawlerImpl implements PaperCrawler{
-
 	@Override
 	public LinkedList<PaperResult> getPaperReult(String keyword) {
 		return null;
