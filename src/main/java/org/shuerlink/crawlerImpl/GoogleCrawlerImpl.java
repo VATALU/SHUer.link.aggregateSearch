@@ -17,14 +17,14 @@ import java.util.LinkedList;
 
 @Repository
 public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCrawler {
-    public static final String google = "http://g.shuer.link/search?q=";
+    public static final String google = "https://g.shuer.link/search?q=";
 
     @Override
     public LinkedList<WebPageResult> getWebPageResult(String keyword) {
         LinkedList<WebPageResult> resultList = null;
         try {
             resultList = new LinkedList<WebPageResult>();
-            Document doc = Jsoup.connect(google + keyword).userAgent("Mozilla").timeout(4000).get();
+            Document doc = Jsoup.connect(google + keyword + "&num=10").userAgent("Mozilla").timeout(4000).get();
             Elements results = doc.select("div.g");
             int i = 1;
             for (Element result : results) {
@@ -33,7 +33,11 @@ public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCra
                 Elements piece = result.select("h3");
                 webPageResult.setTitle(piece.text());
                 String titleUrl = piece.select("a[href]").attr("href");
-                webPageResult.setTitle(result.select("span.st").text());
+                String discription = result.select("span.st").text();
+                if(discription.equals("")){
+                    continue;
+                }
+                webPageResult.setDiscription(discription);
                 titleUrl = titleUrl.substring(7, titleUrl.length());
                 webPageResult.setUrl(titleUrl);
                 webPageResult.setScore(AssessScore.assess(i++, "google", webPageResult.getTitle(), keyword));
