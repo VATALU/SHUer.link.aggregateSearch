@@ -2,6 +2,7 @@ package org.shuerlink.crawlerImpl;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCrawler, VedioCrawler {
+    private static Logger logger = Logger.getLogger(BaiduCrawlerImpl.class.getName());
+
     private static String baidu = "http://www.baidu.com/s?wd=";
     private static String image = "http://image.baidu.com/search/index?tn=baiduimage&word=";
 
@@ -40,15 +43,15 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
                 webPageResult.setUrl(title.select("a[href]").attr("href"));
                 Elements baike_abstract = result.select("div.c-span18.c-span-last");
                 if (!baike_abstract.html().equals("")) {
-                    Element p = baike_abstract.select("p").first();
-                    webPageResult.setTitle(p.text());
+                    Elements p = baike_abstract.select("p:lt(2)");
+                    webPageResult.setDiscription(p.text());
                     webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
                     resultList.add(webPageResult);
                 }
 
                 Elements tieba_abstract = result.select("div.op-tieba-general-main-col.op-tieba-general-main-con");
                 if (!tieba_abstract.html().equals("")) {
-                    webPageResult.setTitle(
+                    webPageResult.setDiscription(
                             tieba_abstract.select("p").text());
                     webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
                     resultList.add(webPageResult);
@@ -64,12 +67,13 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
                 Elements title = result.select("h3");
                 webPageResult.setTitle(title.text());
                 webPageResult.setUrl(title.select("a[href]").attr("href"));
-                webPageResult.setTitle(result.select(".c-abstract").text());
+                webPageResult.setDiscription(result.select(".c-abstract").text());
                 webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
                 resultList.add(webPageResult);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            logger.warning("百度搜索"+"WebPage"+"搜索失败");
         }
         return resultList;
     }

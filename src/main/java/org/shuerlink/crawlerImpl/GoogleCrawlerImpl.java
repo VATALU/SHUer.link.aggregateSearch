@@ -14,9 +14,12 @@ import org.shuerlink.util.AssessScore;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 @Repository
 public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCrawler {
+    private static Logger logger = Logger.getLogger(GoogleCrawlerImpl.class.getName());
+
     public static final String google = "https://g.shuer.link/search?q=";
 
     @Override
@@ -45,6 +48,7 @@ public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCra
             }
         } catch (Exception e) {
             e.printStackTrace();
+            logger.warning("谷歌搜索WebPWebPage搜索失败");
         }
         return resultList;
     }

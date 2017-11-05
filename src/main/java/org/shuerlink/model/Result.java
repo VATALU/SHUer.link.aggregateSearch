@@ -4,7 +4,16 @@ public class Result  implements Comparable<Result> {
     protected String searchEngine;
     protected String title;
     protected String url;
+    protected String[] tag;
     protected int score;
+
+    public String[] getTag() {
+        return tag;
+    }
+
+    public void setTag(String[] tag) {
+        this.tag = tag;
+    }
 
     public String getSearchEngine() {
         return searchEngine;
@@ -60,8 +69,8 @@ public class Result  implements Comparable<Result> {
     */
     @Override
     public boolean equals(Object obj) {
-        Result ir = (Result) obj;
-        if (this.url.equals(ir.url)) {
+        Result r = (Result) obj;
+        if (this.url.equals(r.url)) {
             return true;
         } else {
             return false;

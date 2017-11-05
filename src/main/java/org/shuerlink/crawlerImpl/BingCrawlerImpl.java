@@ -26,7 +26,7 @@ public class BingCrawlerImpl implements WebPageCrawler, ImageCrawler, VedioCrawl
         try {
             resultList = new LinkedList<WebPageResult>();
             keyword = URLEncoder.encode(keyword, "UTF-8");
-            Document doc = Jsoup.connect(bing + keyword+"&first="+start).userAgent("Mozilla").timeout(3000).get();
+            Document doc = Jsoup.connect(bing + keyword + "&first=" + start).userAgent("Mozilla").timeout(3000).get();
             Elements results = doc.select(".b_algo");
             int i = 1;
             for (Element result : results) {
@@ -35,7 +35,7 @@ public class BingCrawlerImpl implements WebPageCrawler, ImageCrawler, VedioCrawl
                 webPageResult.setSearchEngine("必应搜索");
                 webPageResult.setTitle(s.text());
                 webPageResult.setUrl(s.select("a[href]").attr("href"));
-                webPageResult.setTitle(result.select("p").text());
+                webPageResult.setDiscription(result.select("p").text());
                 webPageResult.setScore(AssessScore.assess(i++, "bing"));
                 resultList.add(webPageResult);
             }

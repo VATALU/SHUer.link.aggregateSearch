@@ -30,7 +30,6 @@ public class SearchController {
                          @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
-        System.out.println(start);
         LinkedList<?> result = null;
         switch (form.toLowerCase()) {
             case "webpage":

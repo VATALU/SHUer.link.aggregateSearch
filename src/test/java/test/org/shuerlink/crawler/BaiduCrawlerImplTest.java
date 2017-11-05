@@ -8,7 +8,7 @@ public class BaiduCrawlerImplTest {
     @Test
     public void testBaiduCrawler() {
         System.out.println("Start:");
-        System.out.println(new BaiduCrawlerImpl().getWebPageResult("idea吧", 0, 10));
+        System.out.println(new BaiduCrawlerImpl().getWebPageResult("德鲁伊", 0, 10));
         System.out.println("End~");
     }
 
