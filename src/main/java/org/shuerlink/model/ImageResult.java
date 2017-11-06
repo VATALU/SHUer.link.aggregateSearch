@@ -41,6 +41,6 @@ public class ImageResult extends Result {
 
     @Override
     public String toString() {
-        return searchEngine + " " + score + " " + title + "\n" + url + "\n";
+        return "\n" + searchEngine + " " + score + " " + title + "\n" + url + "\n" + hostUrl + "\n" + width + "*" + height + extension;
     }
 }

@@ -15,7 +15,7 @@ public class BaiduCrawlerImplTest {
     @Test
     public void testBaiduImageCrawler() {
         System.out.println("Start:");
-        System.out.println(new BaiduCrawlerImpl().getImageResult("idea", 0, 10));
+        System.out.println(new BaiduCrawlerImpl().getImageResult("可达鸭", 0, 10));
         System.out.println("End~");
     }
 }

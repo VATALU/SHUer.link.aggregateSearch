@@ -29,7 +29,6 @@ public class SeleniumTest {
         driver.manage().window().maximize();
         try {
             driver.get("http://image.baidu.com/search/index?tn=baiduimage&ps=1&ct=201326592&lm=-1&cl=2&nc=1&ie=utf-8&word=idea");
-            JavascriptExecutor js = (JavascriptExecutor)driver;
             List<WebElement> elements = driver.findElements(By.cssSelector(".imgitem"));
             for(WebElement element : elements){
                 String objurl = element.getAttribute("data-objurl");

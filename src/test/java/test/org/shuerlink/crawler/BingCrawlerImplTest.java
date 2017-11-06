@@ -14,4 +14,10 @@ public class BingCrawlerImplTest {
         System.out.println("End~");
     }
 
+    @Test
+    public void testBaiduImageCrawler() {
+        System.out.println("Start~");
+        System.out.println(new BingCrawlerImpl().getImageResult("可达鸭", 0, 10));
+        System.out.println("End~");
+    }
 }

@@ -1,6 +1,7 @@
 package org.shuerlink.crawlerImpl;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,6 +16,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.shuerlink.crawler.ImageCrawler;
 import org.shuerlink.crawler.MusicCrawler;
 import org.shuerlink.crawler.VedioCrawler;
@@ -105,19 +109,24 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
     public LinkedList<ImageResult> getImageResult(String keyword, int start, int num) {
         LinkedList<ImageResult> resultList = null;
         try {
-            resultList = new LinkedList<ImageResult>();
+            keyword = URLEncoder.encode(keyword, "UTF-8");
+            resultList = new LinkedList<>();
             DesiredCapabilities dcaps = new DesiredCapabilities();
             dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "D:\\driver\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
             PhantomJSDriver driver = new PhantomJSDriver(dcaps);
             driver.manage().window().maximize();
-            driver.get(image+keyword+"&pn="+start);
-            int i = 1;
+            driver.get(image+keyword);
+            WebDriverWait webDriverWait = new WebDriverWait(driver,3);
+            webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("imgitem")));
             List<WebElement> elements = driver.findElements(By.cssSelector(".imgitem"));
-            for (WebElement element : elements) {
+            for (int i = 0;i<elements.size();i++) {
+                WebElement element = elements.get(i);
                 ImageResult imageResult = new ImageResult();
                 imageResult.setSearchEngine("百度搜索");
                 String url = element.getAttribute("data-objurl");
                 imageResult.setUrl(url);
+                String hostUrl = element.getAttribute("data-fromurlhost");
+                imageResult.setHostUrl(hostUrl);
                 String title = element.getAttribute("data-title");
                 imageResult.setTitle(title);
                 String extension = element.getAttribute("data-ext");
@@ -126,7 +135,7 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
                 imageResult.setWidth(Integer.valueOf(width));
                 String height = element.getAttribute("data-height");
                 imageResult.setHeight(Integer.valueOf(height));
-                imageResult.setScore(AssessScore.assess(i++,"baidu"));
+                imageResult.setScore(AssessScore.assess(i+1,"baidu"));
                 resultList.add(imageResult);
             }
             driver.quit();
