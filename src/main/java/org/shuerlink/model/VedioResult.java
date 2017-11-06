@@ -3,6 +3,24 @@ package org.shuerlink.model;
 public class VedioResult  extends Result {
     private String time;
     private String imageUrl;
+    private String publishTime;
+    private String publisher;
+
+    public String getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(String publishTime) {
+        this.publishTime = publishTime;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
     public String getTime() {
         return time;

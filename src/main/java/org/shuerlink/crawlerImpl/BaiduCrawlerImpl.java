@@ -2,12 +2,19 @@ package org.shuerlink.crawlerImpl;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.shuerlink.crawler.ImageCrawler;
 import org.shuerlink.crawler.MusicCrawler;
 import org.shuerlink.crawler.VedioCrawler;
@@ -37,22 +44,27 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
             Elements result_op_c_container_xpath_log = doc.select("div.result-op.c-container.xpath-log");
             for (Element result : result_op_c_container_xpath_log) {
                 WebPageResult webPageResult = new WebPageResult();
+                //设置搜索引擎
                 webPageResult.setSearchEngine("百度搜索");
+                //设置标题和标题链接
                 Elements title = result.select("h3");
                 webPageResult.setTitle(title.text());
                 webPageResult.setUrl(title.select("a[href]").attr("href"));
-                Elements baike_abstract = result.select("div.c-span18.c-span-last");
-                if (!baike_abstract.html().equals("")) {
-                    Elements p = baike_abstract.select("p:lt(2)");
+                Elements baikeDiscription = result.select("div.c-span18.c-span-last");
+                if (!baikeDiscription.html().equals("")) {
+                    //设置摘要
+                    Elements p = baikeDiscription.select("p:lt(2)");
                     webPageResult.setDiscription(p.text());
+                    //设置评分
                     webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
                     resultList.add(webPageResult);
                 }
-
-                Elements tieba_abstract = result.select("div.op-tieba-general-main-col.op-tieba-general-main-con");
-                if (!tieba_abstract.html().equals("")) {
+                Elements tiebaDiscription = result.select("div.op-tieba-general-main-col.op-tieba-general-main-con");
+                if (!tiebaDiscription.html().equals("")) {
+                    //设置摘要
                     webPageResult.setDiscription(
-                            tieba_abstract.select("p").text());
+                            tiebaDiscription.select("p").text());
+                    //设置评分
                     webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
                     resultList.add(webPageResult);
                 }
@@ -63,17 +75,21 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
             Elements results_c_container = doc.select("div.result.c-container");
             for (Element result : results_c_container) {
                 WebPageResult webPageResult = new WebPageResult();
+                //设置搜索引擎
                 webPageResult.setSearchEngine("百度搜索");
+                //设置标题和标题链接
                 Elements title = result.select("h3");
                 webPageResult.setTitle(title.text());
                 webPageResult.setUrl(title.select("a[href]").attr("href"));
+                //设置摘要
                 webPageResult.setDiscription(result.select(".c-abstract").text());
+                //设置评分
                 webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
                 resultList.add(webPageResult);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            logger.warning("百度搜索"+"WebPage"+"搜索失败");
+            logger.warning("百度搜索" + "WebPage" + "搜索失败");
         }
         return resultList;
     }
@@ -84,32 +100,37 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
     }
 
     /*
-    * 图片搜索数据在 app.setData的js代码中
-    * 尚未完成
     * */
     @Override
     public LinkedList<ImageResult> getImageResult(String keyword, int start, int num) {
         LinkedList<ImageResult> resultList = null;
         try {
             resultList = new LinkedList<ImageResult>();
-            Document doc = Jsoup.connect(image + keyword).userAgent("Mozilla").timeout(3000).get();
-            System.out.println(doc.text());
-            Elements imgitem = doc.select("li.imgitem");
+            DesiredCapabilities dcaps = new DesiredCapabilities();
+            dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "D:\\driver\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
+            PhantomJSDriver driver = new PhantomJSDriver(dcaps);
+            driver.manage().window().maximize();
+            driver.get(image+keyword+"&pn="+start);
             int i = 1;
-            for (Element img : imgitem) {
+            List<WebElement> elements = driver.findElements(By.cssSelector(".imgitem"));
+            for (WebElement element : elements) {
                 ImageResult imageResult = new ImageResult();
                 imageResult.setSearchEngine("百度搜索");
-                String title = img.attr("data-title");
+                String url = element.getAttribute("data-objurl");
+                imageResult.setUrl(url);
+                String title = element.getAttribute("data-title");
                 imageResult.setTitle(title);
-                imageResult.setUrl(img.attr("data-thumburl"));
-                imageResult.setWidth(Integer.valueOf(img.attr("data-width")));
-                imageResult.setHeight(Integer.valueOf(img.attr("data-height")));
-                imageResult.setHostUrl(img.attr("data-objurl"));
-                imageResult.setExtension(img.attr("data-ext"));
-                imageResult.setScore(AssessScore.assess(i++, "baidu"));
+                String extension = element.getAttribute("data-ext");
+                imageResult.setExtension(extension);
+                String width = element.getAttribute("data-width");
+                imageResult.setWidth(Integer.valueOf(width));
+                String height = element.getAttribute("data-height");
+                imageResult.setHeight(Integer.valueOf(height));
+                imageResult.setScore(AssessScore.assess(i++,"baidu"));
                 resultList.add(imageResult);
             }
-        } catch (IOException e) {
+            driver.quit();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return resultList;
