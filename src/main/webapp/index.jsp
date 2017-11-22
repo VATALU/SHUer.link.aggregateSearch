@@ -7,10 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="search">
+	<form action="/search/webpage">
 		<input type="text" name="keyword"> <input type="submit"
 			value="搜索">
-		<input hidden type="text" name="form" value="webpage">
+	</form>
+	<form action="/search/image">
+		<input type="text" name="keyword"> <input type="submit"
+												  value="搜索">
 	</form>
 </body>
 </html>

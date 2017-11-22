@@ -2,10 +2,19 @@ package org.shuerlink.model;
 
 public class ImageResult extends Result {
 
+    private String discription;
     private String hostUrl;
     private String type;
     private int height;
     private int width;
+
+    public String getDiscription() {
+        return discription;
+    }
+
+    public void setDiscription(String discription) {
+        this.discription = discription;
+    }
 
     public String getHostUrl() {
         return hostUrl;
@@ -41,6 +50,6 @@ public class ImageResult extends Result {
 
     @Override
     public String toString() {
-        return "\n" + searchEngine + " " + score + " " + title + "\n" + url + "\n" + hostUrl + "\n" + width + "*" + height + " " + type;
+        return "\n" + searchEngine + " " + score + " " + title + " " + discription + "\n" + url + "\n" + hostUrl + "\n" + width + "*" + height + " " + type;
     }
 }

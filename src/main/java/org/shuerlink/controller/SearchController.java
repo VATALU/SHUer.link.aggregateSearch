@@ -39,12 +39,11 @@ public class SearchController {
     @RequestMapping(value = "/image", produces = "application/json; charset=utf-8")
     public @ResponseBody
     LinkedList<?> searchImage(String keyword,
-                         @RequestParam(defaultValue = "0") int start,
-                         @RequestParam(defaultValue = "10") int num) {
+                         @RequestParam(defaultValue = "0") int start) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
         LinkedList<?> result = null;
-        result = searchService.getImage(keyword,start,num);
+        result = searchService.getImage(keyword,start);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }

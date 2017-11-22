@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
 public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCrawler {
     private static Logger logger = Logger.getLogger(GoogleCrawlerImpl.class.getName());
 
-    public static final String google = "https://g.shuer.link/search?q=";
-    public static final String image = "http://g.shuer.link/search?tbm=isch&q=";
+    public static final String GOOGLE = "https://g.shuer.link/search?q=";
+    public static final String IMAGE = "http://g.shuer.link/search?tbm=isch&q=";
 
     @Override
     public LinkedList<WebPageResult> getWebPageResult(String keyword, int start, int num) {
@@ -35,7 +35,7 @@ public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCra
         try {
             keyword = URLEncoder.encode(keyword, "UTF-8");
             resultList = new LinkedList<WebPageResult>();
-            Document doc = Jsoup.connect(google + keyword + "&num=" + num + "&start=" + start + "&lr=lang_zh-CN").userAgent("Mozilla").timeout(4000).get();
+            Document doc = Jsoup.connect(GOOGLE + keyword + "&num=" + num + "&start=" + start + "&lr=lang_zh-CN").userAgent("Mozilla").timeout(4000).get();
             Elements results = doc.select("div.g");
             int i = 1;
             for (Element result : results) {
@@ -67,18 +67,18 @@ public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCra
     }
 
     @Override
-    public LinkedList<ImageResult> getImageResult(String keyword, int start, int num) {
+    public LinkedList<ImageResult> getImageResult(String keyword,int start) {
         LinkedList<ImageResult> resultList = null;
         try {
-            keyword = URLEncoder.encode(keyword,"UTF-8");
+            keyword = URLEncoder.encode(keyword, "UTF-8");
             resultList = new LinkedList<ImageResult>();
-            Document doc= Jsoup.connect(image+keyword).userAgent("Mozilla").get();
+            Document doc = Jsoup.connect(IMAGE + keyword).userAgent("Mozilla").get();
             Elements images_table = doc.select(".images_table");
             Elements trs = images_table.select("tbody tr");
             int i = 0;
-            for (Element tr:trs){
+            for (Element tr : trs) {
                 Elements tds = tr.select("td");
-                for(Element td:tds){
+                for (Element td : tds) {
                     ImageResult imageResult = new ImageResult();
                     //设置搜索引擎
                     imageResult.setSearchEngine("谷歌搜索");
@@ -87,24 +87,26 @@ public class GoogleCrawlerImpl implements WebPageCrawler, VedioCrawler, ImageCra
                     //设置hostUrl
                     imageResult.setHostUrl(td.select("a").attr("href").substring(7));
                     //设置title
+                    imageResult.setTitle(td.select("cite").attr("title"));
+                    //设置discription
                     String html = td.html();
-                    int titleBegin = html.lastIndexOf("</cite><br>")+11;
+                    int titleBegin = html.lastIndexOf("</cite><br>") + 11;
                     int tileEnd = html.lastIndexOf("<br>");
-                    imageResult.setTitle(html.substring(titleBegin,tileEnd).replace("</b>"," ").replace("<b>"," "));
+                    imageResult.setDiscription(html.substring(titleBegin, tileEnd).replace("</b>", " ").replace("<b>", " "));
                     //设置height width
                     Pattern p1 = Pattern.compile("\\d{1,}\\s×\\s\\d{1,}");
                     Matcher m1 = p1.matcher(html);
-                    if(m1.find()) {
+                    if (m1.find()) {
                         String[] size = m1.group().toString().split(" ");
                         imageResult.setWidth(Integer.parseInt(size[0]));
                         imageResult.setHeight(Integer.parseInt(size[2]));
                     }
                     //设置type
-                    int typeBegin = html.lastIndexOf("&nbsp;-&nbsp;")+13;
-                    String type = html.substring(typeBegin,html.length());
+                    int typeBegin = html.lastIndexOf("&nbsp;-&nbsp;") + 13;
+                    String type = html.substring(typeBegin, html.length());
                     imageResult.setType(type);
                     //设置score
-                    imageResult.setScore(AssessScore.assess(i++,"google"));
+                    imageResult.setScore(AssessScore.assess(i++, "google"));
                     resultList.add(imageResult);
                 }
             }

@@ -87,14 +87,14 @@ public class SearchServiceImpl implements SearchService {
     * 搜索照片
     * */
     @Override
-    public LinkedList<ImageResult> getImage(String keyword, int start, int num) {
+    public LinkedList<ImageResult> getImage(String keyword,int start) {
          /*
         * 添加爬虫线程
 		* */
         ArrayList<Future<LinkedList<ImageResult>>> resultArrayList = new ArrayList<Future<LinkedList<ImageResult>>>();
-        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getImageResult(keyword,start,num)));
-        resultArrayList.add(taskExecutor.submit(() -> googleCrawler.getImageResult(keyword,start,num)));
-        resultArrayList.add(taskExecutor.submit(() -> bingCrawler.getImageResult(keyword,start,num)));
+        resultArrayList.add(taskExecutor.submit(() -> baiduCrawler.getImageResult(keyword,start)));
+        resultArrayList.add(taskExecutor.submit(() -> googleCrawler.getImageResult(keyword,start)));
+        resultArrayList.add(taskExecutor.submit(() -> bingCrawler.getImageResult(keyword,start)));
 
         /*
         * 获取线程返回值

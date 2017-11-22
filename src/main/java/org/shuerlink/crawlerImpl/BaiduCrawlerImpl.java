@@ -24,8 +24,8 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
     private static Logger logger = Logger.getLogger(BaiduCrawlerImpl.class.getName());
 
 
-    private static String baidu = "http://www.baidu.com/s?wd=";
-    private static String image = "http://image.baidu.com/search/index?tn=baiduimage&word=";
+    private static String BAIDU = "http://www.baidu.com/s?wd=";
+    private static String IMAGE = "http://image.baidu.com/search/index?tn=baiduimage&word=";
 
     @Override
     public LinkedList<WebPageResult> getWebPageResult(String keyword, int start, int num) {
@@ -33,7 +33,7 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
         try {
             keyword = URLEncoder.encode(keyword, "UTF-8");
             resultList = new LinkedList<WebPageResult>();
-            Document doc = Jsoup.connect(baidu + keyword + "&pn=" + String.valueOf(start) + "&rn=" + String.valueOf(num)).userAgent("Mozilla").timeout(3000).get();
+            Document doc = Jsoup.connect(BAIDU + keyword + "&pn=" + String.valueOf(start) + "&rn=" + String.valueOf(num)).userAgent("Mozilla").timeout(3000).get();
 
             //result-op.c-container.xpath-log
             Elements result_op_c_container_xpath_log = doc.select("div.result-op.c-container.xpath-log");
@@ -97,25 +97,28 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
     /*
     * */
     @Override
-    public LinkedList<ImageResult> getImageResult(String keyword, int start, int num) {
+    public LinkedList<ImageResult> getImageResult(String keyword, int start) {
         LinkedList<ImageResult> resultList = null;
         try {
             keyword = URLEncoder.encode(keyword, "UTF-8");
             resultList = new LinkedList<ImageResult>();
-            Document doc = Jsoup.connect(image + keyword+"&pn="+start).timeout(3000).get();
+            Document doc = Jsoup.connect(IMAGE + keyword + "&pn=" + start).timeout(3000).get();
             String html = doc.html();
             int begin = html.lastIndexOf("'imgData'") + 10;
             int end = html.lastIndexOf("'fcadData'") - 20;
             String subHtml = html.substring(begin, end);
             String text = subHtml.substring(subHtml.indexOf("data") + 6, subHtml.length() - 1);
 
+            //用fastjson将String转换json
             List<BaiduImageResult> baiduImageResults = JSON.parseArray(text, BaiduImageResult.class);
-            baiduImageResults.remove(baiduImageResults.size()-1);
+            //去除最后一项多余项
+            baiduImageResults.remove(baiduImageResults.size() - 1);
             int i = 0;
             for (BaiduImageResult baiduImageResult : baiduImageResults) {
                 ImageResult imageResult = new ImageResult();
-                imageResult.setScore(AssessScore.assess(i,"baidu"));
-                imageResult.setTitle(baiduImageResult.getFromPageTitle().replace("<strong>","").replace("</strong>",""));
+                imageResult.setScore(AssessScore.assess(i++, "baidu"));
+                imageResult.setTitle(baiduImageResult.getFromURLHost());
+                imageResult.setDiscription(baiduImageResult.getFromPageTitle().replace("<strong>", "").replace("</strong>", ""));
                 imageResult.setHostUrl(baiduImageResult.getFromURLHost());
                 imageResult.setHeight(baiduImageResult.getHeight());
                 imageResult.setWidth(baiduImageResult.getWidth());

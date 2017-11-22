@@ -19,7 +19,7 @@ public class BaiduCrawlerImplTest {
     public void testBaiduImageCrawler() {
         System.out.println("Start:");
         Long startTime = System.currentTimeMillis();
-        System.out.println(new BaiduCrawlerImpl().getImageResult("可达鸭", 0, 10));
+        System.out.println(new BaiduCrawlerImpl().getImageResult("可达鸭", 0));
         System.out.println(System.currentTimeMillis()-startTime);
         System.out.println("End~");
     }
