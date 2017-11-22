@@ -17,7 +17,10 @@ public class BingCrawlerImplTest {
     @Test
     public void testBaiduImageCrawler() {
         System.out.println("Start~");
+        Long startTime = System.currentTimeMillis();
         System.out.println(new BingCrawlerImpl().getImageResult("可达鸭", 0, 10));
+        System.out.println(System.currentTimeMillis()-startTime);
         System.out.println("End~");
+
     }
 }

@@ -8,13 +8,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.shuerlink.crawler.ImageCrawler;
 import org.shuerlink.crawler.VedioCrawler;
 import org.shuerlink.crawler.WebPageCrawler;
@@ -66,36 +59,7 @@ public class BingCrawlerImpl implements WebPageCrawler, ImageCrawler, VedioCrawl
         try{
             resultList = new LinkedList<>();
             keyword = URLEncoder.encode(keyword, "UTF-8");
-            DesiredCapabilities dcaps = new DesiredCapabilities();
-            dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "D:\\driver\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
-            PhantomJSDriver driver = new PhantomJSDriver(dcaps);
-            driver.manage().window().maximize();
-            driver.get(image+keyword);
-            WebDriverWait webDriverWait = new WebDriverWait(driver,3);
-            webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".iusc")));
-            int i = 1;
-            List<WebElement> elements = driver.findElements(By.cssSelector(".iusc"));
-            for (WebElement element : elements) {
-                System.out.println(i);
-                ImageResult imageResult = new ImageResult();
-                //设置搜索引擎
-                imageResult.setSearchEngine("必应搜索");
-                //设置url
-                String url = element.getAttribute("m");
-                imageResult.setUrl(url);
-                WebElement subElement = element.findElement(By.cssSelector(".b_dataList"));
-                List<WebElement> li = subElement.findElements(By.tagName("li"));
-                String title = li.get(2).getText();
-                imageResult.setTitle(title);
-                String width_height_extension = li.get(1).getText();
-                String[] imageInfo = width_height_extension.split(" ");
-                imageResult.setWidth(Integer.valueOf(imageInfo[0]));
-                imageResult.setHeight(Integer.valueOf(imageInfo[2]));
-                imageResult.setExtension(imageInfo[4]);
-                imageResult.setScore(AssessScore.assess(i++,"bing"));
-                resultList.add(imageResult);
-            }
-            driver.quit();
+
         }catch (Exception e){
 
         }

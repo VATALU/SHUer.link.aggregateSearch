@@ -50,7 +50,7 @@ public class SearchServiceImpl implements SearchService {
     * 搜索网页
     * */
     @Override
-    public LinkedList<WebPageResult> searchWebPage(String keyword, int start, int num) {
+    public LinkedList<WebPageResult> getWebpage(String keyword, int start, int num) {
          /*
         * 添加爬虫线程
 		* */
@@ -87,7 +87,7 @@ public class SearchServiceImpl implements SearchService {
     * 搜索照片
     * */
     @Override
-    public LinkedList<ImageResult> searchImage(String keyword, int start, int num) {
+    public LinkedList<ImageResult> getImage(String keyword, int start, int num) {
          /*
         * 添加爬虫线程
 		* */
@@ -124,7 +124,7 @@ public class SearchServiceImpl implements SearchService {
     * 搜索视频
     * */
     @Override
-    public LinkedList<VedioResult> searchVedio(String keyword, int start, int num) {
+    public LinkedList<VedioResult> getVedio(String keyword, int start, int num) {
         /*
         * 添加爬虫线程
 		* */
@@ -164,7 +164,7 @@ public class SearchServiceImpl implements SearchService {
     * 搜索音乐
     * */
     @Override
-    public LinkedList<MusicResult> searchMusic(String keyword, int start, int num) {
+    public LinkedList<MusicResult> getMusic(String keyword, int start, int num) {
         /*
         * 添加爬虫线程
 		* */
@@ -202,7 +202,7 @@ public class SearchServiceImpl implements SearchService {
     * 搜索书籍
     * */
     @Override
-    public LinkedList<BookResult> searchBook(String keyword, int start, int num) {
+    public LinkedList<BookResult> getBook(String keyword, int start, int num) {
          /*
         * 添加爬虫线程
 		* */
@@ -237,7 +237,7 @@ public class SearchServiceImpl implements SearchService {
     * 搜索论文
     * */
     @Override
-    public LinkedList<PaperResult> searchPaper(String keyword, int start, int num) {
+    public LinkedList<PaperResult> getPaper(String keyword, int start, int num) {
           /*
         * 添加爬虫线程
 		* */

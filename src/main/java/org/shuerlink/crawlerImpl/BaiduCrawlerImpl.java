@@ -1,38 +1,28 @@
 package org.shuerlink.crawlerImpl;
 
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.alibaba.fastjson.JSON;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.shuerlink.crawler.ImageCrawler;
 import org.shuerlink.crawler.MusicCrawler;
 import org.shuerlink.crawler.VedioCrawler;
 import org.shuerlink.crawler.WebPageCrawler;
-import org.shuerlink.model.ImageResult;
-import org.shuerlink.model.MusicResult;
-import org.shuerlink.model.VedioResult;
-import org.shuerlink.model.WebPageResult;
+import org.shuerlink.model.*;
 import org.shuerlink.util.AssessScore;
 import org.springframework.stereotype.Repository;
+
 
 @Repository
 public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCrawler, VedioCrawler {
     private static Logger logger = Logger.getLogger(BaiduCrawlerImpl.class.getName());
+
 
     private static String baidu = "http://www.baidu.com/s?wd=";
     private static String image = "http://image.baidu.com/search/index?tn=baiduimage&word=";
@@ -41,6 +31,7 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
     public LinkedList<WebPageResult> getWebPageResult(String keyword, int start, int num) {
         LinkedList<WebPageResult> resultList = null;
         try {
+            keyword = URLEncoder.encode(keyword, "UTF-8");
             resultList = new LinkedList<WebPageResult>();
             Document doc = Jsoup.connect(baidu + keyword + "&pn=" + String.valueOf(start) + "&rn=" + String.valueOf(num)).userAgent("Mozilla").timeout(3000).get();
 
@@ -110,35 +101,30 @@ public class BaiduCrawlerImpl implements WebPageCrawler, MusicCrawler, ImageCraw
         LinkedList<ImageResult> resultList = null;
         try {
             keyword = URLEncoder.encode(keyword, "UTF-8");
-            resultList = new LinkedList<>();
-            DesiredCapabilities dcaps = new DesiredCapabilities();
-            dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "D:\\driver\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
-            PhantomJSDriver driver = new PhantomJSDriver(dcaps);
-            driver.manage().window().maximize();
-            driver.get(image+keyword);
-            WebDriverWait webDriverWait = new WebDriverWait(driver,3);
-            webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("imgitem")));
-            List<WebElement> elements = driver.findElements(By.cssSelector(".imgitem"));
-            for (int i = 0;i<elements.size();i++) {
-                WebElement element = elements.get(i);
+            resultList = new LinkedList<ImageResult>();
+            Document doc = Jsoup.connect(image + keyword+"&pn="+start).timeout(3000).get();
+            String html = doc.html();
+            int begin = html.lastIndexOf("'imgData'") + 10;
+            int end = html.lastIndexOf("'fcadData'") - 20;
+            String subHtml = html.substring(begin, end);
+            String text = subHtml.substring(subHtml.indexOf("data") + 6, subHtml.length() - 1);
+
+            List<BaiduImageResult> baiduImageResults = JSON.parseArray(text, BaiduImageResult.class);
+            baiduImageResults.remove(baiduImageResults.size()-1);
+            int i = 0;
+            for (BaiduImageResult baiduImageResult : baiduImageResults) {
                 ImageResult imageResult = new ImageResult();
+                imageResult.setScore(AssessScore.assess(i,"baidu"));
+                imageResult.setTitle(baiduImageResult.getFromPageTitle().replace("<strong>","").replace("</strong>",""));
+                imageResult.setHostUrl(baiduImageResult.getFromURLHost());
+                imageResult.setHeight(baiduImageResult.getHeight());
+                imageResult.setWidth(baiduImageResult.getWidth());
+                imageResult.setType(baiduImageResult.getType());
+                imageResult.setUrl(baiduImageResult.getObjURL());
                 imageResult.setSearchEngine("百度搜索");
-                String url = element.getAttribute("data-objurl");
-                imageResult.setUrl(url);
-                String hostUrl = element.getAttribute("data-fromurlhost");
-                imageResult.setHostUrl(hostUrl);
-                String title = element.getAttribute("data-title");
-                imageResult.setTitle(title);
-                String extension = element.getAttribute("data-ext");
-                imageResult.setExtension(extension);
-                String width = element.getAttribute("data-width");
-                imageResult.setWidth(Integer.valueOf(width));
-                String height = element.getAttribute("data-height");
-                imageResult.setHeight(Integer.valueOf(height));
-                imageResult.setScore(AssessScore.assess(i+1,"baidu"));
                 resultList.add(imageResult);
             }
-            driver.quit();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

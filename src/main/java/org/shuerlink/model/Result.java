@@ -4,16 +4,7 @@ public class Result  implements Comparable<Result> {
     protected String searchEngine;
     protected String title;
     protected String url;
-    protected String[] tag;
     protected int score;
-
-    public String[] getTag() {
-        return tag;
-    }
-
-    public void setTag(String[] tag) {
-        this.tag = tag;
-    }
 
     public String getSearchEngine() {
         return searchEngine;
@@ -49,13 +40,13 @@ public class Result  implements Comparable<Result> {
 
 
     @Override
-    public int compareTo(Result sr) {
-        if (sr.score < this.score) {
+    public final int compareTo(Result r) {
+        if (r.score < this.score) {
             return 1;
-        } else if (sr.score > this.score) {
+        } else if (r.score > this.score) {
             return -1;
         } else {
-            return sr.title.compareTo(this.title);
+            return r.title.compareTo(this.title);
         }
     }
 

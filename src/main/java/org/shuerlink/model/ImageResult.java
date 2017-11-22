@@ -3,7 +3,7 @@ package org.shuerlink.model;
 public class ImageResult extends Result {
 
     private String hostUrl;
-    private String extension;
+    private String type;
     private int height;
     private int width;
 
@@ -15,12 +15,12 @@ public class ImageResult extends Result {
         this.hostUrl = hostUrl;
     }
 
-    public String getExtension() {
-        return extension;
+    public String getType() {
+        return type;
     }
 
-    public void setExtension(String extension) {
-        this.extension = extension;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getHeight() {
@@ -41,6 +41,6 @@ public class ImageResult extends Result {
 
     @Override
     public String toString() {
-        return "\n" + searchEngine + " " + score + " " + title + "\n" + url + "\n" + hostUrl + "\n" + width + "*" + height + extension;
+        return "\n" + searchEngine + " " + score + " " + title + "\n" + url + "\n" + hostUrl + "\n" + width + "*" + height + " " + type;
     }
 }
