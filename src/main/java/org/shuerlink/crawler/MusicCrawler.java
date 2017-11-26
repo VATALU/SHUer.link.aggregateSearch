@@ -1,9 +1,11 @@
 package org.shuerlink.crawler;
 
+import org.jsoup.nodes.Document;
+import org.shuerlink.Spider.Crawler;
 import org.shuerlink.model.MusicResult;
 
 import java.util.LinkedList;
 
-public interface MusicCrawler {
-    public LinkedList<MusicResult> getMusicResult(String keyword, int start, int num);
+public abstract class MusicCrawler extends Crawler<MusicResult>{
+    public abstract LinkedList<MusicResult> process(Document document);
 }

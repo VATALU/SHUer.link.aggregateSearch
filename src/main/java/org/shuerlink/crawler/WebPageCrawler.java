@@ -1,10 +1,11 @@
 package org.shuerlink.crawler;
 
+import org.jsoup.nodes.Document;
+import org.shuerlink.Spider.Crawler;
 import org.shuerlink.model.WebPageResult;
 
 import java.util.LinkedList;
 
-public interface WebPageCrawler {
-    public LinkedList<WebPageResult> getWebPageResult(String keyword, int start, int num);
-
+public abstract class WebPageCrawler extends Crawler<WebPageResult> {
+    public abstract LinkedList<WebPageResult> process(Document document);
 }

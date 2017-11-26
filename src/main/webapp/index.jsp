@@ -8,11 +8,11 @@
 </head>
 <body>
 	<form action="/search/webpage">
-		<input type="text" name="keyword"> <input type="submit"
+		webpage:<input type="text" name="keyword"> <input type="submit"
 			value="搜索">
 	</form>
 	<form action="/search/image">
-		<input type="text" name="keyword"> <input type="submit"
+		image:<input type="text" name="keyword"> <input type="submit"
 												  value="搜索">
 	</form>
 </body>
