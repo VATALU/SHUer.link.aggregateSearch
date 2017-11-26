@@ -1,12 +1,8 @@
 package org.shuerlink.Spider;
 
-import org.shuerlink.model.ImageResult;
 import org.shuerlink.model.Result;
-import org.shuerlink.model.VedioResult;
-import org.shuerlink.model.WebPageResult;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.Executor;
 
 public class Spider {

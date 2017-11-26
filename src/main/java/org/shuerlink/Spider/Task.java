@@ -17,6 +17,7 @@ public class Task {
     public LinkedList<Result> execute(Spider spider) {
         LinkedList<Crawler> crawlers = spider.getCrawlers();
         ThreadPoolTaskExecutor taskExecutor = (ThreadPoolTaskExecutor) spider.getExecutor();
+
         /*
         * 添加爬虫线程
 		* */

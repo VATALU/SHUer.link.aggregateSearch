@@ -1,9 +1,7 @@
 package org.shuerlink.crawlerImpl.WebpageCrawlerImpl;
 
-import java.net.URLEncoder;
 import java.util.LinkedList;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -11,9 +9,7 @@ import org.shuerlink.Spider.Site;
 import org.shuerlink.crawler.WebPageCrawler;
 import org.shuerlink.model.WebPageResult;
 import org.shuerlink.util.AssessScore;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public class BingWebpageCrawler extends WebPageCrawler {
     private static final String BING = "https://www.bing.com/search?";
 

@@ -1,6 +1,5 @@
 package org.shuerlink.crawlerImpl.WebpageCrawlerImpl;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -8,13 +7,9 @@ import org.shuerlink.Spider.Site;
 import org.shuerlink.crawler.WebPageCrawler;
 import org.shuerlink.model.WebPageResult;
 import org.shuerlink.util.AssessScore;
-import org.springframework.stereotype.Repository;
 
-import java.net.URLEncoder;
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
-@Repository
 public class GoogleWebpageCrawler extends WebPageCrawler {
 
     public static final String GOOGLE = "https://g.shuer.link/search?";

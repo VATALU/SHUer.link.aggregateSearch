@@ -15,7 +15,6 @@ import org.shuerlink.util.AssessScore;
 import org.springframework.stereotype.Repository;
 
 
-@Repository
 public class BaiduWebpageCrawler extends WebPageCrawler {
 
     private static String BAIDU = "http://www.baidu.com/s?";
