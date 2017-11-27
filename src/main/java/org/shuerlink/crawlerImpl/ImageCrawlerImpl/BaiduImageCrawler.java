@@ -14,9 +14,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BaiduImageCrawler extends ImageCrawler {
-    private static String IMAGE = "http://image.baidu.com/search/index?";
-    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(3).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36")
-            .setUrl(IMAGE);
+    private static final String url = "http://image.baidu.com/search/index?";
+    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(3).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+
+    public static BaiduImageCrawler newInstance(String keyword, int start) {
+        return new BaiduImageCrawler(keyword, start);
+    }
+
+    private BaiduImageCrawler(String keyword, int start) {
+        setKeyword(keyword).setStart(String.valueOf(start));
+    }
+
 
     @Override
     public Site getSite() {
@@ -51,5 +59,10 @@ public class BaiduImageCrawler extends ImageCrawler {
             resultList.add(imageResult);
         }
         return resultList;
+    }
+
+    @Override
+    public String getUrl() {
+        return url + "tn=baiduimage" + "&word=" + getKeyword() + "&pn=" + getStart();
     }
 }

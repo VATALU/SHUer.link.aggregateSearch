@@ -2,6 +2,7 @@ package org.shuerlink.serviceImpl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import javax.annotation.Resource;
@@ -32,78 +33,73 @@ public class SearchServiceImpl implements SearchService {
     * 搜索网页
     * */
     @Override
-    public LinkedList<Result> getWebpage(String keyword, int start, int num) {
+    public LinkedList<WebPageResult> getWebpage(String keyword, int start, int num) {
         try {
             keyword = URLEncoder.encode(keyword, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        LinkedList<Result> results = null;
-        BaiduWebpageCrawler baiduWebpageCrawler = new BaiduWebpageCrawler();
-        baiduWebpageCrawler.getSite().addQueryParameter("wd", keyword)
-                .addQueryParameter("pn", String.valueOf(start))
-                .addQueryParameter("rn", String.valueOf(num));
-        BingWebpageCrawler bingWebpageCrawler = new BingWebpageCrawler();
-        bingWebpageCrawler.getSite().addQueryParameter("q", keyword)
-                .addQueryParameter("first", String.valueOf(start));
-        GoogleWebpageCrawler googleWebpageCrawler = new GoogleWebpageCrawler();
-        googleWebpageCrawler.getSite().addQueryParameter("q", keyword)
-                .addQueryParameter("start", String.valueOf(start))
-                .addQueryParameter("num", String.valueOf(num))
-                .addQueryParameter("lr", "lang_zh-CN");
+        LinkedList<WebPageResult> webPageResults = null;
+        BaiduWebpageCrawler baiduWebpageCrawler = BaiduWebpageCrawler.newInstance(keyword, start, num);
+        BingWebpageCrawler bingWebpageCrawler = BingWebpageCrawler.newInstance(keyword, start);
+        GoogleWebpageCrawler googleWebpageCrawler = GoogleWebpageCrawler.newInstance(keyword, start, num);
 
-        LinkedList<Crawler> crawlers = new LinkedList<>();
+        LinkedList<Crawler<WebPageResult>> crawlers = new LinkedList<>();
         crawlers.add(baiduWebpageCrawler);
         crawlers.add(bingWebpageCrawler);
-        crawlers.add(googleWebpageCrawler);
+//        crawlers.add(googleWebpageCrawler);
 
-        results = Spider.newInstance(crawlers, taskExecutor).run();
-        return results;
+        Spider<WebPageResult> spider = new Spider<WebPageResult>(crawlers, taskExecutor);
+        webPageResults = spider.run();
+        /*
+        *  URL去重
+        */
+        webPageResults = new LinkedList<>(new LinkedHashSet<>(webPageResults));
+        /*
+        *排序
+         */
+        webPageResults.sort((t1, t2) -> (t1.compareTo(t2)));
+        return webPageResults;
     }
 
     /*
     * 搜索照片
     * */
     @Override
-    public LinkedList<Result> getImage(String keyword, int start) {
-        try {
-            keyword = URLEncoder.encode(keyword,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        LinkedList<Result> results = null;
-        BaiduImageCrawler baiduImageCrawler = new BaiduImageCrawler();
-        baiduImageCrawler.getSite().addQueryParameter("tn", "baiduimage")
-                .addQueryParameter("word", keyword)
-                .addQueryParameter("pn", String.valueOf(start));
-        BingImageCrawler bingImageCrawler = new BingImageCrawler();
-        bingImageCrawler.getSite().addQueryParameter("q", keyword)
-                .addQueryParameter("qs", "n")
-                .addQueryParameter("form", "QBIR")
-                .addQueryParameter("first", String.valueOf(start));
-        GoogleImageCrawler googleImageCrawler = new GoogleImageCrawler();
-        googleImageCrawler.getSite().addQueryParameter("tbm", "isch")
-                .addQueryParameter("q",keyword);
+    public LinkedList<ImageResult> getImage(String keyword, int start) {
+        LinkedList<ImageResult> imageResults = null;
+        BaiduImageCrawler baiduImageCrawler = BaiduImageCrawler.newInstance(keyword, start);
+        BingImageCrawler bingImageCrawler = BingImageCrawler.newInstance(keyword, start);
+        GoogleImageCrawler googleImageCrawler = GoogleImageCrawler.newInstance(keyword);
 
-        LinkedList<Crawler> crawlers = new LinkedList<>();
+        LinkedList<Crawler<ImageResult>> crawlers = new LinkedList<>();
         crawlers.add(baiduImageCrawler);
         crawlers.add(bingImageCrawler);
-        crawlers.add(googleImageCrawler);
-        results = Spider.newInstance(crawlers,taskExecutor).run();
-        return results;
+//        crawlers.add(googleImageCrawler);
+        Spider<ImageResult> spider = new Spider<ImageResult>(crawlers, taskExecutor);
+        imageResults = spider.run();
+        /*
+        *url去重
+         */
+        imageResults = new LinkedList<>(new LinkedHashSet<>(imageResults));
+        /*
+        *url排序
+         */
+        imageResults.sort((t1, t2) -> (t1.compareTo(t2)));
+
+        return imageResults;
     }
 
     /*
     * 搜索视频
     * */
     @Override
-    public LinkedList<Result> getVedio(String keyword, int start, int num) {
-        LinkedList<Result> results = null;
-        return results;
+    public LinkedList<VedioResult> getVedio(String keyword, int start, int num) {
+        return null;
     }
 
     @Override
-    public LinkedList<Result> getMusic(String keyword, int start, int num) {
+    public LinkedList<MusicResult> getMusic(String keyword, int start, int num) {
         return null;
     }
 
@@ -111,15 +107,7 @@ public class SearchServiceImpl implements SearchService {
     * 搜索书籍
     * */
     @Override
-    public LinkedList<Result> getBook(String keyword, int start, int num) {
-        return null;
-    }
-
-    /*
-    * 搜索论文
-    * */
-    @Override
-    public LinkedList<Result> getPaper(String keyword, int start, int num) {
+    public LinkedList<BookResult> getBook(String keyword, int start, int num) {
         return null;
     }
 

@@ -29,7 +29,7 @@ public class Site {
 
     private int timeOut = 5000;
 
-    private Integer acceptStatCode = new Integer(200);
+    private Integer acceptStatCode = 200;
 
     private Map<String, String> headers = new HashMap<String, String>();
 

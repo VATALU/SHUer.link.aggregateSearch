@@ -1,10 +1,7 @@
 package org.shuerlink.crawlerImpl.WebpageCrawlerImpl;
 
-import java.net.URLEncoder;
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -12,15 +9,20 @@ import org.shuerlink.Spider.Site;
 import org.shuerlink.crawler.WebPageCrawler;
 import org.shuerlink.model.*;
 import org.shuerlink.util.AssessScore;
-import org.springframework.stereotype.Repository;
-
 
 public class BaiduWebpageCrawler extends WebPageCrawler {
 
-    private static String BAIDU = "http://www.baidu.com/s?";
+    private static final String url = "http://www.baidu.com/s?";
 
-    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(3).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36")
-            .setUrl(BAIDU);
+    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+
+    public static BaiduWebpageCrawler newInstance(String keyword, int start, int num) {
+        return new BaiduWebpageCrawler(keyword, start, num);
+    }
+
+    private BaiduWebpageCrawler(String keyword, int start, int num) {
+        setKeyword(keyword).setStart(String.valueOf(start)).setNum(String.valueOf(num));
+    }
 
     @Override
     public Site getSite() {
@@ -74,14 +76,18 @@ public class BaiduWebpageCrawler extends WebPageCrawler {
             //设置摘要
             if (!result.select(".c-abstract").text().equals("")) {
                 webPageResult.setDiscription(result.select(".c-abstract").text());
-            }
-            else {
-                webPageResult.setDiscription(result.select("font p").text().replace("<em>","").replace("</em>",""));
+            } else {
+                webPageResult.setDiscription(result.select("font p").text().replace("<em>", "").replace("</em>", ""));
             }
             //设置评分
             webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
             resultList.add(webPageResult);
         }
         return resultList;
+    }
+
+    @Override
+    public String getUrl() {
+        return url + "wd=" + getKeyword() + "&pn=" + getStart() + "&rn=" + getNum();
     }
 }

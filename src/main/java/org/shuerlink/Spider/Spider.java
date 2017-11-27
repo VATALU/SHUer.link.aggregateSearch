@@ -6,33 +6,29 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.LinkedList;
 import java.util.concurrent.Executor;
 
-public class Spider {
+public class Spider<T> {
 
     private ThreadPoolTaskExecutor executor;
 
-    private LinkedList<Crawler> crawlers = new LinkedList<>();
+    private LinkedList<Crawler<T>> crawlers;
 
-    private Task task = new Task();
+    private Task<T> task = new Task<>();
 
-    public static Spider newInstance(LinkedList<Crawler> crawlers,ThreadPoolTaskExecutor executor) {
-        return new Spider(crawlers,executor);
-    }
-
-    public Spider(LinkedList<Crawler> crawlers,ThreadPoolTaskExecutor executor) {
+    public Spider(LinkedList<Crawler<T>> crawlers,ThreadPoolTaskExecutor executor) {
         setCrawlers(crawlers);
         setExecutor(executor);
     }
 
-    public LinkedList<Crawler> getCrawlers() {
+    public LinkedList<Crawler<T>> getCrawlers() {
         return crawlers;
     }
 
-    public Spider setCrawlers(LinkedList<Crawler> crawlers) {
+    public Spider setCrawlers(LinkedList<Crawler<T>> crawlers) {
         this.crawlers = crawlers;
         return this;
     }
 
-    public Spider addCrawler(Crawler<Result> crawler) {
+    public Spider addCrawler(Crawler<T> crawler) {
         crawlers.add(crawler);
         return this;
     }
@@ -49,13 +45,13 @@ public class Spider {
         return task;
     }
 
-    public Spider setTask(Task task) {
+    public Spider setTask(Task<T> task) {
         this.task = task;
         return this;
     }
 
-    public LinkedList<Result> run() {
-        LinkedList<Result> results = null;
+    public LinkedList<T> run() {
+        LinkedList<T> results = null;
         results = task.execute(this);
         return results;
     }

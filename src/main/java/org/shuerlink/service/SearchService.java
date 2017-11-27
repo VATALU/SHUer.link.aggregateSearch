@@ -6,9 +6,9 @@ import org.shuerlink.model.*;
 
 
 public interface SearchService {
-	public LinkedList<Result> getWebpage(String keyword, int start, int num);
-	public LinkedList<Result> getImage(String keyword,int start);
-	public LinkedList<Result> getVedio(String keyword, int start, int num);
-	public LinkedList<Result> getMusic(String keyword, int start, int num);
-	public LinkedList<Result> getBook(String keyword, int start, int num);
+	public LinkedList<WebPageResult> getWebpage(String keyword, int start, int num);
+	public LinkedList<ImageResult> getImage(String keyword,int start);
+	public LinkedList<VedioResult> getVedio(String keyword, int start, int num);
+	public LinkedList<MusicResult> getMusic(String keyword, int start, int num);
+	public LinkedList<BookResult> getBook(String keyword, int start, int num);
 }

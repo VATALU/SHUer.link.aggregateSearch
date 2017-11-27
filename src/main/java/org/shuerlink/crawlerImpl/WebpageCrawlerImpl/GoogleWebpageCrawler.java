@@ -12,10 +12,18 @@ import java.util.LinkedList;
 
 public class GoogleWebpageCrawler extends WebPageCrawler {
 
-    public static final String GOOGLE = "https://g.shuer.link/search?";
+    public static final String url = "https://g.shuer.link/search?";
 
-    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(3).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36")
-            .setUrl(GOOGLE);
+    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(3).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+
+    private GoogleWebpageCrawler(String keyword, int start, int num) {
+        setKeyword(keyword).setStart(String.valueOf(start)).setNum(String.valueOf(num));
+    }
+
+    public static GoogleWebpageCrawler newInstance(String keyword, int start, int num) {
+        return new GoogleWebpageCrawler(keyword, start, num);
+    }
+
     @Override
     public Site getSite() {
         return site;
@@ -43,5 +51,10 @@ public class GoogleWebpageCrawler extends WebPageCrawler {
             resultList.add(webPageResult);
         }
         return resultList;
+    }
+
+    @Override
+    public String getUrl() {
+        return url + "q=" + getKeyword() + "&start" + getStart() + "&num" + getNum() + "&lr=lang_zh-CN";
     }
 }

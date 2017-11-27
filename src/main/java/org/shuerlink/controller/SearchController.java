@@ -61,19 +61,6 @@ public class SearchController {
         return result;
     }
 
-    @RequestMapping(value = "/paper", produces = "application/json; charset=utf-8")
-    public @ResponseBody
-    LinkedList<?> searchPaper(String keyword,
-                         @RequestParam(defaultValue = "0") int start,
-                         @RequestParam(defaultValue = "10") int num) {
-        logger.info(keyword);
-        Long startTime = System.currentTimeMillis();
-        LinkedList<?> result = null;
-        result = searchService.getPaper(keyword,start,num);
-        System.out.println(System.currentTimeMillis() - startTime);
-        return result;
-    }
-
     @RequestMapping(value = "/music", produces = "application/json; charset=utf-8")
     public @ResponseBody
     LinkedList<?> searchMusic(String keyword,

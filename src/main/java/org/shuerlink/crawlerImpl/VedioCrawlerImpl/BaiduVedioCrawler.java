@@ -17,4 +17,9 @@ public class BaiduVedioCrawler extends VedioCrawler{
     public LinkedList<VedioResult> process(Document document) {
         return null;
     }
+
+    @Override
+    public String getUrl() {
+        return null;
+    }
 }

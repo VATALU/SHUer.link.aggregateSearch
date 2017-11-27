@@ -4,8 +4,10 @@ package test.org.shuerlink.crawler;
 import org.junit.Test;
 import org.shuerlink.Spider.Crawler;
 import org.shuerlink.Spider.Spider;
+import org.shuerlink.Spider.Task;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BaiduImageCrawler;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BaiduWebpageCrawler;
+import org.shuerlink.model.WebPageResult;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -14,11 +16,16 @@ public class BaiduWebpageCrawlerTest {
     @Test
     public void testBaiduCrawler() {
         System.out.println("Start:");
-        BaiduWebpageCrawler baiduWebpageCrawler = new BaiduWebpageCrawler();
-        String keyword = "可达鸭";
-        baiduWebpageCrawler.getSite().addQueryParameter("wd",keyword).addQueryParameter("pn","0").addQueryParameter("rn","10");
-        LinkedList<Crawler> crawlers = new LinkedList<Crawler>();
-        crawlers.add(baiduWebpageCrawler);
+        BaiduWebpageCrawler baiduWebpageCrawler = BaiduWebpageCrawler.newInstance("可达鸭", 0, 10);
+        baiduWebpageCrawler.getSite().setUrl(baiduWebpageCrawler.getUrl());
+        System.out.println(
+                baiduWebpageCrawler.process(new Task<WebPageResult>().getConnect(baiduWebpageCrawler))
+                );
+//        BaiduWebpageCrawler baiduWebpageCrawler = new BaiduWebpageCrawler();
+//        String keyword = "可达鸭";
+//        baiduWebpageCrawler.getSite().addQueryParameter("wd",keyword).addQueryParameter("pn","0").addQueryParameter("rn","10");
+//        LinkedList<Crawler> crawlers = new LinkedList<Crawler>();
+//        crawlers.add(baiduWebpageCrawler);
         System.out.println("End~");
     }
 

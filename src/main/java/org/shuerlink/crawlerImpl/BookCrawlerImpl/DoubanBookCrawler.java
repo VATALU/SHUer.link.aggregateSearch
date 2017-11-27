@@ -17,4 +17,9 @@ public class DoubanBookCrawler extends BookCrawler{
     public LinkedList<BookResult> process(Document document) {
         return null;
     }
+
+    @Override
+    public String getUrl() {
+        return null;
+    }
 }
