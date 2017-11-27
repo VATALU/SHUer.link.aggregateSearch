@@ -3,7 +3,7 @@ package test.org.shuerlink.crawler;
 import org.junit.Test;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BingWebpageCrawler;
 
-public class BingWebpageCrawlerTest {
+public class BingCrawlerTest {
 
 //    @Test
 //    public void testBingWebpageCrawler() {

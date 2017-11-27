@@ -16,7 +16,7 @@ public class GoogleImageCrawler extends ImageCrawler {
 
     public static final String url = "http://g.shuer.link/search?";
 
-    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(3).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
 
     public static GoogleImageCrawler newInstance(String keyword) {
         return new GoogleImageCrawler(keyword);

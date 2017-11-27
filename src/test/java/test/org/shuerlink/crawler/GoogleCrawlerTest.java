@@ -3,7 +3,7 @@ package test.org.shuerlink.crawler;
 import org.junit.Test;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.GoogleWebpageCrawler;
 
-public class GoogleWebPageCrawlerTest {
+public class GoogleCrawlerTest {
 //    @Test
 //    public void testGoogleCrawler() {
 //        System.out.println("Start:");

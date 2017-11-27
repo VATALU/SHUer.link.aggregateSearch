@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BaiduImageCrawler extends ImageCrawler {
     private static final String url = "http://image.baidu.com/search/index?";
-    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(3).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
 
     public static BaiduImageCrawler newInstance(String keyword, int start) {
         return new BaiduImageCrawler(keyword, start);

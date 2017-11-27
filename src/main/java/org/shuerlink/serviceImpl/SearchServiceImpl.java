@@ -12,6 +12,7 @@ import org.shuerlink.Spider.Spider;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BaiduImageCrawler;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BingImageCrawler;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.GoogleImageCrawler;
+import org.shuerlink.crawlerImpl.VedioCrawlerImpl.BaiduVedioCrawler;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BaiduWebpageCrawler;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BingWebpageCrawler;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.GoogleWebpageCrawler;
@@ -95,7 +96,20 @@ public class SearchServiceImpl implements SearchService {
     * */
     @Override
     public LinkedList<VedioResult> getVedio(String keyword, int start, int num) {
-        return null;
+        LinkedList<VedioResult> vedioResults = null;
+        BaiduVedioCrawler baiduVedioCrawler = BaiduVedioCrawler.newInstance(keyword, start);
+
+        LinkedList<Crawler<VedioResult>> crawlers = new LinkedList<>();
+        crawlers.add(baiduVedioCrawler);
+
+        Spider<VedioResult> spider = new Spider<VedioResult>(crawlers, taskExecutor);
+        vedioResults = spider.run();
+
+        vedioResults = new LinkedList<>(new LinkedHashSet<>(vedioResults));
+
+        vedioResults.sort((t1,t2)->(t1.compareTo(t2)));
+
+        return vedioResults;
     }
 
     @Override

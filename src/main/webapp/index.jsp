@@ -15,5 +15,9 @@
 		image:<input type="text" name="keyword"> <input type="submit"
 												  value="搜索">
 	</form>
+	<form action="/search/vedio">
+		vedio:<input type="text" name="keyword"> <input type="submit"
+														value="搜索">
+	</form>
 </body>
 </html>
