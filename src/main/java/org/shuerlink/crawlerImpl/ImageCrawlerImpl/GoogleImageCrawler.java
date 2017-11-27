@@ -1,6 +1,5 @@
 package org.shuerlink.crawlerImpl.ImageCrawlerImpl;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -9,9 +8,6 @@ import org.shuerlink.crawler.ImageCrawler;
 import org.shuerlink.model.ImageResult;
 import org.shuerlink.util.AssessScore;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

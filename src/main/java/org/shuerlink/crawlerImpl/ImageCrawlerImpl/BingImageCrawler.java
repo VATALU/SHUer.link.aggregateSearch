@@ -1,6 +1,5 @@
 package org.shuerlink.crawlerImpl.ImageCrawlerImpl;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -9,7 +8,6 @@ import org.shuerlink.crawler.ImageCrawler;
 import org.shuerlink.model.ImageResult;
 import org.shuerlink.util.AssessScore;
 
-import java.net.URLEncoder;
 import java.util.LinkedList;
 
 public class BingImageCrawler extends ImageCrawler {

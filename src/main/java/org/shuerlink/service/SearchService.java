@@ -11,5 +11,4 @@ public interface SearchService {
 	public LinkedList<Result> getVedio(String keyword, int start, int num);
 	public LinkedList<Result> getMusic(String keyword, int start, int num);
 	public LinkedList<Result> getBook(String keyword, int start, int num);
-	public LinkedList<Result> getPaper(String keyword, int start, int num);
 }

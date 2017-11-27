@@ -1,23 +1,24 @@
 package org.shuerlink.Spider;
 
 import org.shuerlink.model.Result;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.LinkedList;
 import java.util.concurrent.Executor;
 
 public class Spider {
 
-    private Executor executor;
+    private ThreadPoolTaskExecutor executor;
 
     private LinkedList<Crawler> crawlers = new LinkedList<>();
 
     private Task task = new Task();
 
-    public static Spider newInstance(LinkedList<Crawler> crawlers,Executor executor) {
+    public static Spider newInstance(LinkedList<Crawler> crawlers,ThreadPoolTaskExecutor executor) {
         return new Spider(crawlers,executor);
     }
 
-    public Spider(LinkedList<Crawler> crawlers,Executor executor) {
+    public Spider(LinkedList<Crawler> crawlers,ThreadPoolTaskExecutor executor) {
         setCrawlers(crawlers);
         setExecutor(executor);
     }
@@ -36,11 +37,11 @@ public class Spider {
         return this;
     }
 
-    public Executor getExecutor() {
+    public ThreadPoolTaskExecutor getExecutor() {
         return executor;
     }
 
-    public void setExecutor(Executor executor) {
+    public void setExecutor(ThreadPoolTaskExecutor executor) {
         this.executor = executor;
     }
 
