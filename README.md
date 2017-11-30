@@ -4,6 +4,8 @@
 
  > spring 4.3.11
 
+ > webmagic 0.7.3
+
  > Jsoup 1.10.1
 ## Crawler
 ### WebpageCrawler
@@ -16,19 +18,12 @@
 - [x] Google
 ### VedioCrawler
 - [ ] 百度搜索
-
 - [ ] 必应搜索
-
 - [ ] Google
 - [ ] 优酷
 - [ ] 土豆
 - [ ] bilibili
 - [ ] 爱奇艺
-### BookCrawler
-- [ ] 豆瓣
-### PaperCrawler
-- [ ] 知网
-- [ ] 万方
 ### ShareCrawler
 - [ ] 知乎
 - [ ] 简书

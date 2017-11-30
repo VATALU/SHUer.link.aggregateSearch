@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping(value="search")
+@RequestMapping(value = "search")
 public class SearchController {
     private static Logger logger = Logger.getLogger(SearchController.class.getName());
     @Resource
@@ -26,12 +26,12 @@ public class SearchController {
     @RequestMapping(value = "/webpage", produces = "application/json; charset=utf-8")
     public @ResponseBody
     LinkedList<?> searchWebPage(String keyword,
-                         @RequestParam(defaultValue = "0") int start,
-                         @RequestParam(defaultValue = "10") int num) {
+                                @RequestParam(defaultValue = "0") int start,
+                                @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
         LinkedList<?> result = null;
-        result = searchService.getWebpage(keyword,start,num);
+        result = searchService.getWebpage(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
@@ -39,11 +39,11 @@ public class SearchController {
     @RequestMapping(value = "/image", produces = "application/json; charset=utf-8")
     public @ResponseBody
     LinkedList<?> searchImage(String keyword,
-                         @RequestParam(defaultValue = "0") int start) {
+                              @RequestParam(defaultValue = "0") int start) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
         LinkedList<?> result = null;
-        result = searchService.getImage(keyword,start);
+        result = searchService.getImage(keyword, start);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
@@ -51,39 +51,14 @@ public class SearchController {
     @RequestMapping(value = "/vedio", produces = "application/json; charset=utf-8")
     public @ResponseBody
     LinkedList<?> searchVedio(String keyword,
-                         @RequestParam(defaultValue = "0") int start,
-                         @RequestParam(defaultValue = "10") int num) {
-        logger.info(keyword);
-        Long startTime = System.currentTimeMillis();
-        LinkedList<?> result = null;
-        result = searchService.getVedio(keyword,start,num);
-        System.out.println(System.currentTimeMillis() - startTime);
-        return result;
-    }
-
-    @RequestMapping(value = "/music", produces = "application/json; charset=utf-8")
-    public @ResponseBody
-    LinkedList<?> searchMusic(String keyword,
                               @RequestParam(defaultValue = "0") int start,
                               @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
         LinkedList<?> result = null;
-        result = searchService.getMusic(keyword,start,num);
+        result = searchService.getVedio(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
 
-    @RequestMapping(value = "/book", produces = "application/json; charset=utf-8")
-    public @ResponseBody
-    LinkedList<?> searchBook(String keyword,
-                              @RequestParam(defaultValue = "0") int start,
-                              @RequestParam(defaultValue = "10") int num) {
-        logger.info(keyword);
-        Long startTime = System.currentTimeMillis();
-        LinkedList<?> result = null;
-        result = searchService.getBook(keyword,start,num);
-        System.out.println(System.currentTimeMillis() - startTime);
-        return result;
-    }
 }

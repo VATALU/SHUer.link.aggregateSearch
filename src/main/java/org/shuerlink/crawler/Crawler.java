@@ -1,30 +1,26 @@
-package org.shuerlink.Spider;
+package org.shuerlink.crawler;
 
-import org.jsoup.nodes.Document;
+import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.LinkedList;
 
-public abstract class Crawler<T> {
+public abstract class Crawler implements PageProcessor {
     private String keyword;
-
     private String start;
-
     private String num;
-
-    public abstract Site getSite();
-
-    public abstract LinkedList<T> process(Document document);
-
-    public abstract String getUrl();
 
     public String getKeyword() {
         return keyword;
     }
 
-    public Crawler<T> setKeyword(String keyword) {
-        this.keyword = keyword;
+    public Crawler setKeyword(String keyword) {
+
+        try {
+            this.keyword = URLEncoder.encode(keyword, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 
@@ -32,7 +28,7 @@ public abstract class Crawler<T> {
         return start;
     }
 
-    public Crawler<T> setStart(String start) {
+    public Crawler setStart(String start) {
         this.start = start;
         return this;
     }
@@ -41,9 +37,8 @@ public abstract class Crawler<T> {
         return num;
     }
 
-    public Crawler<T> setNum(String num) {
+    public Crawler setNum(String num) {
         this.num = num;
         return this;
     }
-
 }

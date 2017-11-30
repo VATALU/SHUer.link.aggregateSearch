@@ -5,16 +5,17 @@ import java.util.LinkedList;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.shuerlink.Spider.Site;
 import org.shuerlink.crawler.WebPageCrawler;
 import org.shuerlink.model.*;
 import org.shuerlink.util.AssessScore;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Site;
 
 public class BaiduWebpageCrawler extends WebPageCrawler {
 
     private static final String url = "http://www.baidu.com/s?";
 
-    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+    private Site site = Site.me().setSleepTime(0).setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
 
     public static BaiduWebpageCrawler newInstance(String keyword, int start, int num) {
         return new BaiduWebpageCrawler(keyword, start, num);
@@ -25,11 +26,15 @@ public class BaiduWebpageCrawler extends WebPageCrawler {
     }
 
     @Override
+    public void process(Page page) {
+        process(page.getHtml().getDocument());
+    }
+
+    @Override
     public Site getSite() {
         return site;
     }
 
-    @Override
     public LinkedList<WebPageResult> process(Document document) {
         LinkedList<WebPageResult> resultList = new LinkedList<>();
         //result-op.c-container.xpath-log
@@ -83,6 +88,7 @@ public class BaiduWebpageCrawler extends WebPageCrawler {
             webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
             resultList.add(webPageResult);
         }
+        setWebPageResults(resultList);
         return resultList;
     }
 

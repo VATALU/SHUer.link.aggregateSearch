@@ -3,10 +3,11 @@ package org.shuerlink.crawlerImpl.ImageCrawlerImpl;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.shuerlink.Spider.Site;
 import org.shuerlink.crawler.ImageCrawler;
 import org.shuerlink.model.ImageResult;
 import org.shuerlink.util.AssessScore;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Site;
 
 import java.util.LinkedList;
 import java.util.regex.Matcher;
@@ -16,7 +17,7 @@ public class GoogleImageCrawler extends ImageCrawler {
 
     public static final String url = "http://g.shuer.link/search?";
 
-    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+    private Site site = Site.me().setSleepTime(0).setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
 
     public static GoogleImageCrawler newInstance(String keyword) {
         return new GoogleImageCrawler(keyword);
@@ -27,11 +28,15 @@ public class GoogleImageCrawler extends ImageCrawler {
     }
 
     @Override
+    public void process(Page page) {
+
+    }
+
+    @Override
     public Site getSite() {
         return site;
     }
 
-    @Override
     public LinkedList<ImageResult> process(Document document) {
         LinkedList<ImageResult> resultList = new LinkedList<>();
         Elements images_table = document.select(".images_table");
@@ -71,6 +76,7 @@ public class GoogleImageCrawler extends ImageCrawler {
                 resultList.add(imageResult);
             }
         }
+        setImageResults(resultList);
         return resultList;
     }
 

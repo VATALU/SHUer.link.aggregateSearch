@@ -1,21 +1,20 @@
 package org.shuerlink.crawlerImpl.ImageCrawlerImpl;
 
 import com.alibaba.fastjson.JSON;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.shuerlink.Spider.Site;
 import org.shuerlink.crawler.ImageCrawler;
 import org.shuerlink.model.BaiduImageResult;
 import org.shuerlink.model.ImageResult;
 import org.shuerlink.util.AssessScore;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Site;
 
-import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
 
 public class BaiduImageCrawler extends ImageCrawler {
     private static final String url = "http://image.baidu.com/search/index?";
-    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+    private Site site = Site.me().setSleepTime(0).setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
 
     public static BaiduImageCrawler newInstance(String keyword, int start) {
         return new BaiduImageCrawler(keyword, start);
@@ -27,11 +26,15 @@ public class BaiduImageCrawler extends ImageCrawler {
 
 
     @Override
+    public void process(Page page) {
+        process(page.getHtml().getDocument());
+    }
+
+    @Override
     public Site getSite() {
         return site;
     }
 
-    @Override
     public LinkedList<ImageResult> process(Document document) {
         LinkedList<ImageResult> resultList = new LinkedList<ImageResult>();
         String html = document.html();
@@ -58,6 +61,7 @@ public class BaiduImageCrawler extends ImageCrawler {
             imageResult.setSearchEngine("百度搜索");
             resultList.add(imageResult);
         }
+        setImageResults(resultList);
         return resultList;
     }
 

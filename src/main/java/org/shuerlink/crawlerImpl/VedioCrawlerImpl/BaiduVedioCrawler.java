@@ -3,10 +3,11 @@ package org.shuerlink.crawlerImpl.VedioCrawlerImpl;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.shuerlink.Spider.Site;
 import org.shuerlink.crawler.VedioCrawler;
 import org.shuerlink.model.VedioResult;
 import org.shuerlink.util.AssessScore;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Site;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -15,19 +16,19 @@ import java.util.LinkedList;
 public class BaiduVedioCrawler extends VedioCrawler {
     private static final String url = "http://v.baidu.com/v?";
 
-    private Site site = Site.newInstance().setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+    private Site site = Site.me().setSleepTime(0).setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
 
     public static BaiduVedioCrawler newInstance(String keyword, int start) {
         return new BaiduVedioCrawler(keyword, start);
     }
 
     private BaiduVedioCrawler(String keyword, int start) {
-        try {
-            keyword = URLEncoder.encode(keyword,"utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         setStart(String.valueOf(start)).setKeyword(keyword);
+    }
+
+    @Override
+    public void process(Page page) {
+        process(page.getHtml().getDocument());
     }
 
     @Override
@@ -35,9 +36,8 @@ public class BaiduVedioCrawler extends VedioCrawler {
         return site;
     }
 
-    @Override
     public LinkedList<VedioResult> process(Document document) {
-        LinkedList<VedioResult> vedioResults = new LinkedList<>();
+        LinkedList<VedioResult> resultLinkedList = new LinkedList<>();
         Elements elements = document.select("li.result");
         int i = 1;
         for (Element element : elements) {
@@ -64,9 +64,10 @@ public class BaiduVedioCrawler extends VedioCrawler {
             //设置publisher
             String publisher = element.select("span.site").text();
             vedioResult.setPublisher(publisher);
-            vedioResults.add(vedioResult);
+            resultLinkedList.add(vedioResult);
         }
-        return vedioResults;
+        setVedioResults(resultLinkedList);
+        return resultLinkedList;
     }
 
     @Override

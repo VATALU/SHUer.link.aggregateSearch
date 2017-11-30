@@ -1,14 +1,13 @@
 package org.shuerlink.serviceImpl;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
-import org.shuerlink.Spider.Crawler;
-import org.shuerlink.Spider.Spider;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BaiduImageCrawler;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BingImageCrawler;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.GoogleImageCrawler;
@@ -20,6 +19,7 @@ import org.shuerlink.model.*;
 import org.shuerlink.service.SearchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
+import us.codecraft.webmagic.Spider;
 
 /**
  * @author VATALU
@@ -35,30 +35,51 @@ public class SearchServiceImpl implements SearchService {
     * */
     @Override
     public LinkedList<WebPageResult> getWebpage(String keyword, int start, int num) {
-        try {
-            keyword = URLEncoder.encode(keyword, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        LinkedList<WebPageResult> webPageResults = null;
         BaiduWebpageCrawler baiduWebpageCrawler = BaiduWebpageCrawler.newInstance(keyword, start, num);
         BingWebpageCrawler bingWebpageCrawler = BingWebpageCrawler.newInstance(keyword, start);
         GoogleWebpageCrawler googleWebpageCrawler = GoogleWebpageCrawler.newInstance(keyword, start, num);
-
-        LinkedList<Crawler<WebPageResult>> crawlers = new LinkedList<>();
-        crawlers.add(baiduWebpageCrawler);
-        crawlers.add(bingWebpageCrawler);
-//        crawlers.add(googleWebpageCrawler);
-
-        Spider<WebPageResult> spider = new Spider<WebPageResult>(crawlers, taskExecutor);
-        webPageResults = spider.run();
+         /*
+        * 添加爬虫线程
+		* */
+        ArrayList<Future<LinkedList<WebPageResult>>> futureArrayList = new ArrayList<>();
+        futureArrayList.add(taskExecutor.submit(() -> {
+            Spider spider = Spider.create(baiduWebpageCrawler);
+            spider.setEmptySleepTime(100);
+            spider.addUrl(baiduWebpageCrawler.getUrl()).run();
+            return baiduWebpageCrawler.getWebPageResults();
+        }));
+        futureArrayList.add(taskExecutor.submit(() -> {
+            Spider spider = Spider.create(bingWebpageCrawler);
+            spider.setEmptySleepTime(100);
+            spider.addUrl(bingWebpageCrawler.getUrl()).run();
+            return bingWebpageCrawler.getWebPageResults();
+        }));
+        futureArrayList.add(taskExecutor.submit(()->{
+            Spider spider = Spider.create(googleWebpageCrawler);
+            spider.setEmptySleepTime(100);
+            spider.addUrl(googleWebpageCrawler.getUrl()).run();
+            return googleWebpageCrawler.getWebPageResults();
+        }));
+        /*
+        * 获取线程返回值
+        * */
+        LinkedList<WebPageResult> webPageResults = new LinkedList<WebPageResult>();
+        for (Future<LinkedList<WebPageResult>> f : futureArrayList) {
+            try {
+                webPageResults.addAll(f.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
         /*
         *  URL去重
         */
-        webPageResults = new LinkedList<>(new LinkedHashSet<>(webPageResults));
+        webPageResults = new LinkedList<WebPageResult>(new LinkedHashSet<WebPageResult>(webPageResults));
         /*
-        *排序
-         */
+        * 排序
+        * */
         webPageResults.sort((t1, t2) -> (t1.compareTo(t2)));
         return webPageResults;
     }
@@ -68,17 +89,43 @@ public class SearchServiceImpl implements SearchService {
     * */
     @Override
     public LinkedList<ImageResult> getImage(String keyword, int start) {
-        LinkedList<ImageResult> imageResults = null;
         BaiduImageCrawler baiduImageCrawler = BaiduImageCrawler.newInstance(keyword, start);
         BingImageCrawler bingImageCrawler = BingImageCrawler.newInstance(keyword, start);
         GoogleImageCrawler googleImageCrawler = GoogleImageCrawler.newInstance(keyword);
 
-        LinkedList<Crawler<ImageResult>> crawlers = new LinkedList<>();
-        crawlers.add(baiduImageCrawler);
-        crawlers.add(bingImageCrawler);
-//        crawlers.add(googleImageCrawler);
-        Spider<ImageResult> spider = new Spider<ImageResult>(crawlers, taskExecutor);
-        imageResults = spider.run();
+        ArrayList<Future<LinkedList<ImageResult>>> futureArrayList = new ArrayList<>();
+        futureArrayList.add(taskExecutor.submit(() -> {
+            Spider spider = Spider.create(baiduImageCrawler);
+            spider.setEmptySleepTime(100);
+            spider.addUrl(baiduImageCrawler.getUrl()).run();
+            return baiduImageCrawler.getImageResults();
+        }));
+        futureArrayList.add(taskExecutor.submit(() -> {
+            Spider spider = Spider.create(bingImageCrawler);
+            spider.setEmptySleepTime(100);
+            spider.addUrl(bingImageCrawler.getUrl()).run();
+            return bingImageCrawler.getImageResults();
+        }));
+        futureArrayList.add(taskExecutor.submit(() -> {
+            Spider spider = Spider.create(googleImageCrawler);
+            spider.setEmptySleepTime(100);
+            spider.addUrl(googleImageCrawler.getUrl()).run();
+            return googleImageCrawler.getImageResults();
+        }));
+
+         /*
+        * 获取线程返回值
+        * */
+        LinkedList<ImageResult> imageResults = new LinkedList<>();
+        for (Future<LinkedList<ImageResult>> f : futureArrayList) {
+            try {
+                imageResults.addAll(f.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
         /*
         *url去重
          */
@@ -99,30 +146,33 @@ public class SearchServiceImpl implements SearchService {
         LinkedList<VedioResult> vedioResults = null;
         BaiduVedioCrawler baiduVedioCrawler = BaiduVedioCrawler.newInstance(keyword, start);
 
-        LinkedList<Crawler<VedioResult>> crawlers = new LinkedList<>();
-        crawlers.add(baiduVedioCrawler);
+        ArrayList<Future<LinkedList<VedioResult>>> futureArrayList = new ArrayList<>();
+        futureArrayList.add(taskExecutor.submit(() -> {
+            Spider spider = Spider.create(baiduVedioCrawler);
+            spider.setEmptySleepTime(100);
+            spider.addUrl(baiduVedioCrawler.getUrl()).run();
+            return baiduVedioCrawler.getVedioResults();
+        }));
 
-        Spider<VedioResult> spider = new Spider<VedioResult>(crawlers, taskExecutor);
-        vedioResults = spider.run();
+         /*
+        * 获取线程返回值
+        * */
+        LinkedList<VedioResult> webPageResults = new LinkedList<VedioResult>();
+        for (Future<LinkedList<VedioResult>> f : futureArrayList) {
+            try {
+                webPageResults.addAll(f.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
 
         vedioResults = new LinkedList<>(new LinkedHashSet<>(vedioResults));
 
-        vedioResults.sort((t1,t2)->(t1.compareTo(t2)));
+        vedioResults.sort((t1, t2) -> (t1.compareTo(t2)));
 
         return vedioResults;
-    }
-
-    @Override
-    public LinkedList<MusicResult> getMusic(String keyword, int start, int num) {
-        return null;
-    }
-
-    /*
-    * 搜索书籍
-    * */
-    @Override
-    public LinkedList<BookResult> getBook(String keyword, int start, int num) {
-        return null;
     }
 
 }
