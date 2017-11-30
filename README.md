@@ -17,7 +17,7 @@
 - [x] 必应搜索
 - [x] Google
 ### VedioCrawler
-- [ ] 百度搜索
+- [x] 百度搜索
 - [ ] 必应搜索
 - [ ] Google
 - [ ] 优酷
