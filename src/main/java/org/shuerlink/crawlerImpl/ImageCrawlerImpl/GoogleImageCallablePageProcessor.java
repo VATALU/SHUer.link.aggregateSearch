@@ -3,38 +3,26 @@ package org.shuerlink.crawlerImpl.ImageCrawlerImpl;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.shuerlink.crawler.ImageCrawler;
+import org.shuerlink.crawler.ImageCallablePageProcessor;
 import org.shuerlink.model.ImageResult;
 import org.shuerlink.util.AssessScore;
+import org.springframework.stereotype.Repository;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GoogleImageCrawler extends ImageCrawler {
+@Repository
+public class GoogleImageCallablePageProcessor extends ImageCallablePageProcessor {
 
     public static final String url = "http://g.shuer.link/search?";
 
-    private Site site = Site.me().setSleepTime(0).setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
-
-    public static GoogleImageCrawler newInstance(String keyword) {
-        return new GoogleImageCrawler(keyword);
-    }
-
-    private GoogleImageCrawler(String keyword) {
-        setKeyword(keyword);
-    }
-
     @Override
-    public void process(Page page) {
-
-    }
-
-    @Override
-    public Site getSite() {
-        return site;
+    public LinkedList<ImageResult> getResults(Page page) {
+        return process(page.getHtml().getDocument());
     }
 
     public LinkedList<ImageResult> process(Document document) {
@@ -76,13 +64,12 @@ public class GoogleImageCrawler extends ImageCrawler {
                 resultList.add(imageResult);
             }
         }
-        setImageResults(resultList);
         return resultList;
     }
 
     @Override
-    public String getUrl() {
-        return url + "tbm=isch" + "&q=" + getKeyword();
+    public String getUrl(String keyword, int start, int num) {
+        return url + "tbm=isch" + "&q=" + keyword;
     }
 
 }

@@ -1,6 +1,7 @@
 package org.shuerlink.controller;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -25,12 +26,12 @@ public class SearchController {
 
     @RequestMapping(value = "/webpage", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    LinkedList<?> searchWebPage(String keyword,
+    List<?> searchWebPage(String keyword,
                                 @RequestParam(defaultValue = "0") int start,
                                 @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
-        LinkedList<?> result = null;
+        List<?> result = null;
         result = searchService.getWebpage(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
@@ -38,24 +39,25 @@ public class SearchController {
 
     @RequestMapping(value = "/image", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    LinkedList<?> searchImage(String keyword,
-                              @RequestParam(defaultValue = "0") int start) {
+    List<?> searchImage(String keyword,
+                              @RequestParam(defaultValue = "0") int start,
+                                @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
-        LinkedList<?> result = null;
-        result = searchService.getImage(keyword, start);
+        List<?> result = null;
+        result = searchService.getImage(keyword, start,num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
 
     @RequestMapping(value = "/vedio", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    LinkedList<?> searchVedio(String keyword,
+    List<?> searchVedio(String keyword,
                               @RequestParam(defaultValue = "0") int start,
                               @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
-        LinkedList<?> result = null;
+        List<?> result = null;
         result = searchService.getVedio(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;

@@ -10,7 +10,7 @@ import ucar.unidata.util.Urlencoded;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-public class BilibiliCrawlerTest {
+public class BilibiliCallablePageProcessorTest {
     @Test
     public void testBilibili(){
         try {

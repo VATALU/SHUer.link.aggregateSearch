@@ -3,36 +3,24 @@ package org.shuerlink.crawlerImpl.WebpageCrawlerImpl;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.shuerlink.crawler.WebPageCrawler;
+import org.shuerlink.crawler.WebPageCallablePageProcessor;
 import org.shuerlink.model.WebPageResult;
 import org.shuerlink.util.AssessScore;
+import org.springframework.stereotype.Repository;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 
 import java.util.LinkedList;
+import java.util.List;
 
-public class GoogleWebpageCrawler extends WebPageCrawler {
+@Repository
+public class GoogleWebpageCallablePageProcessor extends WebPageCallablePageProcessor {
 
     public static final String url = "https://g.shuer.link/search?";
 
-    private Site site = Site.me().setSleepTime(0).setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
-
-    private GoogleWebpageCrawler(String keyword, int start, int num) {
-        setKeyword(keyword).setStart(String.valueOf(start)).setNum(String.valueOf(num));
-    }
-
-    public static GoogleWebpageCrawler newInstance(String keyword, int start, int num) {
-        return new GoogleWebpageCrawler(keyword, start, num);
-    }
-
     @Override
-    public void process(Page page) {
-        process(page.getHtml().getDocument());
-    }
-
-    @Override
-    public Site getSite() {
-        return site;
+    public LinkedList<WebPageResult> getResults(Page page) {
+        return   process(page.getHtml().getDocument());
     }
 
     public LinkedList<WebPageResult> process(Document document) {
@@ -55,12 +43,12 @@ public class GoogleWebpageCrawler extends WebPageCrawler {
             webPageResult.setScore(AssessScore.assess(i++, "google"));
             resultList.add(webPageResult);
         }
-        setWebPageResults(resultList);
         return resultList;
     }
 
     @Override
-    public String getUrl() {
-        return url + "q=" + getKeyword() + "&start" + getStart() + "&num" + getNum() + "&lr=lang_zh-CN";
+    public String getUrl(String keyword, int start, int num) {
+        return url + "q=" + keyword + "&start" +start + "&num" +num + "&lr=lang_zh-CN";
     }
+
 }

@@ -2,37 +2,24 @@ package org.shuerlink.crawlerImpl.ImageCrawlerImpl;
 
 import com.alibaba.fastjson.JSON;
 import org.jsoup.nodes.Document;
-import org.shuerlink.crawler.ImageCrawler;
+import org.shuerlink.crawler.ImageCallablePageProcessor;
 import org.shuerlink.model.BaiduImageResult;
 import org.shuerlink.model.ImageResult;
 import org.shuerlink.util.AssessScore;
+import org.springframework.stereotype.Repository;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class BaiduImageCrawler extends ImageCrawler {
+@Repository
+public class BaiduImageCallablePageProcessor extends ImageCallablePageProcessor {
     private static final String url = "http://image.baidu.com/search/index?";
-    private Site site = Site.me().setSleepTime(0).setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
-
-    public static BaiduImageCrawler newInstance(String keyword, int start) {
-        return new BaiduImageCrawler(keyword, start);
-    }
-
-    private BaiduImageCrawler(String keyword, int start) {
-        setKeyword(keyword).setStart(String.valueOf(start));
-    }
-
 
     @Override
-    public void process(Page page) {
-        process(page.getHtml().getDocument());
-    }
-
-    @Override
-    public Site getSite() {
-        return site;
+    public LinkedList<ImageResult> getResults(Page page) {
+        return process(page.getHtml().getDocument());
     }
 
     public LinkedList<ImageResult> process(Document document) {
@@ -61,12 +48,12 @@ public class BaiduImageCrawler extends ImageCrawler {
             imageResult.setSearchEngine("百度搜索");
             resultList.add(imageResult);
         }
-        setImageResults(resultList);
         return resultList;
     }
 
     @Override
-    public String getUrl() {
-        return url + "tn=baiduimage" + "&word=" + getKeyword() + "&pn=" + getStart();
+    public String getUrl(String keyword, int start, int num) {
+        return url + "tn=baiduimage" + "&word=" + keyword + "&pn=" + start;
     }
+
 }

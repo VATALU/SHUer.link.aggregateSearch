@@ -3,47 +3,47 @@ package test.org.shuerlink.crawler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shuerlink.crawler.CallableSpider;
-import org.shuerlink.crawlerImpl.ImageCrawlerImpl.GoogleImageCallablePageProcessor;
-import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.GoogleWebpageCallablePageProcessor;
+import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BingImageCallablePageProcessor;
+import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BingWebpageCallablePageProcessor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import us.codecraft.webmagic.Spider;
 
 import javax.annotation.Resource;
 
 @RunWith(SpringJUnit4ClassRunner.class)//表示整合JUnit4进行测试
 @ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})//加载spring配置文件
-public class GoogleCrawlerTest {
+public class BingCallablePageProcessorTest {
     @Resource
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
     @Resource
-    private GoogleWebpageCallablePageProcessor googleWebpageCallablePageProcessor;
+    private BingWebpageCallablePageProcessor bingWebpageCallablePageProcessor;
     @Resource
-    private GoogleImageCallablePageProcessor googleImageCallablePageProcessor;
+    private BingImageCallablePageProcessor bingImageCallablePageProcessor;
 
     @Test
-    public void testGoogleCrawler() {
-        System.out.println("Start:");
-        Long startTime = System.currentTimeMillis();
+    public void testBingWebpageCrawler() {
+        System.out.println("Start~");
         String keyword = "可达鸭";
         int start = 0;
         int num = 10;
-        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num,googleWebpageCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
+        CallableSpider callableSpider = CallableSpider.newInstance(keyword, start, num, bingWebpageCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
         System.out.println(callableSpider.call());
-        System.out.println(System.currentTimeMillis() - startTime);
         System.out.println("End~");
     }
 
     @Test
-    public void testGoogleImageCrawler(){
-        System.out.println("Start:");
+    public void testBingImageCrawler() {
+        System.out.println("Start~");
         Long startTime = System.currentTimeMillis();
         String keyword = "可达鸭";
         int start = 0;
         int num = 10;
-        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num,googleImageCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
+        CallableSpider callableSpider = CallableSpider.newInstance(keyword, start, num, bingImageCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
         System.out.println(callableSpider.call());
         System.out.println(System.currentTimeMillis() - startTime);
         System.out.println("End~");
+
     }
 }

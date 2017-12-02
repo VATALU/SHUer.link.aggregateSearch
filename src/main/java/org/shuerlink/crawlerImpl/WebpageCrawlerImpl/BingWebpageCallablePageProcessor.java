@@ -1,37 +1,25 @@
 package org.shuerlink.crawlerImpl.WebpageCrawlerImpl;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.shuerlink.crawler.WebPageCrawler;
+import org.shuerlink.crawler.WebPageCallablePageProcessor;
 import org.shuerlink.model.WebPageResult;
 import org.shuerlink.util.AssessScore;
+import org.springframework.stereotype.Repository;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 
-public class BingWebpageCrawler extends WebPageCrawler {
+@Repository
+public class BingWebpageCallablePageProcessor extends WebPageCallablePageProcessor {
     private static final String url = "https://www.bing.com/search?";
 
-    private Site site = Site.me().setSleepTime(0).setTimeOut(3000).setRetryTimes(2).setRetrySleepTime(50).setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
-
-    private BingWebpageCrawler(String keyword, int start) {
-        setKeyword(keyword).setStart(String.valueOf(start));
-    }
-
-    public static BingWebpageCrawler newInstance(String keyword, int start) {
-        return new BingWebpageCrawler(keyword, start);
-    }
-
     @Override
-    public void process(Page page) {
-        process(page.getHtml().getDocument());
-    }
-
-    @Override
-    public Site getSite() {
-        return site;
+    public LinkedList<WebPageResult> getResults(Page page) {
+        return process(page.getHtml().getDocument());
     }
 
     public LinkedList<WebPageResult> process(Document document) {
@@ -48,12 +36,12 @@ public class BingWebpageCrawler extends WebPageCrawler {
             webPageResult.setScore(AssessScore.assess(i++, "bing"));
             resultList.add(webPageResult);
         }
-        setWebPageResults(resultList);
         return resultList;
     }
 
     @Override
-    public String getUrl() {
-        return url + "q=" + getKeyword() + "&first=" + getStart();
+    public String getUrl(String keyword, int start, int num) {
+        return url + "q=" + keyword + "&first=" + start;
     }
+
 }
