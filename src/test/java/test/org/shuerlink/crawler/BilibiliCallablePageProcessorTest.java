@@ -1,31 +1,38 @@
 package test.org.shuerlink.crawler;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.junit.Test;
-import ucar.unidata.util.Urlencoded;
+import org.junit.runner.RunWith;
+import org.shuerlink.crawler.CallableSpider;
+import org.shuerlink.crawlerImpl.VedioCrawlerImpl.BilibiliVedioCallablePageProcessor;
+import org.shuerlink.model.ImageResult;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import us.codecraft.webmagic.Spider;
 
-import java.io.IOException;
-import java.net.URLEncoder;
+import javax.annotation.Resource;
+import java.util.LinkedList;
+import java.util.List;
 
+@RunWith(SpringJUnit4ClassRunner.class)//表示整合JUnit4进行测试
+@ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})//加载spring配置文件
 public class BilibiliCallablePageProcessorTest {
+
+    @Resource
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    @Resource
+    private BilibiliVedioCallablePageProcessor bilibiliVedioCallablePageProcessor;
+
     @Test
-    public void testBilibili(){
-        try {
-            String keyword = URLEncoder.encode("可达鸭");
-            Document doc= Jsoup.connect("https://search.bilibili.com/all?keyword="+keyword).userAgent("Mozilla").get();
-            Elements movieList=doc.select(".ajax-render li").select("a.title");
-            for (Element element:movieList){
-                String nameElement=element.attr("title");
-                String urlElement=element.attr("href").substring(2);
-                System.out.println(nameElement+" "+urlElement);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public void testBilibiliVedioCrawler() {
+        System.out.println("Start:");
+        Long startTime = System.currentTimeMillis();
+        String keyword = "可达鸭";
+        int start = 0;
+        int num = 10;
+        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num,bilibiliVedioCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
+        System.out.println(callableSpider.call());
+        System.out.println(System.currentTimeMillis() - startTime);
+        System.out.println("End~");
     }
-
 }

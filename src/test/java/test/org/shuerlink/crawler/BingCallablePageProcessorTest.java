@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shuerlink.crawler.CallableSpider;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BingImageCallablePageProcessor;
+import org.shuerlink.crawlerImpl.VedioCrawlerImpl.BingVedioCallablePageProcessor;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BingWebpageCallablePageProcessor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,6 +22,8 @@ public class BingCallablePageProcessorTest {
     private BingWebpageCallablePageProcessor bingWebpageCallablePageProcessor;
     @Resource
     private BingImageCallablePageProcessor bingImageCallablePageProcessor;
+    @Resource
+    private BingVedioCallablePageProcessor bingVedioCallablePageProcessor;
 
     @Test
     public void testBingWebpageCrawler() {
@@ -45,5 +48,17 @@ public class BingCallablePageProcessorTest {
         System.out.println(System.currentTimeMillis() - startTime);
         System.out.println("End~");
 
+    }
+    @Test
+    public void testBingVedioCrawler() {
+        System.out.println("Start:");
+        Long startTime = System.currentTimeMillis();
+        String keyword = "可达鸭";
+        int start = 0;
+        int num = 10;
+        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num,bingVedioCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
+        System.out.println(callableSpider.call());
+        System.out.println(System.currentTimeMillis() - startTime);
+        System.out.println("End~");
     }
 }
