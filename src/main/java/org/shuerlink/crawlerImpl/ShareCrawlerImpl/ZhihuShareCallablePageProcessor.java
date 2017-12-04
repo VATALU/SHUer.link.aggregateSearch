@@ -26,6 +26,7 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
     public LinkedList<ShareResult> process(Document document) {
         LinkedList<ShareResult> resultLinkedList = new LinkedList<>();
         Elements elements = document.select("li.item.clearfix").select("[data-type=\"Answer\"]");
+        //System.out.println(elements);
         int i = 1;
         for (Element element : elements) {
             ShareResult shareResult = new ShareResult();
@@ -52,7 +53,7 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
             String time=element.select("a.time.text-muted").text();
             shareResult.setTime(time);
             //设置voters
-            String ss=element.select("a.zm-item-vote-count.hidden-expanded.js-expand.js-vote-count").text();
+            String ss=getInt(element.select("a.zm-item-vote-count.hidden-expanded.js-expand.js-vote-count").text());
             int voters;
             if (ss.length()==0)
                 voters=0;
@@ -65,10 +66,10 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
             //设置comment
             String s=element.select("a.action-item.js-toggleCommentBox").select("span.label").text();
             int comment;
-            if (s.length()==0)
-                comment=0;
+            if (s.indexOf("条")>0)
+                comment=Integer.parseInt(s.substring(0,s.indexOf("条")-1));
             else
-                comment=Integer.parseInt(getInt(s));
+                comment=0;
             shareResult.setComment(comment);
             //设置discription
             String discription=element.select("div.summary.hidden-expanded").text();
