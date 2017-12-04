@@ -44,8 +44,13 @@ public class IQIYIVedioCallablePageProcessor extends VedioCallablePageProcessor 
             String title = element.select("img").attr("alt");
             vedioResult.setTitle(title);
             //设置publisher
-            String publisher = element.select("div.result_info_cont result_info_cont-half").select("a").text();
+            String publisher = element.select("a.result_info_link").text();
+            if (publisher.length()==0)
+                publisher=element.select("em.result_info_desc").text().substring(11);
             vedioResult.setPublisher(publisher);
+            //设置publisherTime
+            String publisherTime=element.select("em.result_info_desc").text().substring(0,10);
+            vedioResult.setPublishTime(publisherTime);
             resultLinkedList.add(vedioResult);
         }
         return resultLinkedList;

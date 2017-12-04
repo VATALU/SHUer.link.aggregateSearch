@@ -35,7 +35,7 @@ public class BilibiliVedioCallablePageProcessor extends VedioCallablePageProcess
             String time = element.select("span.so-imgTag_rb").text();
             vedioResult.setTime(time);
             //设置imageUrl
-            String imageUrl = element.select("img").attr("src");
+            String imageUrl = element.select("div.img").select("img").attr("data-src").substring(2);
             vedioResult.setImageUrl(imageUrl);
             //设置url
             String url = element.select("a").attr("href").substring(2);
@@ -46,6 +46,9 @@ public class BilibiliVedioCallablePageProcessor extends VedioCallablePageProcess
             //设置publisher
             String publisher = element.select("a.up-name").text();
             vedioResult.setPublisher(publisher);
+            //设置publisherTime
+            String publisherTime=element.select("span.so-icon.time").text();
+            vedioResult.setPublishTime(publisherTime);
             resultLinkedList.add(vedioResult);
         }
         return resultLinkedList;

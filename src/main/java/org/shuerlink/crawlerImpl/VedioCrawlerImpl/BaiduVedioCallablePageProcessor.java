@@ -50,6 +50,9 @@ public class BaiduVedioCallablePageProcessor extends VedioCallablePageProcessor 
             //设置publisher
             String publisher = element.select("span.site").text();
             vedioResult.setPublisher(publisher);
+            //设置publisherTime
+            String publisherTime=element.select("span.so-icon.time").text();
+            vedioResult.setPublishTime(publisherTime);
             resultLinkedList.add(vedioResult);
         }
         return resultLinkedList;

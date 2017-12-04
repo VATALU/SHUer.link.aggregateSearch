@@ -35,10 +35,10 @@ public class YoukuVedioCallablePageProcessor extends VedioCallablePageProcessor 
             String time = element.select("span.v-time").text();
             vedioResult.setTime(time);
             //设置imageUrl
-            String imageUrl = element.select("img").attr("src");
+            String imageUrl = element.select("img").attr("src").substring(2);
             vedioResult.setImageUrl(imageUrl);
             //设置url
-            String url = element.select("div.v-link").select("a").attr("href");
+            String url = element.select("div.v-link").select("a").attr("href").substring(2);
             vedioResult.setUrl(url);
             //设置title
             String title = element.select("div.v-link").select("a").attr("title");
@@ -47,6 +47,9 @@ public class YoukuVedioCallablePageProcessor extends VedioCallablePageProcessor 
             String publisher = element.select("span.username").select("a").text();
             vedioResult.setPublisher(publisher);
             resultLinkedList.add(vedioResult);
+            //设置publisherTime
+            String publisherTime=element.select("span.r").text();
+            vedioResult.setPublishTime(publisherTime);
         }
         return resultLinkedList;
     }
