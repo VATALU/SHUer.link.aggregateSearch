@@ -29,7 +29,7 @@ public class BaiduVedioCallablePageProcessor extends VedioCallablePageProcessor 
         for (Element element : elements) {
             VedioResult vedioResult = new VedioResult();
             //设置搜索引擎
-            vedioResult.setSearchEngine("百度搜索");
+            vedioResult.setSearchEngine("百度");
             //设置score
             vedioResult.setScore(AssessScore.assess(i++,"baidu"));
             //设置time

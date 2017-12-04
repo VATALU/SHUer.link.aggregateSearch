@@ -32,7 +32,7 @@ public class JianshuShareCallablePageProcessor extends ShareCallablePageProcesso
         for (Element element : elements) {
             ShareResult shareResult = new ShareResult();
             //设置搜索引擎
-            shareResult.setSearchEngine("简书搜索");
+            shareResult.setSearchEngine("简书");
             //设置score
             shareResult.setScore(AssessScore.assess(i++,"jianshu"));
             //设置authorName

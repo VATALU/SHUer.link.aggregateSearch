@@ -30,7 +30,7 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
         for (Element element : elements) {
             ShareResult shareResult = new ShareResult();
             //设置搜索引擎
-            shareResult.setSearchEngine("知乎搜索");
+            shareResult.setSearchEngine("知乎");
             //设置score
             shareResult.setScore(AssessScore.assess(i++,"zhihu"));
             //设置authorName

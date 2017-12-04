@@ -61,7 +61,7 @@ public class BaiduWebpageCallablePageProcessor extends WebPageCallablePageProces
         for (Element result : results_c_container) {
             WebPageResult webPageResult = new WebPageResult();
             //设置搜索引擎
-            webPageResult.setSearchEngine("百度搜索");
+            webPageResult.setSearchEngine("百度");
             //设置标题和标题链接
             Elements title = result.select("h3");
             webPageResult.setTitle(title.text());

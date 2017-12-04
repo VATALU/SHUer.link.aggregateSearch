@@ -45,7 +45,7 @@ public class BaiduImageCallablePageProcessor extends ImageCallablePageProcessor 
             imageResult.setWidth(baiduImageResult.getWidth());
             imageResult.setType(baiduImageResult.getType());
             imageResult.setUrl(baiduImageResult.getObjURL());
-            imageResult.setSearchEngine("百度搜索");
+            imageResult.setSearchEngine("百度");
             resultList.add(imageResult);
         }
         return resultList;

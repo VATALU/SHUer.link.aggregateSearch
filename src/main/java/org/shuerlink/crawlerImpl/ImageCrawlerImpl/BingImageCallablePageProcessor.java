@@ -38,7 +38,7 @@ public class BingImageCallablePageProcessor extends ImageCallablePageProcessor {
             for(Element li : lis){
                 ImageResult imageResult = new ImageResult();
                 //设置搜索引擎
-                imageResult.setSearchEngine("必应搜索");
+                imageResult.setSearchEngine("必应");
                 //设置url
                 String urlInfo = li.select("a[m]").attr("m");
                 Map<String, Object> map = new HashMap<String, Object>();

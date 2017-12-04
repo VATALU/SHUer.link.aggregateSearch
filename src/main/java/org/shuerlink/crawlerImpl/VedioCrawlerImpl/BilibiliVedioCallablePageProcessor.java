@@ -16,11 +16,13 @@ import java.util.List;
 @Repository
 public class BilibiliVedioCallablePageProcessor extends VedioCallablePageProcessor {
     private static final String url = "https://search.bilibili.com/all?keyword=";
+
     @Override
 
     public LinkedList<VedioResult> getResults(Page page) {
         return process(page.getHtml().getDocument());
     }
+
     public LinkedList<VedioResult> process(Document document) {
         LinkedList<VedioResult> resultLinkedList = new LinkedList<>();
         Elements elements = document.select("li.video.matrix");
@@ -28,9 +30,9 @@ public class BilibiliVedioCallablePageProcessor extends VedioCallablePageProcess
         for (Element element : elements) {
             VedioResult vedioResult = new VedioResult();
             //设置搜索引擎
-            vedioResult.setSearchEngine("bilibili搜索");
+            vedioResult.setSearchEngine("bilibili");
             //设置score
-            vedioResult.setScore(AssessScore.assess(i++,"bilibili"));
+            vedioResult.setScore(AssessScore.assess(i++, "bilibili"));
             //设置time
             String time = element.select("span.so-imgTag_rb").text();
             vedioResult.setTime(time);
@@ -47,14 +49,15 @@ public class BilibiliVedioCallablePageProcessor extends VedioCallablePageProcess
             String publisher = element.select("a.up-name").text();
             vedioResult.setPublisher(publisher);
             //设置publisherTime
-            String publisherTime=element.select("span.so-icon.time").text();
+            String publisherTime = element.select("span.so-icon.time").text();
             vedioResult.setPublishTime(publisherTime);
             resultLinkedList.add(vedioResult);
         }
         return resultLinkedList;
     }
+
     @Override
     public String getUrl(String keyword, int start, int num) {
-        return url + keyword;
+        return url + keyword + "&page=" + (start / 10 + 1);
     }
 }

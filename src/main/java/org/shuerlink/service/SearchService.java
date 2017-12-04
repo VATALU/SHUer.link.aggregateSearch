@@ -7,7 +7,11 @@ import org.shuerlink.model.*;
 
 
 public interface SearchService {
-	public List<WebPageResult> getWebpage(String keyword, int start, int num);
-	public List<ImageResult> getImage(String keyword, int start,int num);
-	public List<VedioResult> getVedio(String keyword, int start, int num);
+    public List<WebPageResult> getWebpage(String keyword, int start, int num);
+
+    public List<ImageResult> getImage(String keyword, int start, int num);
+
+    public List<VedioResult> getVedio(String keyword, int start, int num);
+
+    public List<ShareResult> getShare(String keyword, int start, int num);
 }

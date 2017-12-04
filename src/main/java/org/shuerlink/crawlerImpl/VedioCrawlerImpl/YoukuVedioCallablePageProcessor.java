@@ -16,11 +16,13 @@ import java.util.List;
 @Repository
 public class YoukuVedioCallablePageProcessor extends VedioCallablePageProcessor {
     private static final String url = "http://www.soku.com/search_video/q_";
+
     @Override
 
     public LinkedList<VedioResult> getResults(Page page) {
         return process(page.getHtml().getDocument());
     }
+
     public LinkedList<VedioResult> process(Document document) {
         LinkedList<VedioResult> resultLinkedList = new LinkedList<>();
         Elements elements = document.select("div.v");
@@ -28,9 +30,9 @@ public class YoukuVedioCallablePageProcessor extends VedioCallablePageProcessor 
         for (Element element : elements) {
             VedioResult vedioResult = new VedioResult();
             //设置搜索引擎
-            vedioResult.setSearchEngine("优酷搜索");
+            vedioResult.setSearchEngine("优酷土豆");
             //设置score
-            vedioResult.setScore(AssessScore.assess(i++,"youku"));
+            vedioResult.setScore(AssessScore.assess(i++, "youku"));
             //设置time
             String time = element.select("span.v-time").text();
             vedioResult.setTime(time);
@@ -48,13 +50,14 @@ public class YoukuVedioCallablePageProcessor extends VedioCallablePageProcessor 
             vedioResult.setPublisher(publisher);
             resultLinkedList.add(vedioResult);
             //设置publisherTime
-            String publisherTime=element.select("span.r").text();
+            String publisherTime = element.select("span.r").text();
             vedioResult.setPublishTime(publisherTime);
         }
         return resultLinkedList;
     }
+
     @Override
     public String getUrl(String keyword, int start, int num) {
-        return url + keyword;
+        return url + keyword + "&page=" + (start / 10 + 1);
     }
 }

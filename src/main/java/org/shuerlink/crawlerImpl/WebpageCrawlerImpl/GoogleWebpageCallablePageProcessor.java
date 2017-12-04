@@ -29,7 +29,7 @@ public class GoogleWebpageCallablePageProcessor extends WebPageCallablePageProce
         int i = 1;
         for (Element result : results) {
             WebPageResult webPageResult = new WebPageResult();
-            webPageResult.setSearchEngine("谷歌搜索");
+            webPageResult.setSearchEngine("谷歌");
             Elements piece = result.select("h3");
             webPageResult.setTitle(piece.text());
             String titleUrl = piece.select("a[href]").attr("href");

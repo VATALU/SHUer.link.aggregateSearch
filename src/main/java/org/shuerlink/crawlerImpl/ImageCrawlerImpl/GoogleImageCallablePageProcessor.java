@@ -35,7 +35,7 @@ public class GoogleImageCallablePageProcessor extends ImageCallablePageProcessor
             for (Element td : tds) {
                 ImageResult imageResult = new ImageResult();
                 //设置搜索引擎
-                imageResult.setSearchEngine("谷歌搜索");
+                imageResult.setSearchEngine("谷歌");
                 //设置url
                 imageResult.setUrl(td.select("img").attr("src"));
                 //设置hostUrl

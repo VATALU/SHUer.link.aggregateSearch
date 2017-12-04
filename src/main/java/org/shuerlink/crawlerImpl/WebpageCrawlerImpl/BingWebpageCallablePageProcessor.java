@@ -29,7 +29,7 @@ public class BingWebpageCallablePageProcessor extends WebPageCallablePageProcess
         for (Element result : results) {
             Elements s = result.select("h2");
             WebPageResult webPageResult = new WebPageResult();
-            webPageResult.setSearchEngine("必应搜索");
+            webPageResult.setSearchEngine("必应");
             webPageResult.setTitle(s.text());
             webPageResult.setUrl(s.select("a[href]").attr("href"));
             webPageResult.setDiscription(result.select("p").text());

@@ -9,7 +9,9 @@ import org.shuerlink.crawler.CallableSpider;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BaiduImageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BingImageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.GoogleImageCallablePageProcessor;
-import org.shuerlink.crawlerImpl.VedioCrawlerImpl.BaiduVedioCallablePageProcessor;
+import org.shuerlink.crawlerImpl.ShareCrawlerImpl.JianshuShareCallablePageProcessor;
+import org.shuerlink.crawlerImpl.ShareCrawlerImpl.ZhihuShareCallablePageProcessor;
+import org.shuerlink.crawlerImpl.VedioCrawlerImpl.*;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BaiduWebpageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BingWebpageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.GoogleWebpageCallablePageProcessor;
@@ -38,10 +40,21 @@ public class SearchServiceImpl implements SearchService {
     @Resource
     private BingWebpageCallablePageProcessor bingWebpageCallablePageProcessor;
     @Resource
+    private BingVedioCallablePageProcessor bingVedioCallablePageProcessor;
+    @Resource
     private GoogleImageCallablePageProcessor googleImageCallablePageProcessor;
     @Resource
     private GoogleWebpageCallablePageProcessor googleWebpageCallablePageProcessor;
-
+    @Resource
+    private YoukuVedioCallablePageProcessor youkuVedioCallablePageProcessor;
+    @Resource
+    private IQIYIVedioCallablePageProcessor iqiyiVedioCallablePageProcessor;
+    @Resource
+    private BilibiliVedioCallablePageProcessor bilibiliVedioCallablePageProcessor;
+    @Resource
+    private JianshuShareCallablePageProcessor jianshuShareCallablePageProcessor;
+    @Resource
+    private ZhihuShareCallablePageProcessor zhihuShareCallablePageProcessor;
     /*
     * 搜索网页
     * */
@@ -87,12 +100,25 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<VedioResult> getVedio(String keyword, int start, int num) {
         CallableSpider callableSpider = CallableSpider.newInstance(keyword, start, num,
-                baiduVedioCallablePageProcessor).setThreadPoolTask(taskExecutor);
+                baiduVedioCallablePageProcessor,youkuVedioCallablePageProcessor,
+                bilibiliVedioCallablePageProcessor,iqiyiVedioCallablePageProcessor,
+                bingVedioCallablePageProcessor).setThreadPoolTask(taskExecutor);
         List<VedioResult> vedioResults = callableSpider.call();
 
         vedioResults.sort((t1, t2) -> (t1.compareTo(t2)));
 
         return vedioResults;
+    }
+
+    @Override
+    public List<ShareResult> getShare(String keyword, int start, int num) {
+        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num,
+                jianshuShareCallablePageProcessor,zhihuShareCallablePageProcessor).setThreadPoolTask(taskExecutor);
+        List<ShareResult> shareResults = callableSpider.call();
+
+        shareResults.sort((t1,t2)->(t1.compareTo(t2)));
+
+        return shareResults;
     }
 
 }
