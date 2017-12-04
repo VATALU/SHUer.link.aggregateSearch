@@ -3,7 +3,7 @@ package org.shuerlink.model;
 public class ShareResult extends Result {
 
     private String authorname;
-    private String image;
+    private String imageUrl;
     private String authorurl;
     private String time;
     private int Voters;
@@ -19,12 +19,12 @@ public class ShareResult extends Result {
         this.authorname = authorname;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getAuthorurl() {
@@ -77,7 +77,7 @@ public class ShareResult extends Result {
 
     @Override
     public String toString() {
-        return authorname + " " + authorurl + " " + image + "\n" +
+        return authorname + " " + authorurl + " " + imageUrl + "\n" +
                 title + " " + url + "\n" +
                 discription + "\n" +
                 time + " " + comment + " " + visitor + " " + Voters + "\n";

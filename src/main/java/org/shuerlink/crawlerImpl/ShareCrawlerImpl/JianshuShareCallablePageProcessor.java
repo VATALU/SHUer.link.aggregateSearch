@@ -40,7 +40,7 @@ public class JianshuShareCallablePageProcessor extends ShareCallablePageProcesso
             shareResult.setAuthorname(authorName);
             //设置imageurl
             String imageurl = element.select("a.avatar").select("img").attr("src");
-            shareResult.setImageurl(imageurl);
+            shareResult.setImageUrl(imageurl);
             //设置url
             String url = element.select("a.title").attr("href");
             shareResult.setUrl(temp+url);

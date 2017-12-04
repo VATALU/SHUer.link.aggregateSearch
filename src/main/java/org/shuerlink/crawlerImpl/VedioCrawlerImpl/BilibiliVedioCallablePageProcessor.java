@@ -38,7 +38,7 @@ public class BilibiliVedioCallablePageProcessor extends VedioCallablePageProcess
             String imageUrl = element.select("img").attr("src");
             vedioResult.setImageUrl(imageUrl);
             //设置url
-            String url = element.select("a").attr("href");
+            String url = element.select("a").attr("href").substring(2);
             vedioResult.setUrl(url);
             //设置title
             String title = element.select("a").attr("title");

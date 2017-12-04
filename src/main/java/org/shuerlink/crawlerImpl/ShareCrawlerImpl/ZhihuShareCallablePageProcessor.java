@@ -38,7 +38,7 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
             shareResult.setAuthorname(authorName);
             //设置imageurl
             String imageurl = element.select("img.Avatar.Avatar--xs").attr("src");
-            shareResult.setImageurl(imageurl);
+            shareResult.setImageUrl(imageurl);
             //设置url
             String url = element.select("a.js-title-link").attr("href");
             shareResult.setUrl(temp+url);

@@ -11,8 +11,8 @@
 		webpage:<input type="text" name="keyword"> <input type="submit"
 			value="搜索">
 	</form>
-	<form action="/search/image">
-		image:<input type="text" name="keyword"> <input type="submit"
+	<form action="/search/imageUrl">
+		imageUrl:<input type="text" name="keyword"> <input type="submit"
 												  value="搜索">
 	</form>
 	<form action="/search/vedio">

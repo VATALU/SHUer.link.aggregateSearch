@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 
 @RunWith(SpringJUnit4ClassRunner.class)//表示整合JUnit4进行测试
 @ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})//加载spring配置文件
-public class GoogleCrawlerTest {
+public class GoogleCallablePageProcessorTest {
     @Resource
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
     @Resource

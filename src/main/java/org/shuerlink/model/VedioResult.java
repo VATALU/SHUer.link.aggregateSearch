@@ -1,6 +1,6 @@
 package org.shuerlink.model;
 
-public class VedioResult  extends Result {
+public class VedioResult extends Result {
     private String time;
     private String imageUrl;
     private String publishTime;
@@ -40,6 +40,8 @@ public class VedioResult  extends Result {
 
     @Override
     public String toString() {
-        return searchEngine + " " + score + " " + title + "\n" + url + "\n";
+        return "\n" + searchEngine + " " + score + " " + title + "\n" +
+                url + "\n" +
+                imageUrl + "\n" + publisher + " " + publishTime + " " + time;
     }
 }
