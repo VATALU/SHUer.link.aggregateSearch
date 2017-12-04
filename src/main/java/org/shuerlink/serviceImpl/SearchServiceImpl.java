@@ -121,4 +121,10 @@ public class SearchServiceImpl implements SearchService {
         return shareResults;
     }
 
+    @Override
+    public List<WebPageResult> getSchool(String keyword, int start, int num) {
+        List<WebPageResult> results = null;
+        return results;
+    }
+
 }

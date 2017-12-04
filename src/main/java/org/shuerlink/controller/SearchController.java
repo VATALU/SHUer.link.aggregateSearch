@@ -5,6 +5,10 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 
+import org.shuerlink.model.ImageResult;
+import org.shuerlink.model.ShareResult;
+import org.shuerlink.model.VedioResult;
+import org.shuerlink.model.WebPageResult;
 import org.shuerlink.serviceImpl.SearchServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +29,12 @@ public class SearchController {
 
     @RequestMapping(value = "/webpage", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    List<?> searchWebPage(String keyword,
-                                @RequestParam(defaultValue = "0") int start,
-                                @RequestParam(defaultValue = "10") int num) {
+    List<WebPageResult> searchWebPage(String keyword,
+                                      @RequestParam(defaultValue = "0") int start,
+                                      @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
-        List<?> result = null;
+        List<WebPageResult> result = null;
         result = searchService.getWebpage(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
@@ -38,40 +42,54 @@ public class SearchController {
 
     @RequestMapping(value = "/image", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    List<?> searchImage(String keyword,
-                              @RequestParam(defaultValue = "0") int start,
-                                @RequestParam(defaultValue = "10") int num) {
+    List<ImageResult> searchImage(String keyword,
+                                  @RequestParam(defaultValue = "0") int start,
+                                  @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
-        List<?> result = null;
-        result = searchService.getImage(keyword, start,num);
+        List<ImageResult> result = null;
+        result = searchService.getImage(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
 
     @RequestMapping(value = "/vedio", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    List<?> searchVedio(String keyword,
-                              @RequestParam(defaultValue = "0") int start,
-                              @RequestParam(defaultValue = "10") int num) {
+    List<VedioResult> searchVedio(String keyword,
+                                  @RequestParam(defaultValue = "0") int start,
+                                  @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
-        List<?> result = null;
+        List<VedioResult> result = null;
         result = searchService.getVedio(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
 
-    @RequestMapping(value = "/article" , produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/article", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    List<?> searchArticle(String keyword,
-                        @RequestParam(defaultValue = "0") int start,
-                        @RequestParam(defaultValue = "10") int num) {
+    List<ShareResult> searchArticle(String keyword,
+                                    @RequestParam(defaultValue = "0") int start,
+                                    @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
-        List<?> result = null;
+        List<ShareResult> result = null;
         result = searchService.getShare(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
+
+    @RequestMapping(value = "/school", produces = "application/json; charset=utf-8")
+    public @ResponseBody
+    List<WebPageResult> searchSchool(String keyword,
+                                     @RequestParam(defaultValue = "0") int start,
+                                     @RequestParam(defaultValue = "10") int num) {
+        logger.info(keyword);
+        Long startTime = System.currentTimeMillis();
+        List<WebPageResult> result = null;
+        result = searchService.getSchool(keyword, start, num);
+        System.out.println(System.currentTimeMillis() - startTime);
+        return result;
+    }
+
 }

@@ -14,4 +14,6 @@ public interface SearchService {
     public List<VedioResult> getVedio(String keyword, int start, int num);
 
     public List<ShareResult> getShare(String keyword, int start, int num);
+
+    public List<WebPageResult> getSchool(String keyword, int start, int num);
 }
