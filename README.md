@@ -18,12 +18,11 @@
 - [x] Google
 ### VedioCrawler
 - [x] 百度搜索
-- [ ] 必应搜索
+- [X] 必应搜索
 - [ ] Google
-- [ ] 优酷
-- [ ] 土豆
-- [ ] bilibili
-- [ ] 爱奇艺
+- [X] 优酷土豆
+- [X] bilibili
+- [X] 爱奇艺
 ### ShareCrawler
 - [ ] 知乎
 - [ ] 简书
