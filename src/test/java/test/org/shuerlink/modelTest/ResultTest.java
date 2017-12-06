@@ -1,8 +1,8 @@
 package test.org.shuerlink.modelTest;
 
 import org.junit.Test;
-import org.shuerlink.model.Result;
-import org.shuerlink.model.WebPageResult;
+import org.shuerlink.model.Result.Result;
+import org.shuerlink.model.Result.WebPageResult;
 
 public class ResultTest {
     @Test

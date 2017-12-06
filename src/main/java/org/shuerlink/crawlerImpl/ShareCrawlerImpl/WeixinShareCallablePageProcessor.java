@@ -2,18 +2,14 @@ package org.shuerlink.crawlerImpl.ShareCrawlerImpl;
 
 import org.shuerlink.crawler.ShareCallablePageProcessor;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.shuerlink.model.*;
+import org.shuerlink.model.Result.ShareResult;
 import org.shuerlink.util.AssessScore;
 import org.springframework.stereotype.Repository;
 import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Site;
-
-import static ucar.coord.Coordinate.Type.time;
 
 @Repository
 public class WeixinShareCallablePageProcessor extends ShareCallablePageProcessor {

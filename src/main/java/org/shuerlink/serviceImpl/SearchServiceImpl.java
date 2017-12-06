@@ -1,6 +1,5 @@
 package org.shuerlink.serviceImpl;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,11 +14,13 @@ import org.shuerlink.crawlerImpl.VedioCrawlerImpl.*;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BaiduWebpageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BingWebpageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.GoogleWebpageCallablePageProcessor;
-import org.shuerlink.model.*;
+import org.shuerlink.model.Result.ImageResult;
+import org.shuerlink.model.Result.ShareResult;
+import org.shuerlink.model.Result.VedioResult;
+import org.shuerlink.model.Result.WebPageResult;
 import org.shuerlink.service.SearchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
-import us.codecraft.webmagic.Spider;
 
 /**
  * @author VATALU

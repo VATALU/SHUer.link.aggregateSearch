@@ -5,10 +5,10 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 
-import org.shuerlink.model.ImageResult;
-import org.shuerlink.model.ShareResult;
-import org.shuerlink.model.VedioResult;
-import org.shuerlink.model.WebPageResult;
+import org.shuerlink.model.Result.ImageResult;
+import org.shuerlink.model.Result.ShareResult;
+import org.shuerlink.model.Result.VedioResult;
+import org.shuerlink.model.Result.WebPageResult;
 import org.shuerlink.serviceImpl.SearchServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

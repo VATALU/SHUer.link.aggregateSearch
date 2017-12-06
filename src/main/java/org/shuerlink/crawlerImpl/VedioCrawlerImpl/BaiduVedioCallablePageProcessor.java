@@ -4,14 +4,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.shuerlink.crawler.VedioCallablePageProcessor;
-import org.shuerlink.model.VedioResult;
+import org.shuerlink.model.Result.VedioResult;
 import org.shuerlink.util.AssessScore;
 import org.springframework.stereotype.Repository;
 import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Site;
 
 import java.util.LinkedList;
-import java.util.List;
 
 @Repository
 public class BaiduVedioCallablePageProcessor extends VedioCallablePageProcessor {

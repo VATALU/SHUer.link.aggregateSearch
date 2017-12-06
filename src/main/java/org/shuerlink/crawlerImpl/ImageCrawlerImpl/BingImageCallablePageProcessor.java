@@ -5,16 +5,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.shuerlink.crawler.ImageCallablePageProcessor;
-import org.shuerlink.model.ImageResult;
+import org.shuerlink.model.Result.ImageResult;
 import org.shuerlink.util.AssessScore;
 import org.springframework.stereotype.Repository;
 import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.selector.Html;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 @Repository

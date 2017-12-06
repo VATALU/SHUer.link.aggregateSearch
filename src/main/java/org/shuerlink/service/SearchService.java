@@ -1,9 +1,11 @@
 package org.shuerlink.service;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import org.shuerlink.model.*;
+import org.shuerlink.model.Result.ImageResult;
+import org.shuerlink.model.Result.ShareResult;
+import org.shuerlink.model.Result.VedioResult;
+import org.shuerlink.model.Result.WebPageResult;
 
 
 public interface SearchService {

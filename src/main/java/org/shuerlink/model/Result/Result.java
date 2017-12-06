@@ -1,4 +1,4 @@
-package org.shuerlink.model;
+package org.shuerlink.model.Result;
 
 public class Result  implements Comparable<Result> {
     protected String searchEngine;

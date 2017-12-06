@@ -1,17 +1,15 @@
 package org.shuerlink.crawlerImpl.WebpageCrawlerImpl;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.shuerlink.crawler.WebPageCallablePageProcessor;
-import org.shuerlink.model.WebPageResult;
+import org.shuerlink.model.Result.WebPageResult;
 import org.shuerlink.util.AssessScore;
 import org.springframework.stereotype.Repository;
 import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Site;
 
 @Repository
 public class BingWebpageCallablePageProcessor extends WebPageCallablePageProcessor {

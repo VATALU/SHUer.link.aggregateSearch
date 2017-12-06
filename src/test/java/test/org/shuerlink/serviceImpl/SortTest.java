@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import org.junit.Test;
-import org.shuerlink.model.WebPageResult;
+import org.shuerlink.model.Result.WebPageResult;
 
 public class SortTest {
 	@Test

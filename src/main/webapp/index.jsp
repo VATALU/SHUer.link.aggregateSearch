@@ -22,5 +22,9 @@
 <form action="/search/article">
     article:<input type="text" name="keyword"> <input type="submit" value="搜索">
 </form>
+<form action="/login" method="post">
+    client:<input type="text" name="userName"><input type="password" name="password">
+    <input type="submit" value="登陆">
+</form>
 </body>
 </html>
