@@ -1,7 +1,9 @@
 package test.org.shuerlink.Login;
 
 import org.junit.Test;
-import org.shuerlink.client.Client;
+import org.shuerlink.client.ServiceClient;
+import org.shuerlink.client.ShuzhiClient;
+import org.shuerlink.model.Student.Student;
 
 import java.io.IOException;
 
@@ -10,9 +12,10 @@ public class ClientTest {
     public void testLoginShuzhi(){
         String userName = "";
         String password = "";
-        Client client = new Client();
+        ShuzhiClient client = new ShuzhiClient();
+        Student student = new Student();
         try {
-            System.out.println(client.loginShuzhi(userName,password));
+            System.out.println(client.login(userName,password,student));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -22,9 +25,10 @@ public class ClientTest {
     public void testLoginService(){
         String userName = "";
         String password = "";
-        Client client = new Client();
+        ServiceClient client = new ServiceClient();
+        Student student = new Student();
         try {
-            System.out.println(client.loginService(userName,password));
+            System.out.println(client.login(userName,password,student));
         } catch (IOException e) {
             e.printStackTrace();
         }

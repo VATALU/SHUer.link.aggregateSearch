@@ -3,8 +3,17 @@ package org.shuerlink.model.Student;
 public class StudentInfo {
     private boolean isLogined;
     private String name;
+    private String nickname;
     private String avatar;
     private Custom custom;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public boolean isLogined() {
         return isLogined;
