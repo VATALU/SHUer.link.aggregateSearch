@@ -8,7 +8,7 @@ import org.shuerlink.crawler.CallableSpider;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BaiduImageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BingImageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.GoogleImageCallablePageProcessor;
-import org.shuerlink.crawlerImpl.ShareCrawlerImpl.JianshuShareCallablePageProcessor;
+import org.shuerlink.crawlerImpl.ShareCrawlerImpl.WeixinShareCallablePageProcessor;
 import org.shuerlink.crawlerImpl.ShareCrawlerImpl.ZhihuShareCallablePageProcessor;
 import org.shuerlink.crawlerImpl.VedioCrawlerImpl.*;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BaiduWebpageCallablePageProcessor;
@@ -53,9 +53,9 @@ public class SearchServiceImpl implements SearchService {
     @Resource
     private BilibiliVedioCallablePageProcessor bilibiliVedioCallablePageProcessor;
     @Resource
-    private JianshuShareCallablePageProcessor jianshuShareCallablePageProcessor;
-    @Resource
     private ZhihuShareCallablePageProcessor zhihuShareCallablePageProcessor;
+    @Resource
+    private WeixinShareCallablePageProcessor weixinShareCallablePageProcessor;
     /*
     * 搜索网页
     * */
@@ -114,7 +114,8 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<ShareResult> getShare(String keyword, int start, int num) {
         CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num,
-                jianshuShareCallablePageProcessor,zhihuShareCallablePageProcessor).setThreadPoolTask(taskExecutor);
+                zhihuShareCallablePageProcessor,
+                weixinShareCallablePageProcessor).setThreadPoolTask(taskExecutor);
         List<ShareResult> shareResults = callableSpider.call();
 
         shareResults.sort((t1,t2)->(t1.compareTo(t2)));

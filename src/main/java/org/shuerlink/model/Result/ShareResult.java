@@ -6,9 +6,9 @@ public class ShareResult extends Result {
     private String imageUrl;
     private String authorurl;
     private String time;
-    private int Voters;
-    private int visitor;
-    private int comment;
+    private Integer Voters;
+    private Integer visitor;
+    private Integer comment;
     private String discription;
 
     public String getAuthorname() {
@@ -43,27 +43,27 @@ public class ShareResult extends Result {
         this.time = time;
     }
 
-    public int getVoters() {
+    public Integer getVoters() {
         return Voters;
     }
 
-    public void setVoters(int voters) {
+    public void setVoters(Integer voters) {
         Voters = voters;
     }
 
-    public int getVisitor() {
+    public Integer getVisitor() {
         return visitor;
     }
 
-    public void setVisitor(int visitor) {
+    public void setVisitor(Integer visitor) {
         this.visitor = visitor;
     }
 
-    public int getComment() {
+    public Integer getComment() {
         return comment;
     }
 
-    public void setComment(int comment) {
+    public void setComment(Integer comment) {
         this.comment = comment;
     }
 

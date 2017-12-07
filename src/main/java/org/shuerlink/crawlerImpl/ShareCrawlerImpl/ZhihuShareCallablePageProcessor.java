@@ -56,9 +56,6 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
             else
                 voters=Integer.parseInt(element.select("a.zm-item-vote-count.hidden-expanded.js-expand.js-vote-count").text());
             shareResult.setVoters(voters);
-            //设置visitor
-            int visitor=0;
-            shareResult.setVisitor(visitor);
             //设置comment
             String s=element.select("a.action-item.js-toggleCommentBox").select("span.label").text();
             int comment;

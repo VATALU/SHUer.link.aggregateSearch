@@ -46,13 +46,6 @@ public class WeixinShareCallablePageProcessor extends ShareCallablePageProcessor
             //设置time
             String time=element.select("div.s-p").select("span.s2").text();
             shareResult.setTime(time);
-            //设置voters
-            shareResult.setVoters(0);
-            //设置visitor
-            int visitor=0;
-            shareResult.setVisitor(visitor);
-            //设置comment
-            shareResult.setComment(0);
             //设置discription
             String discription=element.select("p.txt-info").text();
             shareResult.setDiscription(discription);
