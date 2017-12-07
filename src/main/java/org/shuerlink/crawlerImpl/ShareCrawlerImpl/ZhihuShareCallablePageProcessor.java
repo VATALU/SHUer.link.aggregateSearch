@@ -22,7 +22,7 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
     public LinkedList<ShareResult> process(Document document) {
         LinkedList<ShareResult> resultLinkedList = new LinkedList<>();
         Elements elements = document.select("li.item.clearfix").select("[data-type=\"Answer\"]");
-        //System.out.println(elements);
+        System.out.println(elements);
         int i = 1;
         for (Element element : elements) {
             ShareResult shareResult = new ShareResult();
@@ -32,6 +32,8 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
             shareResult.setScore(AssessScore.assess(i++,"zhihu"));
             //设置authorName
             String authorName = element.select("span.author-link-line").select("a").text();
+            if (authorName.length()==0)
+                authorName="匿名用户";
             shareResult.setAuthorname(authorName);
             //设置imageurl
             String imageurl = element.select("img.Avatar.Avatar--xs").attr("src");
@@ -44,15 +46,24 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
             shareResult.setTitle(title);
             //设置authorurl
             String authorurl = element.select("a.author.author-link").attr("href");
-            shareResult.setAuthorurl(temp+authorurl);
+            if (authorurl.length()==0)
+                authorurl=null;
+            else
+                authorurl=temp+authorurl;
+            shareResult.setAuthorurl(authorurl);
             //设置time
             String time=element.select("a.time.text-muted").text();
             shareResult.setTime(time);
             //设置voters
             String ss=getInt(element.select("a.zm-item-vote-count.hidden-expanded.js-expand.js-vote-count").text());
             int voters;
-            if (ss.length()==0)
-                voters=0;
+            if (ss.length()==0){
+                ss=getInt(element.select("div.zm-item-vote-count.js-expand.js-vote-count").text());
+                if (ss.length()==0)
+                    voters=0;
+                else
+                    voters=Integer.parseInt(ss);
+            }
             else
                 voters=Integer.parseInt(element.select("a.zm-item-vote-count.hidden-expanded.js-expand.js-vote-count").text());
             shareResult.setVoters(voters);
