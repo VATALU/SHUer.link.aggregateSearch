@@ -2,33 +2,60 @@ package org.shuerlink.serviceImpl;
 
 import org.shuerlink.client.ServiceClient;
 import org.shuerlink.client.ShuzhiClient;
-import org.shuerlink.model.Student.Student;
+import org.shuerlink.daoImpl.StudentDaoImpl;
+import org.shuerlink.model.Student.StudentInfo;
 import org.shuerlink.service.SHULoginService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Map;
 
 @Service
 public class SHULoginServiceImpl implements SHULoginService {
-    public boolean loginSHUStudent(String userName, String password, Student student) {
+    @Resource
+    private ServiceClient serviceClient;
+    @Resource
+    private ShuzhiClient shuzhiClient;
+    @Resource
+    private StudentDaoImpl studentDao;
+
+    public StudentInfo loginSHUStudent(String userName, String password) {
+        StudentInfo studentInfo = new StudentInfo();
+        studentInfo.setId(userName);
         try {
-            ServiceClient serviceClient = new ServiceClient();
-            boolean isLogined = serviceClient.login(userName, password, student);
-            if(isLogined){
-                serviceClient.getData(student);
+            Map<String, String> cookies = serviceClient.login(userName, password);
+            if (cookies != null) {
+                studentInfo.setLogined(true);
+                serviceClient.getData(studentInfo, cookies);
+            } else {
+                studentInfo.setLogined(false);
             }
-            return isLogined;
         } catch (IOException e) {
+            e.printStackTrace();
             try {
-                ShuzhiClient shuzhiClient = new ShuzhiClient();
-                boolean isLogined = shuzhiClient.login(userName, password, student);
-                if(!isLogined){
-                    shuzhiClient.getData(student);
+                Map<String, String> cookies = shuzhiClient.login(userName, password);
+                if (cookies != null) {
+                    studentInfo.setLogined(true);
+                    shuzhiClient.getData(studentInfo, cookies);
+                } else {
+                    studentInfo.setLogined(false);
                 }
-                return isLogined;
             } catch (IOException e1) {
-                return false;
+                e1.printStackTrace();
             }
         }
+        if (studentInfo.isLogined()) {
+            StudentInfo dBstudentInfo = studentDao.findOneById(studentInfo.getId());
+            if (dBstudentInfo == null) {
+                studentDao.save(studentInfo);
+            }else{
+                studentInfo = dBstudentInfo;
+                studentInfo.setLogined(true);
+            }
+        } else {
+            studentInfo.setLogined(false);
+        }
+        return studentInfo;
     }
 }

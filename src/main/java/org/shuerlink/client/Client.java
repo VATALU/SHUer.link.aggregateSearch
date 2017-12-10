@@ -1,14 +1,15 @@
 package org.shuerlink.client;
 
-import org.shuerlink.model.Student.Student;
+import org.shuerlink.model.Student.StudentInfo;
 
 import java.io.IOException;
+import java.util.Map;
 
 public interface Client {
 
-    public void getData(Student student) throws IOException;
+    public void getData(StudentInfo studentInfo,Map<String, String> cookies) throws IOException;
 
-    public boolean login(String userName, String password, Student student) throws IOException;
+    public Map<String, String> login(String userName, String password) throws IOException;
 
 
 }

@@ -1,34 +1,39 @@
 package test.org.shuerlink.Login;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.shuerlink.client.ServiceClient;
 import org.shuerlink.client.ShuzhiClient;
-import org.shuerlink.model.Student.Student;
+import org.shuerlink.model.Student.StudentInfo;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class ClientTest {
     @Test
-    public void testLoginShuzhi(){
+    public void testLoginShuzhi() {
         String userName = "";
         String password = "";
         ShuzhiClient client = new ShuzhiClient();
-        Student student = new Student();
+        StudentInfo student = new StudentInfo();
         try {
-            System.out.println(client.login(userName,password,student));
+            System.out.println(client.login(userName, password));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testLoginService(){
+    public void testLoginService() {
         String userName = "";
         String password = "";
         ServiceClient client = new ServiceClient();
-        Student student = new Student();
+        StudentInfo studentInfo = new StudentInfo();
         try {
-            System.out.println(client.login(userName,password,student));
+            Map<String, String> cookies = client.login(userName, password);
+            client.getData(studentInfo, cookies);
+            System.out.println(studentInfo.getName() + " " + studentInfo.getNickname());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,5 @@
 package org.shuerlink.controller;
 
-import org.shuerlink.model.Student.Student;
 import org.shuerlink.model.Student.StudentInfo;
 import org.shuerlink.serviceImpl.SHULoginServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -18,8 +17,7 @@ public class LoginController {
     @RequestMapping(value = "/login", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
     public @ResponseBody
     StudentInfo loginStudent(String userName, String password) {
-        Student student = new Student();
-        loginService.loginSHUStudent(userName, password, student);
-        return student.getStudentInfo();
+        StudentInfo studentInfo = loginService.loginSHUStudent(userName, password);
+        return studentInfo;
     }
 }

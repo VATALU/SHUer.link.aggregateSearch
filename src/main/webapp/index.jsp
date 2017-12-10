@@ -26,5 +26,9 @@
     client:<input type="text" name="userName"><input type="password" name="password">
     <input type="submit" value="登陆">
 </form>
+<form action="/api" method="post">
+    api:<<textarea name="login" id="" cols="30" rows="10"></textarea>
+    <input type="submit" value="查询">
+</form>
 </body>
 </html>

@@ -5,40 +5,38 @@ import com.alibaba.fastjson.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.shuerlink.model.Student.Student;
 import org.shuerlink.model.Student.StudentInfo;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.Map;
 
+@Repository
 public class ShuzhiClient implements Client {
 
     private static final String host = "http://www.sz.shu.edu.cn";
 
-    public boolean login(String userName, String password, Student student) throws IOException {
+    public Map<String, String> login(String userName, String password) throws IOException {
         Connection.Response response = Jsoup.connect(host + "/api/Sys/Users/Client")
                 .data("userName", userName)
                 .data("password", password)
                 .userAgent("Mozilla")
                 .timeout(1000 * 10)
                 .method(Connection.Method.POST).ignoreContentType(true).execute();
-        Map<String, String> stringMap = response.cookies();
-        student.setCookie(stringMap);
         JSONObject jsonObject = JSON.parseObject(response.body());
         if (jsonObject.get("message").equals("成功")) {
-            student.getStudentInfo().setLogined(true);
-            return true;
+            Map<String, String> cookies = response.cookies();
+            return cookies;
         } else {
-            student.getStudentInfo().setLogined(false);
-            return false;
+            return null;
         }
     }
 
 
     @Override
-    public void getData(Student student) throws IOException {
+    public void getData(StudentInfo studentInfo, Map<String, String> cookies) throws IOException {
         Document document = Jsoup.connect(host + "/people/personinfo.aspx")
-                .headers(student.getCookie())
+                .headers(cookies)
                 .userAgent("Mozilla")
                 .timeout(100)
                 .get();

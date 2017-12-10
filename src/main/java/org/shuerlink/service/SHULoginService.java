@@ -1,7 +1,7 @@
 package org.shuerlink.service;
 
-import org.shuerlink.model.Student.Student;
+import org.shuerlink.model.Student.StudentInfo;
 
 public interface SHULoginService {
-    public boolean loginSHUStudent (String userName, String password, Student student);
+    public StudentInfo loginSHUStudent (String userName, String password);
 }
