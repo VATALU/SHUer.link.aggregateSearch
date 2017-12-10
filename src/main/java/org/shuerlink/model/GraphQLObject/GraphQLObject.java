@@ -8,8 +8,8 @@ import static graphql.schema.GraphQLObjectType.newObject;
 
 public class GraphQLObject {
     public static GraphQLObjectType wallpaperCategory = newObject().name("wallpaperCategory")
-            .field(newFieldDefinition().name("SHU").type(Scalars.GraphQLString).build())
-            .field(newFieldDefinition().name("others").type(Scalars.GraphQLString).build()).build();
+            .field(newFieldDefinition().name("SHU").type(Scalars.GraphQLBoolean).build())
+            .field(newFieldDefinition().name("others").type(Scalars.GraphQLBoolean).build()).build();
 
     public static GraphQLObjectType shuerlink = newObject().name("shuerlink")
             .field(newFieldDefinition().name("autoChangeWallpaper").type(Scalars.GraphQLBoolean).build())
