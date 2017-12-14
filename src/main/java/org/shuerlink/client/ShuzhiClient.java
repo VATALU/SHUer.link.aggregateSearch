@@ -16,12 +16,13 @@ public class ShuzhiClient implements Client {
 
     private static final String host = "http://www.sz.shu.edu.cn";
 
+    @Deprecated
     public Map<String, String> login(String userName, String password) throws IOException {
         Connection.Response response = Jsoup.connect(host + "/api/Sys/Users/Client")
                 .data("userName", userName)
                 .data("password", password)
                 .userAgent("Mozilla")
-                .timeout(1000 * 10)
+                .timeout(1000 * 100)
                 .method(Connection.Method.POST).ignoreContentType(true).execute();
         JSONObject jsonObject = JSON.parseObject(response.body());
         if (jsonObject.get("message").equals("成功")) {
@@ -33,6 +34,7 @@ public class ShuzhiClient implements Client {
     }
 
 
+    @Deprecated
     @Override
     public void getData(StudentInfo studentInfo, Map<String, String> cookies) throws IOException {
         Document document = Jsoup.connect(host + "/people/personinfo.aspx")

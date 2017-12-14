@@ -66,30 +66,30 @@ public class SearchController {
         return result;
     }
 
-    @RequestMapping(value = "/article", produces = "application/json; charset=utf-8")
-    public @ResponseBody
-    List<ShareResult> searchArticle(String keyword,
-                                    @RequestParam(defaultValue = "0") int start,
-                                    @RequestParam(defaultValue = "10") int num) {
-        logger.info(keyword);
-        Long startTime = System.currentTimeMillis();
-        List<ShareResult> result = null;
-        result = searchService.getShare(keyword, start, num);
-        System.out.println(System.currentTimeMillis() - startTime);
-        return result;
-    }
+//    @RequestMapping(value = "/article", produces = "application/json; charset=utf-8")
+//    public @ResponseBody
+//    List<ShareResult> searchArticle(String keyword,
+//                                    @RequestParam(defaultValue = "0") int start,
+//                                    @RequestParam(defaultValue = "10") int num) {
+//        logger.info(keyword);
+//        Long startTime = System.currentTimeMillis();
+//        List<ShareResult> result = null;
+//        result = searchService.getShare(keyword, start, num);
+//        System.out.println(System.currentTimeMillis() - startTime);
+//        return result;
+//    }
 
-    @RequestMapping(value = "/school", produces = "application/json; charset=utf-8")
-    public @ResponseBody
-    List<WebPageResult> searchSchool(String keyword,
-                                     @RequestParam(defaultValue = "0") int start,
-                                     @RequestParam(defaultValue = "10") int num) {
-        logger.info(keyword);
-        Long startTime = System.currentTimeMillis();
-        List<WebPageResult> result = null;
-        result = searchService.getSchool(keyword, start, num);
-        System.out.println(System.currentTimeMillis() - startTime);
-        return result;
-    }
+//    @RequestMapping(value = "/school", produces = "application/json; charset=utf-8")
+//    public @ResponseBody
+//    List<WebPageResult> searchSchool(String keyword,
+//                                     @RequestParam(defaultValue = "0") int start,
+//                                     @RequestParam(defaultValue = "10") int num) {
+//        logger.info(keyword);
+//        Long startTime = System.currentTimeMillis();
+//        List<WebPageResult> result = null;
+//        result = searchService.getSchool(keyword, start, num);
+//        System.out.println(System.currentTimeMillis() - startTime);
+//        return result;
+//    }
 
 }

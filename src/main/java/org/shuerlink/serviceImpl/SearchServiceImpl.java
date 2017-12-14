@@ -63,7 +63,7 @@ public class SearchServiceImpl implements SearchService {
     public List<WebPageResult> getWebpage(String keyword, int start, int num) {
         CallableSpider callableSpider = CallableSpider.newInstance(keyword, start, num,
                 baiduWebpageCallablePageProcessor,
-//              googleWebpageCallablePageProcessor,
+              googleWebpageCallablePageProcessor,
                 bingWebpageCallablePageProcessor
         ).setThreadPoolTask(taskExecutor);
 

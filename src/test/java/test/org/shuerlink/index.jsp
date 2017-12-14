@@ -3,7 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;no-cache">
+
     <title>Insert title here</title>
 </head>
 <body>
@@ -27,7 +28,7 @@
     <input type="submit" value="登陆">
 </form>
 <form action="/api" method="post">
-    api:<<textarea name="login" id="" cols="30" rows="10"></textarea>
+    api:<textarea name="login" id="" cols="30" rows="10"></textarea>
     <input type="submit" value="查询">
 </form>
 </body>

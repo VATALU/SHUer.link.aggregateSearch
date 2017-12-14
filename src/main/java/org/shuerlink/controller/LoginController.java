@@ -14,10 +14,10 @@ public class LoginController {
     @Resource
     private SHULoginServiceImpl loginService;
 
-    @RequestMapping(value = "/login", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
-    public @ResponseBody
-    StudentInfo loginStudent(String userName, String password) {
-        StudentInfo studentInfo = loginService.loginSHUStudent(userName, password);
-        return studentInfo;
-    }
+//    @requestmapping(value = "/login", produces = "application/json; charset=utf-8", method = requestmethod.post)
+//    public @responsebody
+//    studentinfo loginstudent(string username, string password) {
+//        studentinfo studentinfo = loginservice.loginshustudent(username, password);
+//        return studentinfo;
+//    }
 }

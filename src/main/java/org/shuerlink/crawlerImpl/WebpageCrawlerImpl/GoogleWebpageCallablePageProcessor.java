@@ -14,7 +14,7 @@ import java.util.LinkedList;
 @Repository
 public class GoogleWebpageCallablePageProcessor extends WebPageCallablePageProcessor {
 
-    public static final String url = "https://g.shuer.link/search?";
+    public static final String url = "https://g6.shuosc.org/search?";
 
     @Override
     public LinkedList<WebPageResult> getResults(Page page) {

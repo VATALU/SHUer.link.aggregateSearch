@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 @Repository
 public class GoogleImageCallablePageProcessor extends ImageCallablePageProcessor {
 
-    public static final String url = "http://g.shuer.link/search?";
+    public static final String url = "https://g6.shuosc.org/search?";
 
     @Override
     public LinkedList<ImageResult> getResults(Page page) {

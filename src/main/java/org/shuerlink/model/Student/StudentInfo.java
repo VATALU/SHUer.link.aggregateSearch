@@ -13,7 +13,7 @@ public class StudentInfo {
     private String avatar = "avatar_default.jpg";
     @Transient
     private boolean Logined = false;
-    private Custom custom = new Custom();
+    private Custom custom;
 
     public String getId() {
         return id;
