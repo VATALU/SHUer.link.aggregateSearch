@@ -21,7 +21,7 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
     }
     public LinkedList<ShareResult> process(Document document) {
         LinkedList<ShareResult> resultLinkedList = new LinkedList<>();
-        Elements elements = document.select("li.item.clearfix").select("[data-type=\"Answer\"]");
+        Elements elements = document.select("div.Card").select("div.List-item");
         System.out.println(elements);
         int i = 1;
         for (Element element : elements) {
@@ -31,52 +31,45 @@ public class ZhihuShareCallablePageProcessor extends ShareCallablePageProcessor 
             //设置score
             shareResult.setScore(AssessScore.assess(i++,"zhihu"));
             //设置authorName
-            String authorName = element.select("span.author-link-line").select("a").text();
+            String authorName = element.select("span.RichText.CopyrightRichText-richText").text();
             if (authorName.length()==0)
                 authorName="匿名用户";
+            else authorName=authorName.substring(0,authorName.indexOf("："));
             shareResult.setAuthorname(authorName);
             //设置imageurl
-            String imageurl = element.select("img.Avatar.Avatar--xs").attr("src");
-            shareResult.setImageUrl(imageurl);
+            shareResult.setImageUrl(null);
             //设置url
-            String url = element.select("a.js-title-link").attr("href");
-            shareResult.setUrl(temp+url);
+            String url = element.select("meta").select("[itemprop=\"url\"]").attr("content");
+            if (url.length()==0)
+                continue;
+            shareResult.setUrl(url);
             //设置title
-            String title = element.select("a.js-title-link").text();
+            String title = element.select("span.Highlight").text();
             shareResult.setTitle(title);
             //设置authorurl
-            String authorurl = element.select("a.author.author-link").attr("href");
-            if (authorurl.length()==0)
-                authorurl=null;
-            else
-                authorurl=temp+authorurl;
-            shareResult.setAuthorurl(authorurl);
+            shareResult.setAuthorurl(null);
             //设置time
-            String time=element.select("a.time.text-muted").text();
-            shareResult.setTime(time);
+            shareResult.setTime(null);
             //设置voters
-            String ss=getInt(element.select("a.zm-item-vote-count.hidden-expanded.js-expand.js-vote-count").text());
+            String ss=getInt(element.select("button.Button.VoteButton.VoteButton--up").text());
             int voters;
-            if (ss.length()==0){
-                ss=getInt(element.select("div.zm-item-vote-count.js-expand.js-vote-count").text());
-                if (ss.length()==0)
-                    voters=0;
-                else
-                    voters=Integer.parseInt(ss);
-            }
+            if (ss.length()==0)
+                voters=0;
             else
-                voters=Integer.parseInt(element.select("a.zm-item-vote-count.hidden-expanded.js-expand.js-vote-count").text());
+                voters=Integer.parseInt(ss);
             shareResult.setVoters(voters);
             //设置comment
-            String s=element.select("a.action-item.js-toggleCommentBox").select("span.label").text();
+            String s=element.select("button.Button.ContentItem-action.Button--plain.Button--withIcon.Button--withLabel").text().trim();
             int comment;
-            if (s.indexOf("条")>0)
-                comment=Integer.parseInt(s.substring(0,s.indexOf("条")-1));
+            if (s.indexOf("条")>0){
+                comment=Integer.parseInt(s.substring(2,s.indexOf("条")-1));
+            }
             else
                 comment=0;
             shareResult.setComment(comment);
             //设置discription
-            String discription=element.select("div.summary.hidden-expanded").text();
+            String discription=element.select("span.RichText.CopyrightRichText-richText").text();
+            discription=discription.substring(discription.indexOf("：")+1);
             shareResult.setDiscription(discription);
             resultLinkedList.add(shareResult);
         }
