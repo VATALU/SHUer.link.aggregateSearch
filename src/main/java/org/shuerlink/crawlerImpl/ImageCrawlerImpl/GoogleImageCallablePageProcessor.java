@@ -25,42 +25,48 @@ public class GoogleImageCallablePageProcessor extends ImageCallablePageProcessor
 
     public LinkedList<ImageResult> process(Document document) {
         LinkedList<ImageResult> resultList = new LinkedList<>();
-        Elements images_table = document.select(".images_table");
-        Elements trs = images_table.select("tbody tr");
+        Elements trs = document.select("div.rg_bx.rg_di.rg_el.ivg-i");
+        //System.out.println(trs);
         int i = 0;
         for (Element tr : trs) {
-            Elements tds = tr.select("td");
-            for (Element td : tds) {
                 ImageResult imageResult = new ImageResult();
                 //设置搜索引擎
                 imageResult.setSearchEngine("谷歌");
                 //设置url
-                imageResult.setUrl(td.select("img").attr("src"));
+                String url=tr.select("div.rg_meta.notranslate").text();
+                url=url.substring(url.indexOf("\"ou\":\"")+6,url.indexOf("\",\"ow\""));
+                imageResult.setUrl(url);
                 //设置hostUrl
-                imageResult.setHostUrl(td.select("a").attr("href").substring(7));
+                String hostUrl=tr.select("div.rg_meta.notranslate").text();
+                hostUrl=hostUrl.substring(hostUrl.indexOf("\"ru\":\"")+6,hostUrl.indexOf("\",\"s\""));
+                imageResult.setHostUrl(hostUrl);
                 //设置title
-                imageResult.setTitle(td.select("cite").attr("title"));
+                String title=tr.select("div.rg_meta.notranslate").text();
+                if (title.indexOf("\",\"st\"")>0)
+                    title=title.substring(title.indexOf("\"s\":\"")+5,title.indexOf("\",\"st\""));
+                else
+                    title=null;
+                imageResult.setTitle(title);
                 //设置discription
-                String html = td.html();
-                int titleBegin = html.lastIndexOf("</cite><br>") + 11;
-                int tileEnd = html.lastIndexOf("<br>");
-                imageResult.setDiscription(html.substring(titleBegin, tileEnd).replace("</b>", " ").replace("<b>", " "));
+                String discription=tr.select("div.rg_meta.notranslate").text();
+                discription=discription.substring(discription.indexOf("\"pt\":\"")+6,discription.indexOf("\",\"rid\""));
+                imageResult.setDiscription(discription);
                 //设置height width
-                Pattern p1 = Pattern.compile("\\d{1,}\\s×\\s\\d{1,}");
-                Matcher m1 = p1.matcher(html);
-                if (m1.find()) {
-                    String[] size = m1.group().toString().split(" ");
-                    imageResult.setWidth(Integer.parseInt(size[0]));
-                    imageResult.setHeight(Integer.parseInt(size[2]));
-                }
+                String height=tr.select("span.rg_ilmn").text().trim();
+                System.out.println("gxy "+height);
+                height=height.substring(height.indexOf(" × ")+3,height.indexOf(" - "));
+                imageResult.setHeight(Integer.parseInt(height));
+                String width=tr.select("span.rg_ilmn").text().trim();
+                width=width.substring(0,width.indexOf(" × "));
+                imageResult.setWidth(Integer.parseInt(width));
                 //设置type
-                int typeBegin = html.lastIndexOf("&nbsp;-&nbsp;") + 13;
-                String type = html.substring(typeBegin, html.length());
+                String type=tr.select("span.rg_ilmn").text().trim();
+                type=type.substring(type.indexOf(" - ")+3);
                 imageResult.setType(type);
                 //设置score
                 imageResult.setScore(AssessScore.assess(i++, "google"));
                 resultList.add(imageResult);
-            }
+
         }
         return resultList;
     }
