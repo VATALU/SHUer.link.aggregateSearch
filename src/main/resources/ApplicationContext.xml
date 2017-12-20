@@ -38,5 +38,7 @@
         <property name="keepAliveSeconds" value="${executor.keepAliveSeconds}"/>
     </bean>
 
+   <import resource="mongodbkey.xml"/>
+
     <import resource="mongodb-context.xml"/>
 </beans>

@@ -9,10 +9,7 @@ import graphql.schema.GraphQLSchema;
 import org.shuerlink.model.GraphQLObject.GraphQLObject;
 import org.shuerlink.serviceImpl.SHULoginServiceImpl;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -28,7 +25,7 @@ public class ApiController {
 
     @RequestMapping(value = "/api", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
     public @ResponseBody
-    String loginSHUStudent(@RequestParam(name = "login") String login) {
+    String loginSHUStudent(@RequestBody  String query) {
         GraphQLFieldDefinition loginField = GraphQLFieldDefinition.newFieldDefinition().name("login")
                 .argument(newArgument().name("username").type(Scalars.GraphQLString).build())
                 .argument(newArgument().name("password").type(Scalars.GraphQLString).build())
@@ -44,7 +41,7 @@ public class ApiController {
                 .field(loginField)
                 .build()).build();
 
-        ExecutionResult re = GraphQL.newGraphQL(schema).build().execute(login);
+        ExecutionResult re = GraphQL.newGraphQL(schema).build().execute(query);
         Map<String, Object> result = re.getData();
         JSONObject json = new JSONObject();
         json.putAll(result);

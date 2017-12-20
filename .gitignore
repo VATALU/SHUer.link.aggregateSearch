@@ -6,3 +6,4 @@ aggregate-search.iml
 .classpath
 .project
 /logs
+src/main/resources/mongodbkey.xml
