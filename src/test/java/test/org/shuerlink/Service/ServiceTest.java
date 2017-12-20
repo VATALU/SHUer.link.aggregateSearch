@@ -14,8 +14,8 @@ public class ServiceTest {
     private SHULoginServiceImpl shuLoginService;
 
     public void testSHUClient() {
-        String userName = "16123070";
-        String password = "Gxy5478";
+        String userName = "";
+        String password = "";
         shuLoginService.loginSHUStudent(userName,password);
     }
 }

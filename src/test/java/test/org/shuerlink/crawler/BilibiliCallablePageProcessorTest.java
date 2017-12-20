@@ -3,7 +3,7 @@ package test.org.shuerlink.crawler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shuerlink.crawler.CallableSpider;
-import org.shuerlink.crawlerImpl.VedioCrawlerImpl.BilibiliVedioCallablePageProcessor;
+import org.shuerlink.crawlerImpl.VideoCrawlerImpl.BilibiliVideoCallablePageProcessor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,16 +17,16 @@ public class BilibiliCallablePageProcessorTest {
     @Resource
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
     @Resource
-    private BilibiliVedioCallablePageProcessor bilibiliVedioCallablePageProcessor;
+    private BilibiliVideoCallablePageProcessor bilibiliVideoCallablePageProcessor;
 
     @Test
-    public void testBilibiliVedioCrawler() {
+    public void testBilibiliVideoCrawler() {
         System.out.println("Start:");
         Long startTime = System.currentTimeMillis();
         String keyword = "可达鸭";
         int start = 0;
         int num = 10;
-        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num,bilibiliVedioCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
+        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num, bilibiliVideoCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
         System.out.println(callableSpider.call());
         System.out.println(System.currentTimeMillis() - startTime);
         System.out.println("End~");

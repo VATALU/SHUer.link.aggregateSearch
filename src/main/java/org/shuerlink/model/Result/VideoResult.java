@@ -1,6 +1,6 @@
 package org.shuerlink.model.Result;
 
-public class VedioResult extends Result {
+public class VideoResult extends Result {
     private String time;
     private String imageUrl;
     private String publishTime;

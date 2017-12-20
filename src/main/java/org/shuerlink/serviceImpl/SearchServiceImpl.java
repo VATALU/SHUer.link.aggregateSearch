@@ -10,13 +10,13 @@ import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BingImageCallablePageProcessor
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.GoogleImageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.ShareCrawlerImpl.WeixinShareCallablePageProcessor;
 import org.shuerlink.crawlerImpl.ShareCrawlerImpl.ZhihuShareCallablePageProcessor;
-import org.shuerlink.crawlerImpl.VedioCrawlerImpl.*;
+import org.shuerlink.crawlerImpl.VideoCrawlerImpl.*;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BaiduWebpageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BingWebpageCallablePageProcessor;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.GoogleWebpageCallablePageProcessor;
 import org.shuerlink.model.Result.ImageResult;
 import org.shuerlink.model.Result.ShareResult;
-import org.shuerlink.model.Result.VedioResult;
+import org.shuerlink.model.Result.VideoResult;
 import org.shuerlink.model.Result.WebPageResult;
 import org.shuerlink.service.SearchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -35,23 +35,23 @@ public class SearchServiceImpl implements SearchService {
     @Resource
     private BaiduWebpageCallablePageProcessor baiduWebpageCallablePageProcessor;
     @Resource
-    private BaiduVedioCallablePageProcessor baiduVedioCallablePageProcessor;
+    private BaiduVideoCallablePageProcessor baiduBaiduVideoCallablePageProcessor;
     @Resource
     private BingImageCallablePageProcessor bingImageCallablePageProcessor;
     @Resource
     private BingWebpageCallablePageProcessor bingWebpageCallablePageProcessor;
     @Resource
-    private BingVedioCallablePageProcessor bingVedioCallablePageProcessor;
+    private BingVideoCallablePageProcessor bingVideoCallablePageProcessor;
     @Resource
     private GoogleImageCallablePageProcessor googleImageCallablePageProcessor;
     @Resource
     private GoogleWebpageCallablePageProcessor googleWebpageCallablePageProcessor;
     @Resource
-    private YoukuVedioCallablePageProcessor youkuVedioCallablePageProcessor;
+    private YoukuVideoCallablePageProcessor youkuVideoCallablePageProcessor;
     @Resource
-    private IQIYIVedioCallablePageProcessor iqiyiVedioCallablePageProcessor;
+    private IQIYIVideoCallablePageProcessor iqiyiVideoCallablePageProcessor;
     @Resource
-    private BilibiliVedioCallablePageProcessor bilibiliVedioCallablePageProcessor;
+    private BilibiliVideoCallablePageProcessor bilibiliVideoCallablePageProcessor;
     @Resource
     private ZhihuShareCallablePageProcessor zhihuShareCallablePageProcessor;
     @Resource
@@ -99,16 +99,16 @@ public class SearchServiceImpl implements SearchService {
     * 搜索视频
     * */
     @Override
-    public List<VedioResult> getVedio(String keyword, int start, int num) {
+    public List<VideoResult> getVideo(String keyword, int start, int num) {
         CallableSpider callableSpider = CallableSpider.newInstance(keyword, start, num,
-                baiduVedioCallablePageProcessor,youkuVedioCallablePageProcessor,
-                bilibiliVedioCallablePageProcessor,iqiyiVedioCallablePageProcessor,
-                bingVedioCallablePageProcessor).setThreadPoolTask(taskExecutor);
-        List<VedioResult> vedioResults = callableSpider.call();
+                baiduBaiduVideoCallablePageProcessor, youkuVideoCallablePageProcessor,
+                bilibiliVideoCallablePageProcessor, iqiyiVideoCallablePageProcessor,
+                bingVideoCallablePageProcessor).setThreadPoolTask(taskExecutor);
+        List<VideoResult> videoResults = callableSpider.call();
 
-        vedioResults.sort((t1, t2) -> (t1.compareTo(t2)));
+        videoResults.sort((t1, t2) -> (t1.compareTo(t2)));
 
-        return vedioResults;
+        return videoResults;
     }
 
     @Override

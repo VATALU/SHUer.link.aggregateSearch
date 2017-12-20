@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shuerlink.crawler.CallableSpider;
 import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BaiduImageCallablePageProcessor;
-import org.shuerlink.crawlerImpl.VedioCrawlerImpl.BaiduVedioCallablePageProcessor;
+import org.shuerlink.crawlerImpl.VideoCrawlerImpl.BaiduVideoCallablePageProcessor;
 import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BaiduWebpageCallablePageProcessor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,7 +24,7 @@ public class BaiduCallablePageProcessorTest {
     @Resource
     private BaiduImageCallablePageProcessor baiduImageCallablePageProcessor;
     @Resource
-    private BaiduVedioCallablePageProcessor baiduVedioCallablePageProcessor;
+    private BaiduVideoCallablePageProcessor baiduBaiduVideoCallablePageProcessor;
 
     @Test
     public void testBaiduWebpageCrawler() {
@@ -53,13 +53,13 @@ public class BaiduCallablePageProcessorTest {
     }
 
     @Test
-    public void testBaiduVedioCrawler() {
+    public void testBaiduVideoCrawler() {
         System.out.println("Start:");
         Long startTime = System.currentTimeMillis();
         String keyword = "可达鸭";
         int start = 0;
         int num = 10;
-        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num,baiduVedioCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
+        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num, baiduBaiduVideoCallablePageProcessor).setThreadPoolTask(threadPoolTaskExecutor);
         System.out.println(callableSpider.call());
         System.out.println(System.currentTimeMillis() - startTime);
         System.out.println("End~");

@@ -6,8 +6,7 @@ import java.util.logging.Logger;
 import javax.annotation.Resource;
 
 import org.shuerlink.model.Result.ImageResult;
-import org.shuerlink.model.Result.ShareResult;
-import org.shuerlink.model.Result.VedioResult;
+import org.shuerlink.model.Result.VideoResult;
 import org.shuerlink.model.Result.WebPageResult;
 import org.shuerlink.serviceImpl.SearchServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -53,14 +52,14 @@ public class SearchController {
         return result;
     }
 
-    @RequestMapping(value = "/vedio", produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/video", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    List<VedioResult> searchVedio(String keyword,
+    List<VideoResult> searchVedio(String keyword,
                                   @RequestParam(defaultValue = "0") int start,
                                   @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
-        List<VedioResult> result = null;
+        List<VideoResult> result = null;
         result = searchService.getVedio(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;

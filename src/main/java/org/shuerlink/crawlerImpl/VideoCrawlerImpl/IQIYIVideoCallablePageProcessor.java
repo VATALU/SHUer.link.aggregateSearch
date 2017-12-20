@@ -1,10 +1,10 @@
-package org.shuerlink.crawlerImpl.VedioCrawlerImpl;
+package org.shuerlink.crawlerImpl.VideoCrawlerImpl;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.shuerlink.crawler.VedioCallablePageProcessor;
-import org.shuerlink.model.Result.VedioResult;
+import org.shuerlink.crawler.VideoCallablePageProcessor;
+import org.shuerlink.model.Result.VideoResult;
 import org.shuerlink.util.AssessScore;
 import org.springframework.stereotype.Repository;
 import us.codecraft.webmagic.Page;
@@ -12,46 +12,46 @@ import us.codecraft.webmagic.Page;
 import java.util.LinkedList;
 
 @Repository
-public class IQIYIVedioCallablePageProcessor extends VedioCallablePageProcessor {
+public class IQIYIVideoCallablePageProcessor extends VideoCallablePageProcessor {
     private static final String url = "http://so.iqiyi.com/so/q_";
 
     @Override
 
-    public LinkedList<VedioResult> getResults(Page page) {
+    public LinkedList<VideoResult> getResults(Page page) {
         return process(page.getHtml().getDocument());
     }
 
-    public LinkedList<VedioResult> process(Document document) {
-        LinkedList<VedioResult> resultLinkedList = new LinkedList<>();
+    public LinkedList<VideoResult> process(Document document) {
+        LinkedList<VideoResult> resultLinkedList = new LinkedList<>();
         Elements elements = document.select("li.list_item");
         int i = 1;
         for (Element element : elements) {
-            VedioResult vedioResult = new VedioResult();
+            VideoResult videoResult = new VideoResult();
             //设置搜索引擎
-            vedioResult.setSearchEngine("爱奇艺");
+            videoResult.setSearchEngine("爱奇艺");
             //设置score
-            vedioResult.setScore(AssessScore.assess(i++, "IQIYI"));
+            videoResult.setScore(AssessScore.assess(i++, "IQIYI"));
             //设置time
             String time = element.select("span.icon-vInfo").text();
-            vedioResult.setTime(time);
+            videoResult.setTime(time);
             //设置imageUrl
             String imageUrl = element.select("img").attr("src");
-            vedioResult.setImageUrl(imageUrl);
+            videoResult.setImageUrl(imageUrl);
             //设置url
             String url = element.select("a").attr("href");
-            vedioResult.setUrl(url);
+            videoResult.setUrl(url);
             //设置title
             String title = element.select("img").attr("alt");
-            vedioResult.setTitle(title);
+            videoResult.setTitle(title);
             //设置publisher
             String publisher = element.select("a.result_info_link").text();
             if (publisher.length() == 0)
                 publisher = element.select("em.result_info_desc").text().substring(11);
-            vedioResult.setPublisher(publisher);
+            videoResult.setPublisher(publisher);
             //设置publisherTime
             String publisherTime = element.select("em.result_info_desc").text().substring(0, 10);
-            vedioResult.setPublishTime(publisherTime);
-            resultLinkedList.add(vedioResult);
+            videoResult.setPublishTime(publisherTime);
+            resultLinkedList.add(videoResult);
         }
         return resultLinkedList;
     }
