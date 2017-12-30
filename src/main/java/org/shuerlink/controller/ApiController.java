@@ -44,8 +44,11 @@ public class ApiController {
         ExecutionResult re = GraphQL.newGraphQL(schema).build().execute(query);
         Map<String, Object> result = re.getData();
         JSONObject json = new JSONObject();
-        json.putAll(result);
-
+        try {
+            json.putAll(result);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return json.toString();
     }
 }

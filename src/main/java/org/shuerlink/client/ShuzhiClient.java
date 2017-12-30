@@ -37,12 +37,7 @@ public class ShuzhiClient implements Client {
     @Deprecated
     @Override
     public void getData(StudentInfo studentInfo, Map<String, String> cookies) throws IOException {
-        Document document = Jsoup.connect(host + "/people/personinfo.aspx")
-                .headers(cookies)
-                .userAgent("Mozilla")
-                .timeout(100)
-                .get();
-        System.out.println(document.html());
+
     }
 
 }

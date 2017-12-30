@@ -54,13 +54,13 @@ public class SearchController {
 
     @RequestMapping(value = "/video", produces = "application/json; charset=utf-8")
     public @ResponseBody
-    List<VideoResult> searchVedio(String keyword,
+    List<VideoResult> searchVideo(String keyword,
                                   @RequestParam(defaultValue = "0") int start,
                                   @RequestParam(defaultValue = "10") int num) {
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
         List<VideoResult> result = null;
-        result = searchService.getVedio(keyword, start, num);
+        result = searchService.getVideo(keyword, start, num);
         System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
