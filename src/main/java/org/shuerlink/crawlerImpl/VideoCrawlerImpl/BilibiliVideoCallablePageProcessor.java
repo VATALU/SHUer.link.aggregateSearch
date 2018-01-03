@@ -41,7 +41,7 @@ public class BilibiliVideoCallablePageProcessor extends VideoCallablePageProcess
             String url = element.select("a").attr("href").substring(2);
             videoResult.setUrl(url);
             //设置title
-            String title = element.select("a").attr("title");
+            String title = element.select("a.title").html().replace(" class=\"keyword\"","");
             videoResult.setTitle(title);
             //设置publisher
             String publisher = element.select("a.up-name").text();

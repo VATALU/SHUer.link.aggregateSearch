@@ -41,7 +41,7 @@ public class IQIYIVideoCallablePageProcessor extends VideoCallablePageProcessor 
             String url = element.select("a").attr("href");
             videoResult.setUrl(url);
             //设置title
-            String title = element.select("img").attr("alt");
+            String title = element.select("h3.result_title").select("a").html();
             videoResult.setTitle(title);
             //设置publisher
             String publisher = element.select("a.result_info_link").text();

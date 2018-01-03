@@ -43,7 +43,7 @@ public class BaiduVideoCallablePageProcessor extends VideoCallablePageProcessor 
             }
             videoResult.setUrl(url);
             //设置title
-            String title = element.select("a").attr("title");
+            String title = element.select("span.title").html();
             videoResult.setTitle(title);
             //设置publisher
             String publisher = element.select("span.site").text();
