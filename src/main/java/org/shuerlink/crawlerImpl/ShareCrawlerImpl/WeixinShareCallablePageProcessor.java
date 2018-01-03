@@ -38,7 +38,7 @@ public class WeixinShareCallablePageProcessor extends ShareCallablePageProcessor
             String url = element.select("div.txt-box").select("a").attr("data-share");
             shareResult.setUrl(url);
             //设置title
-            String title = element.select("div.txt-box").select("a").first().text();
+            String title = element.select("div.txt-box").select("a").first().html().replace("<!--red_beg-->","").replace("<!--red_end-->","");
             shareResult.setTitle(title);
             //设置authorurl
             String authorurl = element.select("div.s-p").select("a.account").attr("href");
