@@ -1,4 +1,4 @@
-package org.shuerlink.crawlerImpl.ImageCrawlerImpl;
+package org.shuerlink.crawler.crawlerImpl.ImageCrawlerImpl;
 
 import com.alibaba.fastjson.JSONObject;
 import org.jsoup.nodes.Document;

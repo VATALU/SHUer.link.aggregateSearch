@@ -1,19 +1,19 @@
-package org.shuerlink.serviceImpl;
+package org.shuerlink.service.serviceImpl;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.shuerlink.crawler.CallableSpider;
-import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BaiduImageCallablePageProcessor;
-import org.shuerlink.crawlerImpl.ImageCrawlerImpl.BingImageCallablePageProcessor;
-import org.shuerlink.crawlerImpl.ImageCrawlerImpl.GoogleImageCallablePageProcessor;
-import org.shuerlink.crawlerImpl.ShareCrawlerImpl.WeixinShareCallablePageProcessor;
-import org.shuerlink.crawlerImpl.ShareCrawlerImpl.ZhihuShareCallablePageProcessor;
-import org.shuerlink.crawlerImpl.VideoCrawlerImpl.*;
-import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BaiduWebpageCallablePageProcessor;
-import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.BingWebpageCallablePageProcessor;
-import org.shuerlink.crawlerImpl.WebpageCrawlerImpl.GoogleWebpageCallablePageProcessor;
+import org.shuerlink.crawler.crawlerImpl.ImageCrawlerImpl.BaiduImageCallablePageProcessor;
+import org.shuerlink.crawler.crawlerImpl.ImageCrawlerImpl.BingImageCallablePageProcessor;
+import org.shuerlink.crawler.crawlerImpl.ImageCrawlerImpl.GoogleImageCallablePageProcessor;
+import org.shuerlink.crawler.crawlerImpl.ShareCrawlerImpl.WeixinShareCallablePageProcessor;
+import org.shuerlink.crawler.crawlerImpl.ShareCrawlerImpl.ZhihuShareCallablePageProcessor;
+import org.shuerlink.crawler.crawlerImpl.VideoCrawlerImpl.*;
+import org.shuerlink.crawler.crawlerImpl.WebpageCrawlerImpl.BaiduWebpageCallablePageProcessor;
+import org.shuerlink.crawler.crawlerImpl.WebpageCrawlerImpl.BingWebpageCallablePageProcessor;
+import org.shuerlink.crawler.crawlerImpl.WebpageCrawlerImpl.GoogleWebpageCallablePageProcessor;
 import org.shuerlink.model.Result.ImageResult;
 import org.shuerlink.model.Result.ShareResult;
 import org.shuerlink.model.Result.VideoResult;

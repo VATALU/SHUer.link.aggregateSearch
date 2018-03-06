@@ -1,7 +1,7 @@
 package test.org.shuerlink.Service;
 
 import org.junit.runner.RunWith;
-import org.shuerlink.serviceImpl.SHULoginServiceImpl;
+import org.shuerlink.service.serviceImpl.SHULoginServiceImpl;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

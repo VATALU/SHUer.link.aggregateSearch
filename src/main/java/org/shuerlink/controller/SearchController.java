@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.shuerlink.model.Result.ImageResult;
 import org.shuerlink.model.Result.VideoResult;
 import org.shuerlink.model.Result.WebPageResult;
-import org.shuerlink.serviceImpl.SearchServiceImpl;
+import org.shuerlink.service.serviceImpl.SearchServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -1,4 +1,4 @@
-package org.shuerlink.crawlerImpl.WebpageCrawlerImpl;
+package org.shuerlink.crawler.crawlerImpl.WebpageCrawlerImpl;
 
 import java.util.LinkedList;
 
@@ -30,7 +30,7 @@ public class BingWebpageCallablePageProcessor extends WebPageCallablePageProcess
             webPageResult.setSearchEngine("必应");
             webPageResult.setTitle(s.text());
             webPageResult.setUrl(s.select("a[href]").attr("href"));
-            webPageResult.setDiscription(result.select("p").text());
+            webPageResult.setDescription(result.select("p").text());
             webPageResult.setScore(AssessScore.assess(i++, "bing"));
             resultList.add(webPageResult);
         }

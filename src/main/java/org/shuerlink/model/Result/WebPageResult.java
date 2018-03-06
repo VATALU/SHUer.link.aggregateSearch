@@ -4,18 +4,18 @@ package org.shuerlink.model.Result;
  * @author VATALU
  */
 public class WebPageResult extends Result {
-    private String discription;
+    private String description;
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return searchEngine + " " + score + " " + title + "\n" + url + "\n" + discription +"\n";
+        return searchEngine + " " + score + " " + title + "\n" + url + "\n" + description +"\n";
     }
 }

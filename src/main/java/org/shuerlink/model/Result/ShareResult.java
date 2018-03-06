@@ -9,7 +9,7 @@ public class ShareResult extends Result {
     private Integer Voters;
     private Integer visitor;
     private Integer comment;
-    private String discription;
+    private String description;
 
     public String getAuthorname() {
         return authorname;
@@ -67,19 +67,19 @@ public class ShareResult extends Result {
         this.comment = comment;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
         return authorname + " " + authorurl + " " + imageUrl + "\n" +
                 title + " " + url + "\n" +
-                discription + "\n" +
+                description + "\n" +
                 time + " " + comment + " " + visitor + " " + Voters + "\n";
     }
 }

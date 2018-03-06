@@ -3,7 +3,7 @@ package test.org.shuerlink.crawler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.shuerlink.crawler.CallableSpider;
-import org.shuerlink.crawlerImpl.VideoCrawlerImpl.YoukuVideoCallablePageProcessor;
+import org.shuerlink.crawler.crawlerImpl.VideoCrawlerImpl.YoukuVideoCallablePageProcessor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

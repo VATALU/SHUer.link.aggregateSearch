@@ -1,4 +1,4 @@
-package org.shuerlink.crawlerImpl.WebpageCrawlerImpl;
+package org.shuerlink.crawler.crawlerImpl.WebpageCrawlerImpl;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -35,7 +35,7 @@ public class GoogleWebpageCallablePageProcessor extends WebPageCallablePageProce
             if (discription.equals("")) {
                 continue;
             }
-            webPageResult.setDiscription(discription);
+            webPageResult.setDescription(discription);
             titleUrl = titleUrl.substring(7, titleUrl.length());
             webPageResult.setUrl(titleUrl);
             webPageResult.setScore(AssessScore.assess(i++, "google"));

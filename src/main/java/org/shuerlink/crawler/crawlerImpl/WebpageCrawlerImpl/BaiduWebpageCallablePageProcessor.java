@@ -1,4 +1,4 @@
-package org.shuerlink.crawlerImpl.WebpageCrawlerImpl;
+package org.shuerlink.crawler.crawlerImpl.WebpageCrawlerImpl;
 
 import java.util.LinkedList;
 
@@ -37,7 +37,7 @@ public class BaiduWebpageCallablePageProcessor extends WebPageCallablePageProces
             if (!baikeDiscription.html().equals("")) {
                 //设置摘要
                 Elements p = baikeDiscription.select("p:lt(2)");
-                webPageResult.setDiscription(p.text());
+                webPageResult.setDescription(p.text());
                 //设置评分
                 webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
                 resultList.add(webPageResult);
@@ -45,7 +45,7 @@ public class BaiduWebpageCallablePageProcessor extends WebPageCallablePageProces
             Elements tiebaDiscription = result.select("div.op-tieba-general-main-col.op-tieba-general-main-con");
             if (!tiebaDiscription.html().equals("")) {
                 //设置摘要
-                webPageResult.setDiscription(
+                webPageResult.setDescription(
                         tiebaDiscription.select("p").text());
                 //设置评分
                 webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
@@ -66,9 +66,9 @@ public class BaiduWebpageCallablePageProcessor extends WebPageCallablePageProces
             webPageResult.setUrl(title.select("a[href]").attr("href"));
             //设置摘要
             if (!result.select(".c-abstract").text().equals("")) {
-                webPageResult.setDiscription(result.select(".c-abstract").text());
+                webPageResult.setDescription(result.select(".c-abstract").text());
             } else {
-                webPageResult.setDiscription(result.select("font p").text().replace("<em>", "").replace("</em>", ""));
+                webPageResult.setDescription(result.select("font p").text().replace("<em>", "").replace("</em>", ""));
             }
             //设置评分
             webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));

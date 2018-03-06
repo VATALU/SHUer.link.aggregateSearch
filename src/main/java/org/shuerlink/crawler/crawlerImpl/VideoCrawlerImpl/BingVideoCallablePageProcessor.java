@@ -1,4 +1,4 @@
-package org.shuerlink.crawlerImpl.VideoCrawlerImpl;
+package org.shuerlink.crawler.crawlerImpl.VideoCrawlerImpl;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
