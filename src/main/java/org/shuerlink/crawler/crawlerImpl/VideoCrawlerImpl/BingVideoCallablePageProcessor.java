@@ -30,7 +30,7 @@ public class BingVideoCallablePageProcessor extends VideoCallablePageProcessor {
             //设置搜索引擎
             videoResult.setSearchEngine("必应");
             //设置score
-            videoResult.setScore(AssessScore.assess(i++, "bing"));
+            videoResult.setScore(AssessScore.assessBySearchEngine(i++, "bing"));
             //设置time
             String time = element.select("a.dv_i").attr("aria-label");
             if (time.indexOf("时长: ") > 0 && time.indexOf("秒") > 0)

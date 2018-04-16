@@ -19,6 +19,7 @@ import org.shuerlink.model.Result.ShareResult;
 import org.shuerlink.model.Result.VideoResult;
 import org.shuerlink.model.Result.WebPageResult;
 import org.shuerlink.service.SearchService;
+import org.shuerlink.util.AssessScore;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
@@ -56,9 +57,10 @@ public class SearchServiceImpl implements SearchService {
     private ZhihuShareCallablePageProcessor zhihuShareCallablePageProcessor;
     @Resource
     private WeixinShareCallablePageProcessor weixinShareCallablePageProcessor;
+
     /*
-    * 搜索网页
-    * */
+     * 搜索网页
+     * */
     @Override
     public List<WebPageResult> getWebpage(String keyword, int start, int num) {
         CallableSpider callableSpider = CallableSpider.newInstance(keyword, start, num,
@@ -68,17 +70,19 @@ public class SearchServiceImpl implements SearchService {
         ).setThreadPoolTask(taskExecutor);
 
         List<WebPageResult> webPageResults = callableSpider.call();
-
         /*
-        * 排序
-        * */
+         * 排序
+         * */
+        webPageResults.forEach((webPageResult -> {
+            AssessScore.assessWebPageBySimilarity(keyword, webPageResult);
+        }));
         webPageResults.sort((t1, t2) -> (t1.compareTo(t2)));
         return webPageResults;
     }
 
     /*
-    * 搜索照片
-    * */
+     * 搜索照片
+     * */
     @Override
     public List<ImageResult> getImage(String keyword, int start, int num) {
 
@@ -88,7 +92,7 @@ public class SearchServiceImpl implements SearchService {
                 bingImageCallablePageProcessor).setThreadPoolTask(taskExecutor);
         List<ImageResult> imageResults = callableSpider.call();
         /*
-        *url排序
+         *url排序
          */
         imageResults.sort((t1, t2) -> (t1.compareTo(t2)));
 
@@ -96,8 +100,8 @@ public class SearchServiceImpl implements SearchService {
     }
 
     /*
-    * 搜索视频
-    * */
+     * 搜索视频
+     * */
     @Override
     public List<VideoResult> getVideo(String keyword, int start, int num) {
         CallableSpider callableSpider = CallableSpider.newInstance(keyword, start, num,
@@ -113,12 +117,12 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<ShareResult> getShare(String keyword, int start, int num) {
-        CallableSpider callableSpider = CallableSpider.newInstance(keyword,start,num,
+        CallableSpider callableSpider = CallableSpider.newInstance(keyword, start, num,
                 zhihuShareCallablePageProcessor,
                 weixinShareCallablePageProcessor).setThreadPoolTask(taskExecutor);
         List<ShareResult> shareResults = callableSpider.call();
 
-        shareResults.sort((t1,t2)->(t1.compareTo(t2)));
+        shareResults.sort((t1, t2) -> (t1.compareTo(t2)));
 
         return shareResults;
     }

@@ -30,7 +30,7 @@ public class BilibiliVideoCallablePageProcessor extends VideoCallablePageProcess
             //设置搜索引擎
             videoResult.setSearchEngine("bilibili");
             //设置score
-            videoResult.setScore(AssessScore.assess(i++, "bilibili"));
+            videoResult.setScore(AssessScore.assessBySearchEngine(i++, "bilibili"));
             //设置time
             String time = element.select("span.so-imgTag_rb").text();
             videoResult.setTime(time);

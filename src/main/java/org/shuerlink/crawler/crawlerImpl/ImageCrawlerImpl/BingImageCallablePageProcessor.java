@@ -56,7 +56,7 @@ public class BingImageCallablePageProcessor extends ImageCallablePageProcessor {
                 imageResult.setTitle(fileInfo[5]);
                 //设置discription
                 //设置score
-                imageResult.setScore(AssessScore.assess(Integer.parseInt(li.attr("data-idx")), "bing"));
+                imageResult.setScore(AssessScore.assessBySearchEngine(Integer.parseInt(li.attr("data-idx")), "bing"));
                 resultList.add(imageResult);
             }
         }

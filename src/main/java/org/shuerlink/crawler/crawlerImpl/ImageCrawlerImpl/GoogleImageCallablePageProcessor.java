@@ -62,7 +62,7 @@ public class GoogleImageCallablePageProcessor extends ImageCallablePageProcessor
                 type=type.substring(type.indexOf(" - ")+3);
                 imageResult.setType(type);
                 //设置score
-                imageResult.setScore(AssessScore.assess(i++, "google"));
+                imageResult.setScore(AssessScore.assessBySearchEngine(i++, "google"));
                 resultList.add(imageResult);
 
         }

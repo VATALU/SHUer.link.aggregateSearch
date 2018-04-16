@@ -36,7 +36,7 @@ public class BaiduImageCallablePageProcessor extends ImageCallablePageProcessor 
         int i = 0;
         for (BaiduImageResult baiduImageResult : baiduImageResults) {
             ImageResult imageResult = new ImageResult();
-            imageResult.setScore(AssessScore.assess(i++, "baidu"));
+            imageResult.setScore(AssessScore.assessBySearchEngine(i++, "baidu"));
             imageResult.setTitle(baiduImageResult.getFromURLHost());
             imageResult.setDescription(baiduImageResult.getFromPageTitle());
             imageResult.setHostUrl(baiduImageResult.getFromURLHost());

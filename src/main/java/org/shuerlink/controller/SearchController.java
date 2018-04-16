@@ -10,6 +10,7 @@ import org.shuerlink.model.Result.VideoResult;
 import org.shuerlink.model.Result.WebPageResult;
 import org.shuerlink.service.serviceImpl.SearchServiceImpl;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,11 +27,13 @@ public class SearchController {
     @Resource
     private SearchServiceImpl searchService;
 
-    @RequestMapping(value = "/webpage", produces = "application/json; charset=utf-8")
+    @GetMapping(value = "/webpage", produces = "application/json; charset=utf-8")
     public @ResponseBody
     List<WebPageResult> searchWebPage(String keyword,
                                       @RequestParam(defaultValue = "0") int start,
                                       @RequestParam(defaultValue = "10") int num) {
+        if (keyword.length() > 50)
+            keyword = keyword.substring(0, 50);
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
         List<WebPageResult> result = null;
@@ -39,11 +42,13 @@ public class SearchController {
         return result;
     }
 
-    @RequestMapping(value = "/image", produces = "application/json; charset=utf-8")
+    @GetMapping(value = "/image", produces = "application/json; charset=utf-8")
     public @ResponseBody
     List<ImageResult> searchImage(String keyword,
                                   @RequestParam(defaultValue = "0") int start,
                                   @RequestParam(defaultValue = "10") int num) {
+        if (keyword.length() > 50)
+            keyword = keyword.substring(0, 50);
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
         List<ImageResult> result = null;
@@ -52,11 +57,13 @@ public class SearchController {
         return result;
     }
 
-    @RequestMapping(value = "/video", produces = "application/json; charset=utf-8")
+    @GetMapping(value = "/video", produces = "application/json; charset=utf-8")
     public @ResponseBody
     List<VideoResult> searchVideo(String keyword,
                                   @RequestParam(defaultValue = "0") int start,
                                   @RequestParam(defaultValue = "10") int num) {
+        if (keyword.length() > 50)
+            keyword = keyword.substring(0, 50);
         logger.info(keyword);
         Long startTime = System.currentTimeMillis();
         List<VideoResult> result = null;

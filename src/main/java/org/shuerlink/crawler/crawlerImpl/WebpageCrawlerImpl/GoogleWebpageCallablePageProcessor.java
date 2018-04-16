@@ -38,7 +38,7 @@ public class GoogleWebpageCallablePageProcessor extends WebPageCallablePageProce
             webPageResult.setDescription(discription);
             titleUrl = titleUrl.substring(7, titleUrl.length());
             webPageResult.setUrl(titleUrl);
-            webPageResult.setScore(AssessScore.assess(i++, "google"));
+            webPageResult.setScore(AssessScore.assessBySearchEngine(i++, "google"));
             resultList.add(webPageResult);
         }
         return resultList;

@@ -27,7 +27,7 @@ public class WeixinShareCallablePageProcessor extends ShareCallablePageProcessor
             //设置搜索引擎
             shareResult.setSearchEngine("微信");
             //设置score
-            shareResult.setScore(AssessScore.assess(i++,"weixin"));
+            shareResult.setScore(AssessScore.assessBySearchEngine(i++,"weixin"));
             //设置authorName
             String authorName = element.select("div.s-p").select("a.account").text();
             shareResult.setAuthorname(authorName);

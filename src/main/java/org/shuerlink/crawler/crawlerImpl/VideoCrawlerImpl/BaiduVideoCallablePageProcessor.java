@@ -29,7 +29,7 @@ public class BaiduVideoCallablePageProcessor extends VideoCallablePageProcessor 
             //设置搜索引擎
             videoResult.setSearchEngine("百度");
             //设置score
-            videoResult.setScore(AssessScore.assess(i++,"baidu"));
+            videoResult.setScore(AssessScore.assessBySearchEngine(i++,"baidu"));
             //设置time
             String time = element.select("span.info").text();
             videoResult.setTime(time);

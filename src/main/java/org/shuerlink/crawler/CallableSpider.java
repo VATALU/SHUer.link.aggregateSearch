@@ -111,7 +111,7 @@ public class CallableSpider implements Task {
             for (Future<List<T>> future : futureArrayList) {
                 results.addAll(future.get());
             }
-
+            //去重
             results = new LinkedList<>(new LinkedHashSet<>(results));
         } catch (InterruptedException e) {
             e.printStackTrace();

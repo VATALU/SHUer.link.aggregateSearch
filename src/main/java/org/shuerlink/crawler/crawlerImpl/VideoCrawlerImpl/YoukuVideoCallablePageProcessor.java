@@ -30,7 +30,7 @@ public class YoukuVideoCallablePageProcessor extends VideoCallablePageProcessor 
             //设置搜索引擎
             videoResult.setSearchEngine("优酷土豆");
             //设置score
-            videoResult.setScore(AssessScore.assess(i++, "youku"));
+            videoResult.setScore(AssessScore.assessBySearchEngine(i++, "youku"));
             //设置time
             String time = element.select("span.v-time").text();
             videoResult.setTime(time);

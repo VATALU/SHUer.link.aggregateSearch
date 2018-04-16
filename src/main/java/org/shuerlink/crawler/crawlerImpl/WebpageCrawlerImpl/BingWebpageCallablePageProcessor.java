@@ -31,7 +31,7 @@ public class BingWebpageCallablePageProcessor extends WebPageCallablePageProcess
             webPageResult.setTitle(s.text());
             webPageResult.setUrl(s.select("a[href]").attr("href"));
             webPageResult.setDescription(result.select("p").text());
-            webPageResult.setScore(AssessScore.assess(i++, "bing"));
+            webPageResult.setScore(AssessScore.assessBySearchEngine(i++, "bing"));
             resultList.add(webPageResult);
         }
         return resultList;

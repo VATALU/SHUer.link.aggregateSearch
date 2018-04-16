@@ -39,7 +39,7 @@ public class BaiduWebpageCallablePageProcessor extends WebPageCallablePageProces
                 Elements p = baikeDiscription.select("p:lt(2)");
                 webPageResult.setDescription(p.text());
                 //设置评分
-                webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
+                webPageResult.setScore(AssessScore.assessBySearchEngine(Integer.valueOf(result.attr("id")), "baidu"));
                 resultList.add(webPageResult);
             }
             Elements tiebaDiscription = result.select("div.op-tieba-general-main-col.op-tieba-general-main-con");
@@ -48,7 +48,7 @@ public class BaiduWebpageCallablePageProcessor extends WebPageCallablePageProces
                 webPageResult.setDescription(
                         tiebaDiscription.select("p").text());
                 //设置评分
-                webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
+                webPageResult.setScore(AssessScore.assessBySearchEngine(Integer.valueOf(result.attr("id")), "baidu"));
                 resultList.add(webPageResult);
             }
         }
@@ -71,7 +71,7 @@ public class BaiduWebpageCallablePageProcessor extends WebPageCallablePageProces
                 webPageResult.setDescription(result.select("font p").text().replace("<em>", "").replace("</em>", ""));
             }
             //设置评分
-            webPageResult.setScore(AssessScore.assess(Integer.valueOf(result.attr("id")), "baidu"));
+            webPageResult.setScore(AssessScore.assessBySearchEngine(Integer.valueOf(result.attr("id")), "baidu"));
             resultList.add(webPageResult);
         }
         return resultList;
