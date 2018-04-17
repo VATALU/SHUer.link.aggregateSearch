@@ -1,4 +1,4 @@
-package org.shuerlink.crawlerImpl.VideoCrawlerImpl;
+package org.shuerlink.crawler.crawlerImpl.VideoCrawlerImpl;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,7 +30,7 @@ public class IQIYIVideoCallablePageProcessor extends VideoCallablePageProcessor 
             //设置搜索引擎
             videoResult.setSearchEngine("爱奇艺");
             //设置score
-            videoResult.setScore(AssessScore.assess(i++, "IQIYI"));
+            videoResult.setScore(AssessScore.assessBySearchEngine(i++, "IQIYI"));
             //设置time
             String time = element.select("span.icon-vInfo").text();
             videoResult.setTime(time);
