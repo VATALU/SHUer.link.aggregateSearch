@@ -1,12 +1,12 @@
 # SHUer.link.aggregateSearch:blush:
 ## Dependencies
- > springMVC 4.3.11
-
- > spring 4.3.11
+ > Spring Boot 2.0 
 
  > webmagic 0.7.3
 
  > Jsoup 1.10.1
+
+ > HanLP 1.6.2
 ## Crawler
 ### WebpageCrawler
 - [x] 百度搜索
