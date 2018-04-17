@@ -42,9 +42,9 @@ public class Result  implements Comparable<Result> {
     @Override
     public final int compareTo(Result r) {
         if (r.score < this.score) {
-            return 1;
-        } else if (r.score > this.score) {
             return -1;
+        } else if (r.score > this.score) {
+            return 1;
         } else {
             return r.title.compareTo(this.title);
         }

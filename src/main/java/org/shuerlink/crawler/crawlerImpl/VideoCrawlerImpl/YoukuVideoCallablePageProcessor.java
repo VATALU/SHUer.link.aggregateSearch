@@ -1,4 +1,4 @@
-package org.shuerlink.crawler.crawlerImpl.VideoCrawlerImpl;
+package org.shuerlink.crawlerImpl.VideoCrawlerImpl;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,7 +30,7 @@ public class YoukuVideoCallablePageProcessor extends VideoCallablePageProcessor 
             //设置搜索引擎
             videoResult.setSearchEngine("优酷土豆");
             //设置score
-            videoResult.setScore(AssessScore.assessBySearchEngine(i++, "youku"));
+            videoResult.setScore(AssessScore.assess(i++, "youku"));
             //设置time
             String time = element.select("span.v-time").text();
             videoResult.setTime(time);
@@ -41,7 +41,7 @@ public class YoukuVideoCallablePageProcessor extends VideoCallablePageProcessor 
             String url = element.select("div.v-link").select("a").attr("href").substring(2);
             videoResult.setUrl(url);
             //设置title
-            String title = element.select("div.v-meta-title").select("a").html();
+            String title = element.select("div.v-meta-title").select("a").text();
             videoResult.setTitle(title);
             //设置publisher
             String publisher = element.select("span.username").select("a").text();
@@ -56,6 +56,6 @@ public class YoukuVideoCallablePageProcessor extends VideoCallablePageProcessor 
 
     @Override
     public String getUrl(String keyword, int start, int num) {
-        return url + keyword + "&page=" + (start / 10 + 1);
+        return url + keyword;
     }
 }

@@ -1,14 +1,19 @@
 package org.shuerlink.util;
 
-import org.shuerlink.model.Result.Result;
+import com.hankcs.hanlp.mining.word2vec.DocVectorModel;
+import com.hankcs.hanlp.mining.word2vec.WordVectorModel;
 import org.shuerlink.model.Result.WebPageResult;
-import org.shuerlink.nlp.similarity.text.TextSimilarity;
+import org.shuerlink.nlp.similarity.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
 public class AssessScore {
+
+    private static WordVectorModel wordVectorModel;
+    private static DocVectorModel docVectorModel;
+
     private static Map<String, Integer> searchEngineCoefficientMap;
 
     static {
@@ -24,6 +29,8 @@ public class AssessScore {
                 String property = props.getProperty(key);
                 searchEngineCoefficientMap.put(key, Integer.valueOf(property));
             }
+            wordVectorModel = new WordVectorModel("E:\\github workplace\\SHUer.link.aggregateSearch\\src\\main\\resources\\data\\hanlp-wiki-vec-zh.txt");
+            docVectorModel = new DocVectorModel(wordVectorModel);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -51,13 +58,23 @@ public class AssessScore {
     }
 
     public static double assessWebPageBySimilarity(String keyword, WebPageResult webPageResult) {
-        double score= webPageResult.getScore()*assessByTextWithText(keyword,webPageResult.getTitle()+webPageResult.getDescription());
+        double score = assessByTextWithText(keyword, webPageResult.getTitle() + webPageResult.getDescription()) / webPageResult.getScore();
         webPageResult.setScore(score);
         return score;
     }
 
-    private static double assessByTextWithText(String t1, String t2) {
-        TextSimilarity similarity = new FrequentSimilarity();
-        return similarity.getSimilarity(t1, t2);
+    private static double assessByTextWithText(String text1, String text2) {
+        //分词
+        if (StringUtil.isBlank(text1) && StringUtil.isBlank(text2)) {
+            return 1.0;
+        }
+        if (StringUtil.isBlank(text1) || StringUtil.isBlank(text2)) {
+            return 0.0;
+        }
+        if (text1.equalsIgnoreCase(text2)) {
+            return 1.0;
+        }
+        return docVectorModel.similarity(text1, text2);
     }
+
 }

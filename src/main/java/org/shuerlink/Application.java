@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.io.IOException;
+
 @SpringBootApplication
 @EnableAsync
 public class Application {
@@ -18,6 +20,11 @@ public class Application {
         threadPoolTaskExecutor.setQueueCapacity(20);
         return threadPoolTaskExecutor;
     }
+
+//    @Bean
+//    public WordVectorModel getWordVectorModel() throws IOException {
+//        return new WordVectorModel("E:\\github workplace\\SHUer.link.aggregateSearch\\src\\main\\resources\\data\\wiki.zh.vec");
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

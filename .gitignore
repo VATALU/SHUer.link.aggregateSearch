@@ -7,3 +7,4 @@ aggregate-search.iml
 .project
 /logs
 src/main/resources/mongodbkey.xml
+src/main/resources/data
