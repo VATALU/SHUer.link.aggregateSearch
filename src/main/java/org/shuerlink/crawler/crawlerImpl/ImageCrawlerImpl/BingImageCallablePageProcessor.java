@@ -23,7 +23,8 @@ public class BingImageCallablePageProcessor extends ImageCallablePageProcessor {
     public LinkedList<ImageResult> getResults(Page page) {
         String html = page.getHtml().toString();
         int start = html.indexOf("<div id=\"mmComponent_images_1\"");
-        int end = html.indexOf("<!--for counter factual flight view model logging-->");
+        int end = html.indexOf("<div id=\"bop_container\"");
+        System.out.println(start+" "+end);
         html = html.substring(start,end);
         return process(new Html(html).getDocument());
     }

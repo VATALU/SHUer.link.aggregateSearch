@@ -3,7 +3,6 @@ package org.shuerlink.util;
 import com.hankcs.hanlp.mining.word2vec.DocVectorModel;
 import com.hankcs.hanlp.mining.word2vec.WordVectorModel;
 import org.shuerlink.model.Result.WebPageResult;
-import org.shuerlink.nlp.similarity.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +28,8 @@ public class AssessScore {
                 String property = props.getProperty(key);
                 searchEngineCoefficientMap.put(key, Integer.valueOf(property));
             }
-            wordVectorModel = new WordVectorModel("E:\\github workplace\\SHUer.link.aggregateSearch\\src\\main\\resources\\data\\hanlp-wiki-vec-zh.txt");
+            wordVectorModel = new WordVectorModel("/var/lib/model/hanlp-wiki-vec-zh.txt");
+//            wordVectorModel = new WordVectorModel("E:\\github workplace\\SHUer.link.aggregateSearch\\src\\main\\resources\\data\\hanlp-wiki-vec-zh.txt");
             docVectorModel = new DocVectorModel(wordVectorModel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,16 +64,6 @@ public class AssessScore {
     }
 
     private static double assessByTextWithText(String text1, String text2) {
-        //分词
-        if (StringUtil.isBlank(text1) && StringUtil.isBlank(text2)) {
-            return 1.0;
-        }
-        if (StringUtil.isBlank(text1) || StringUtil.isBlank(text2)) {
-            return 0.0;
-        }
-        if (text1.equalsIgnoreCase(text2)) {
-            return 1.0;
-        }
         return docVectorModel.similarity(text1, text2);
     }
 

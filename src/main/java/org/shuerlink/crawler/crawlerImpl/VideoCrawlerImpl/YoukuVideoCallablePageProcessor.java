@@ -36,9 +36,9 @@ public class YoukuVideoCallablePageProcessor extends VideoCallablePageProcessor 
             videoResult.setTime(time);
             //设置imageUrl
             String imageUrl = element.select("img").attr("src").substring(2);
-            videoResult.setImageUrl(imageUrl);
+            videoResult.setImageUrl("http://"+imageUrl);
             //设置url
-            String url = element.select("div.v-link").select("a").attr("href").substring(2);
+            String url = "http://"+element.select("div.v-link").select("a").attr("href").substring(2);
             videoResult.setUrl(url);
             //设置title
             String title = element.select("div.v-meta-title").select("a").text();

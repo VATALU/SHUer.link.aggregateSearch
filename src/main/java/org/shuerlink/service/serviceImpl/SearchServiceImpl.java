@@ -106,7 +106,8 @@ public class SearchServiceImpl implements SearchService {
     public List<VideoResult> getVideo(String keyword, int start, int num) {
         CallableSpider callableSpider = CallableSpider.newInstance(keyword, start, num,
                 baiduBaiduVideoCallablePageProcessor, youkuVideoCallablePageProcessor,
-                bilibiliVideoCallablePageProcessor, iqiyiVideoCallablePageProcessor,
+//                bilibiliVideoCallablePageProcessor,
+                iqiyiVideoCallablePageProcessor,
                 bingVideoCallablePageProcessor).setThreadPoolTask(taskExecutor);
         List<VideoResult> videoResults = callableSpider.call();
 

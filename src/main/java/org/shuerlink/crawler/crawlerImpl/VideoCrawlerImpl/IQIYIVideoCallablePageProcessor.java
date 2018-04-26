@@ -45,8 +45,13 @@ public class IQIYIVideoCallablePageProcessor extends VideoCallablePageProcessor 
             videoResult.setTitle(title);
             //设置publisher
             String publisher = element.select("a.result_info_link").text();
-            if (publisher.length() == 0)
-                publisher = element.select("em.result_info_desc").text().substring(11);
+            if (publisher.length() == 0) {
+                publisher = element.select("em.result_info_desc").text();
+                if (publisher.length() > 11)
+                    publisher.substring(11);
+                else
+                    continue;
+            }
             videoResult.setPublisher(publisher);
             //设置publisherTime
             String publisherTime = element.select("em.result_info_desc").text().substring(0, 10);

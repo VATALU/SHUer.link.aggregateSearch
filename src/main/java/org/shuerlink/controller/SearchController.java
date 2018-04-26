@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @author VATAL
+ * @author VATALU
  * @version 0.1
  */
 
 @Controller
-@RequestMapping(value = "search")
+@RequestMapping(value = "/search")
 public class SearchController {
     private static Logger logger = Logger.getLogger(SearchController.class.getName());
     @Resource
@@ -42,20 +42,20 @@ public class SearchController {
         return result;
     }
 
-    @GetMapping(value = "/image", produces = "application/json; charset=utf-8")
-    public @ResponseBody
-    List<ImageResult> searchImage(String keyword,
-                                  @RequestParam(defaultValue = "0") int start,
-                                  @RequestParam(defaultValue = "10") int num) {
-        if (keyword.length() > 50)
-            keyword = keyword.substring(0, 50);
-        logger.info(keyword);
-        Long startTime = System.currentTimeMillis();
-        List<ImageResult> result = null;
-        result = searchService.getImage(keyword, start, num);
-        System.out.println(System.currentTimeMillis() - startTime);
-        return result;
-    }
+//    @GetMapping(value = "/image", produces = "application/json; charset=utf-8")
+//    public @ResponseBody
+//    List<ImageResult> searchImage(String keyword,
+//                                  @RequestParam(defaultValue = "0") int start,
+//                                  @RequestParam(defaultValue = "10") int num) {
+//        if (keyword.length() > 50)
+//            keyword = keyword.substring(0, 50);
+//        logger.info(keyword);
+//        Long startTime = System.currentTimeMillis();
+//        List<ImageResult> result = null;
+//        result = searchService.getImage(keyword, start, num);
+//        System.out.println(System.currentTimeMillis() - startTime);
+//        return result;
+//    }
 
     @GetMapping(value = "/video", produces = "application/json; charset=utf-8")
     public @ResponseBody
